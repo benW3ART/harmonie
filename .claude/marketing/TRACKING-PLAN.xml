@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tracking_plan version="1.0" date="2025-02-15">
+
+  <overview>
+    <purpose>Mesurer l'efficacité du funnel d'acquisition et de rétention</purpose>
+    <tools>
+      <tool name="Plausible Analytics" role="primary" reason="RGPD-friendly, simple, pas de cookies">
+        <alternative>Pirsch, Fathom</alternative>
+      </tool>
+      <tool name="Meta Pixel" role="advertising" reason="Retargeting Instagram/Facebook">
+        <note>Consentement cookie requis</note>
+      </tool>
+      <tool name="Google Search Console" role="seo" reason="Performance recherche organique"/>
+      <tool name="Hotjar" role="ux" reason="Heatmaps, recordings (phase growth)">
+        <note>Optionnel au lancement</note>
+      </tool>
+    </tools>
+  </overview>
+
+  <events>
+    <category name="Website - Acquisition">
+      <event name="page_view">
+        <trigger>Chaque vue de page</trigger>
+        <properties>
+          <property name="page_path" type="string" example="/services"/>
+          <property name="referrer" type="string" example="instagram.com"/>
+          <property name="utm_source" type="string" example="instagram"/>
+          <property name="utm_medium" type="string" example="social"/>
+          <property name="utm_campaign" type="string" example="launch_2025"/>
+        </properties>
+      </event>
+
+      <event name="cta_clicked">
+        <trigger>Clic sur un CTA</trigger>
+        <properties>
+          <property name="cta_name" type="string" example="hero_rdv_decouverte"/>
+          <property name="cta_location" type="string" example="hero"/>
+          <property name="page_path" type="string"/>
+        </properties>
+      </event>
+
+      <event name="lead_magnet_downloaded">
+        <trigger>Téléchargement du guide PDF</trigger>
+        <properties>
+          <property name="magnet_name" type="string" example="7_jours_meilleures_nuits"/>
+          <property name="email" type="string" hashed="true"/>
+        </properties>
+        <conversion_value>5€</conversion_value>
+      </event>
+    </category>
+
+    <category name="Website - Conversion">
+      <event name="discovery_call_started">
+        <trigger>Ouverture du formulaire RDV</trigger>
+        <properties>
+          <property name="source_page" type="string"/>
+        </properties>
+      </event>
+
+      <event name="discovery_call_booked">
+        <trigger>RDV découverte confirmé</trigger>
+        <properties>
+          <property name="date" type="date"/>
+          <property name="source" type="string" example="website"/>
+          <property name="utm_source" type="string"/>
+        </properties>
+        <conversion_value>25€</conversion_value>
+      </event>
+
+      <event name="discovery_call_completed">
+        <trigger>RDV découverte effectué</trigger>
+        <properties>
+          <property name="duration_minutes" type="number"/>
+          <property name="outcome" type="enum" values="qualified,not_qualified,no_show"/>
+        </properties>
+        <conversion_value>50€</conversion_value>
+      </event>
+
+      <event name="subscription_started">
+        <trigger>Accompagnement mensuel signé</trigger>
+        <properties>
+          <property name="plan" type="string" example="monthly_500"/>
+          <property name="source" type="string"/>
+          <property name="first_touch_utm" type="string"/>
+        </properties>
+        <conversion_value>500€</conversion_value>
+      </event>
+    </category>
+
+    <category name="App - Onboarding">
+      <event name="app_signup">
+        <trigger>Création de compte app</trigger>
+        <properties>
+          <property name="method" type="enum" values="email,google,apple"/>
+          <property name="referral_code" type="string" optional="true"/>
+        </properties>
+      </event>
+
+      <event name="onboarding_step_completed">
+        <trigger>Étape d'onboarding complétée</trigger>
+        <properties>
+          <property name="step" type="number" example="3"/>
+          <property name="step_name" type="string" example="child_info"/>
+        </properties>
+      </event>
+
+      <event name="onboarding_completed">
+        <trigger>Onboarding terminé</trigger>
+        <properties>
+          <property name="total_duration_seconds" type="number"/>
+          <property name="children_added" type="number"/>
+        </properties>
+      </event>
+    </category>
+
+    <category name="App - Engagement">
+      <event name="chat_message_sent">
+        <trigger>Message envoyé au chatbot</trigger>
+        <properties>
+          <property name="message_type" type="enum" values="text,voice"/>
+          <property name="time_of_day" type="string" example="03:45"/>
+          <property name="is_first_message_today" type="boolean"/>
+        </properties>
+      </event>
+
+      <event name="chat_response_received">
+        <trigger>Réponse IA reçue</trigger>
+        <properties>
+          <property name="response_time_ms" type="number"/>
+          <property name="was_escalated" type="boolean"/>
+        </properties>
+      </event>
+
+      <event name="journal_entry_created">
+        <trigger>Entrée de journal créée</trigger>
+        <properties>
+          <property name="source" type="enum" values="manual,ai_generated"/>
+          <property name="has_sleep_data" type="boolean"/>
+          <property name="has_nutrition_data" type="boolean"/>
+        </properties>
+      </event>
+
+      <event name="goal_completed">
+        <trigger>Objectif marqué comme complété</trigger>
+        <properties>
+          <property name="goal_type" type="string" example="sleep_routine"/>
+          <property name="days_to_complete" type="number"/>
+        </properties>
+      </event>
+
+      <event name="habit_checked">
+        <trigger>Réflexe quotidien coché</trigger>
+        <properties>
+          <property name="habit_name" type="string"/>
+          <property name="streak_days" type="number"/>
+        </properties>
+      </event>
+
+      <event name="escalation_triggered">
+        <trigger>Escalade vers la coach déclenchée</trigger>
+        <properties>
+          <property name="reason" type="string"/>
+          <property name="severity" type="enum" values="low,medium,high"/>
+          <property name="response_time_minutes" type="number"/>
+        </properties>
+      </event>
+    </category>
+
+    <category name="App - Retention">
+      <event name="session_started">
+        <trigger>Ouverture de l'app</trigger>
+        <properties>
+          <property name="days_since_last_session" type="number"/>
+          <property name="platform" type="enum" values="web,pwa"/>
+        </properties>
+      </event>
+
+      <event name="weekly_report_viewed">
+        <trigger>Rapport hebdomadaire consulté</trigger>
+        <properties>
+          <property name="week_number" type="number"/>
+          <property name="engagement_score" type="number"/>
+        </properties>
+      </event>
+
+      <event name="coach_session_completed">
+        <trigger>Bilan avec la coach terminé</trigger>
+        <properties>
+          <property name="duration_minutes" type="number"/>
+          <property name="week_number" type="number"/>
+          <property name="satisfaction_rating" type="number" min="1" max="5"/>
+        </properties>
+      </event>
+
+      <event name="subscription_renewed">
+        <trigger>Renouvellement d'abonnement</trigger>
+        <properties>
+          <property name="month_number" type="number"/>
+          <property name="renewal_type" type="enum" values="auto,manual"/>
+        </properties>
+      </event>
+
+      <event name="subscription_cancelled">
+        <trigger>Annulation d'abonnement</trigger>
+        <properties>
+          <property name="reason" type="string"/>
+          <property name="months_subscribed" type="number"/>
+          <property name="nps_score" type="number"/>
+        </properties>
+      </event>
+    </category>
+
+    <category name="App - Referral">
+      <event name="referral_link_shared">
+        <trigger>Lien de parrainage partagé</trigger>
+        <properties>
+          <property name="share_method" type="enum" values="copy,whatsapp,email,other"/>
+        </properties>
+      </event>
+
+      <event name="referral_converted">
+        <trigger>Filleul converti en client</trigger>
+        <properties>
+          <property name="referrer_months_active" type="number"/>
+        </properties>
+        <conversion_value>200€</conversion_value>
+      </event>
+
+      <event name="testimonial_submitted">
+        <trigger>Témoignage soumis</trigger>
+        <properties>
+          <property name="format" type="enum" values="text,video"/>
+          <property name="rating" type="number"/>
+          <property name="approved_for_use" type="boolean"/>
+        </properties>
+      </event>
+
+      <event name="nps_submitted">
+        <trigger>Score NPS soumis</trigger>
+        <properties>
+          <property name="score" type="number" min="0" max="10"/>
+          <property name="category" type="enum" values="detractor,passive,promoter"/>
+          <property name="feedback" type="string" optional="true"/>
+        </properties>
+      </event>
+    </category>
+  </events>
+
+  <funnels>
+    <funnel name="Acquisition Website">
+      <step order="1" event="page_view" filter="page_path=/"/>
+      <step order="2" event="page_view" filter="page_path=/services"/>
+      <step order="3" event="cta_clicked"/>
+      <step order="4" event="discovery_call_booked"/>
+      <target_conversion_rate>3%</target_conversion_rate>
+    </funnel>
+
+    <funnel name="Lead Magnet to Client">
+      <step order="1" event="lead_magnet_downloaded"/>
+      <step order="2" event="discovery_call_booked"/>
+      <step order="3" event="discovery_call_completed" filter="outcome=qualified"/>
+      <step order="4" event="subscription_started"/>
+      <target_conversion_rate>20%</target_conversion_rate>
+    </funnel>
+
+    <funnel name="App Onboarding">
+      <step order="1" event="app_signup"/>
+      <step order="2" event="onboarding_step_completed" filter="step=1"/>
+      <step order="3" event="onboarding_step_completed" filter="step=2"/>
+      <step order="4" event="onboarding_step_completed" filter="step=3"/>
+      <step order="5" event="onboarding_completed"/>
+      <target_conversion_rate>80%</target_conversion_rate>
+    </funnel>
+
+    <funnel name="First Week Activation">
+      <step order="1" event="onboarding_completed"/>
+      <step order="2" event="chat_message_sent"/>
+      <step order="3" event="journal_entry_created"/>
+      <step order="4" event="habit_checked"/>
+      <step order="5" event="coach_session_completed"/>
+      <target_conversion_rate>90%</target_conversion_rate>
+    </funnel>
+  </funnels>
+
+  <dashboards>
+    <dashboard name="Acquisition">
+      <widget type="number">Visites site / jour</widget>
+      <widget type="number">Leads / semaine</widget>
+      <widget type="number">RDV découverte / semaine</widget>
+      <widget type="number">Conversions / mois</widget>
+      <widget type="funnel">Funnel acquisition</widget>
+      <widget type="chart">Sources de trafic</widget>
+      <widget type="chart">Conversions par canal</widget>
+    </dashboard>
+
+    <dashboard name="Engagement App">
+      <widget type="number">DAU (Daily Active Users)</widget>
+      <widget type="number">WAU (Weekly Active Users)</widget>
+      <widget type="number">Messages chat / jour</widget>
+      <widget type="number">Escalades / semaine</widget>
+      <widget type="chart">Messages par heure de la journée</widget>
+      <widget type="chart">Habits completion rate</widget>
+    </dashboard>
+
+    <dashboard name="Retention">
+      <widget type="number">Churn mensuel</widget>
+      <widget type="number">NPS</widget>
+      <widget type="number">Durée moyenne abonnement</widget>
+      <widget type="cohort">Retention par cohorte mensuelle</widget>
+      <widget type="chart">Raisons de churn</widget>
+    </dashboard>
+
+    <dashboard name="Revenue">
+      <widget type="number">MRR (Monthly Recurring Revenue)</widget>
+      <widget type="number">Clients actifs</widget>
+      <widget type="number">LTV</widget>
+      <widget type="number">CAC</widget>
+      <widget type="chart">MRR évolution</widget>
+      <widget type="chart">Revenue par source</widget>
+    </dashboard>
+  </dashboards>
+
+  <utm_conventions>
+    <format>utm_source=X&amp;utm_medium=Y&amp;utm_campaign=Z&amp;utm_content=W</format>
+    <sources>
+      <source name="instagram">Posts et stories organiques</source>
+      <source name="instagram_ads">Publicités Instagram</source>
+      <source name="whatsapp">Liens partagés WhatsApp</source>
+      <source name="email">Campagnes email</source>
+      <source name="referral">Parrainage</source>
+      <source name="partner">Partenaires (sages-femmes, etc.)</source>
+      <source name="google">Recherche organique</source>
+      <source name="direct">Trafic direct</source>
+    </sources>
+    <mediums>
+      <medium name="social">Réseaux sociaux organiques</medium>
+      <medium name="paid">Publicités payantes</medium>
+      <medium name="email">Email marketing</medium>
+      <medium name="referral">Parrainage</medium>
+      <medium name="partner">Partenariats</medium>
+      <medium name="organic">SEO</medium>
+    </mediums>
+    <examples>
+      <example use="Lien bio Instagram">?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=bio_link</example>
+      <example use="Post Instagram">?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=post_tips_sommeil&amp;utm_content=reel_01</example>
+      <example use="Email newsletter">?utm_source=email&amp;utm_medium=email&amp;utm_campaign=newsletter_jan25</example>
+      <example use="Parrainage">?utm_source=referral&amp;utm_medium=referral&amp;utm_campaign=ambassador&amp;utm_content=marie_d</example>
+    </examples>
+  </utm_conventions>
+
+  <implementation_notes>
+    <note priority="high">
+      Utiliser Plausible comme analytics principal (RGPD-friendly, pas de consentement cookies requis).
+      Intégration simple via script dans le head.
+    </note>
+    <note priority="high">
+      Pour les events personnalisés app, utiliser Plausible Custom Events ou une solution comme Mixpanel/Amplitude.
+    </note>
+    <note priority="medium">
+      Meta Pixel uniquement si publicités Instagram prévues. Nécessite bannière consentement RGPD.
+    </note>
+    <note priority="low">
+      Hotjar pour analyse UX peut attendre la phase growth (Month 3+).
+    </note>
+  </implementation_notes>
+
+</tracking_plan>

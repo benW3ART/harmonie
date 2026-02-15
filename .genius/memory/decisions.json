@@ -1,1 +1,114 @@
-[]
+[
+  {
+    "id": "d-001",
+    "decision": "DISCOVERY: Cible principale = mères actives CSP+ (jeunes primo-mères ou mères expérimentées en déséquilibre pro/perso)",
+    "reason": "Interview fondatrice - profil des clients actuels",
+    "timestamp": "2025-02-15T10:00:00Z",
+    "tags": ["discovery", "users", "persona"]
+  },
+  {
+    "id": "d-002",
+    "decision": "DISCOVERY: Mission = Alléger la charge mentale des mamans",
+    "reason": "Positionnement émotionnel validé par la fondatrice",
+    "timestamp": "2025-02-15T10:00:00Z",
+    "tags": ["discovery", "positioning", "mission"]
+  },
+  {
+    "id": "d-003",
+    "decision": "DISCOVERY: Modèle = Accompagnement mensuel 500€ avec app IA incluse",
+    "reason": "Prix cible pour rentabilité avec 20 familles",
+    "timestamp": "2025-02-15T10:00:00Z",
+    "tags": ["discovery", "pricing", "business-model"]
+  },
+  {
+    "id": "d-004",
+    "decision": "DISCOVERY: IA gère 90% du suivi quotidien, escalade vers humain pour crises émotionnelles",
+    "reason": "Permet de passer de 4 à 20 familles simultanées",
+    "timestamp": "2025-02-15T10:00:00Z",
+    "tags": ["discovery", "ai", "scalability"]
+  },
+  {
+    "id": "d-005",
+    "decision": "DISCOVERY: Web app (pas native) pour commencer - plus rapide à développer",
+    "reason": "Contrainte ASAP, itérations rapides prioritaires",
+    "timestamp": "2025-02-15T10:00:00Z",
+    "tags": ["discovery", "technical", "webapp"]
+  },
+  {
+    "id": "d-006",
+    "decision": "PROJECT DEFINED: Coaching Parental | PROBLEM: Charge mentale des mères | USERS: Mères actives CSP+ isolées",
+    "reason": "Interview discovery complete",
+    "timestamp": "2025-02-15T10:00:00Z",
+    "tags": ["project", "discovery", "complete"]
+  },
+  {
+    "id": "d-007",
+    "decision": "MARKET: Score opportunité 28/35 = FORTE OPPORTUNITE - GO",
+    "reason": "Urgence élevée (parents épuisés), fréquence quotidienne, WTP validé par marché existant",
+    "timestamp": "2025-02-15T10:30:00Z",
+    "tags": ["market", "opportunity", "validation"]
+  },
+  {
+    "id": "d-008",
+    "decision": "MARKET: Positionnement unique 'IA + Humain' = gap non occupé",
+    "reason": "Consultants non scalables, apps impersonnelles - aucun acteur ne combine les deux",
+    "timestamp": "2025-02-15T10:30:00Z",
+    "tags": ["market", "positioning", "competitive"]
+  },
+  {
+    "id": "d-009",
+    "decision": "MARKET: TAM 180K familles/an, SAM 30K familles CSP+, SOM 240 accompagnements/an (objectif Y2)",
+    "reason": "Basé sur 663K naissances France 2024, 25-30% troubles sommeil, 15-20% CSP+ payantes",
+    "timestamp": "2025-02-15T10:30:00Z",
+    "tags": ["market", "sizing", "tam-sam-som"]
+  },
+  {
+    "id": "d-010",
+    "decision": "MARKET ANALYSIS COMPLETE: TAM=90M€ | Opportunity=IA+Humain positioning gap",
+    "reason": "Analysis done - sources: INSEE, INSV/MGEN, Santé Publique France",
+    "timestamp": "2025-02-15T10:30:00Z",
+    "tags": ["market", "complete"]
+  },
+  {
+    "id": "d-011",
+    "decision": "SPEC: Chat multicanal ajouté (WhatsApp + Instagram DM) - 6 stories supplémentaires",
+    "reason": "Demande utilisateur - aller vers les parents sur leurs canaux habituels",
+    "timestamp": "2025-02-15T11:00:00Z",
+    "tags": ["specification", "multichannel", "whatsapp", "instagram"]
+  },
+  {
+    "id": "d-012",
+    "decision": "SPECIFICATIONS COMPLETE: 30 user stories, 10 epics, 12 business rules, 40 API endpoints",
+    "reason": "Awaiting user approval before design phase",
+    "timestamp": "2025-02-15T11:15:00Z",
+    "tags": ["specification", "checkpoint"]
+  },
+  {
+    "id": "d-013",
+    "decision": "DESIGN SYSTEM COMPLETE: Option A Rose Pastel | Primary: #E8A4B8 | Font: Playfair Display + Quicksand",
+    "reason": "User selected - chaleureux, maternel, rassurant pour cible mères actives",
+    "timestamp": "2025-02-15T11:30:00Z",
+    "tags": ["design", "complete", "branding"]
+  },
+  {
+    "id": "d-014",
+    "decision": "GTM STRATEGY COMPLETE: Channels=Instagram+Bouche-à-oreille+SEO | KPIs=20 familles M6, 10K€ MRR",
+    "reason": "Marketing strategy and tracking plan defined",
+    "timestamp": "2025-02-15T11:45:00Z",
+    "tags": ["marketing", "complete", "gtm"]
+  },
+  {
+    "id": "d-015",
+    "decision": "ARCH: Stack=Next.js 14+Supabase+Claude Haiku | Styling=Tailwind+shadcn/ui | Deploy=Vercel",
+    "reason": "Fast iteration, modern stack, low ops overhead, RGPD-friendly",
+    "timestamp": "2025-02-15T12:00:00Z",
+    "tags": ["architecture", "decision", "stack"]
+  },
+  {
+    "id": "d-016",
+    "decision": "ARCHITECTURE COMPLETE: Next.js+Supabase+Claude | 102 tasks in plan.md",
+    "reason": "User requested autonomous execution - proceeding to build",
+    "timestamp": "2025-02-15T12:00:00Z",
+    "tags": ["architecture", "complete"]
+  }
+]

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<discovery version="1.0" date="2025-02-15">
+
+  <executive_summary>
+    <project_name>Coaching Parental (nom à définir)</project_name>
+    <tagline>Alléger la charge mentale des mamans</tagline>
+    <description>
+      Service de coaching parental spécialisé en sommeil, nutrition et comportement
+      de l'enfant (4 mois - 8 ans), avec accompagnement IA 24h/24 via une web app.
+    </description>
+    <products>
+      <product type="website">Site vitrine pour promouvoir l'activité</product>
+      <product type="webapp">Application web avec chatbot IA et outils de suivi</product>
+    </products>
+  </executive_summary>
+
+  <problem_space>
+    <core_problem>
+      Les mères actives sont débordées par la charge mentale liée à l'éducation
+      de leurs enfants. Elles se sentent seules, démunies, et ont besoin d'aide
+      à toute heure — pas seulement pendant les heures de bureau.
+    </core_problem>
+    <pain_points>
+      <pain>Problèmes de sommeil de l'enfant empêchant les parents de dormir</pain>
+      <pain>Difficulté à concilier vie professionnelle et familiale</pain>
+      <pain>Sentiment d'isolement et de culpabilité</pain>
+      <pain>Manque de connaissances sur le développement de l'enfant</pain>
+      <pain>Pères qui peinent à trouver leur place dans la famille</pain>
+    </pain_points>
+    <current_solutions>
+      <solution>Recherches internet (non personnalisées)</solution>
+      <solution>Conseils de l'entourage (souvent contradictoires)</solution>
+      <solution>Coaching traditionnel (coûteux, non disponible 24h/24)</solution>
+    </current_solutions>
+  </problem_space>
+
+  <users>
+    <persona id="1" primary="true">
+      <name>Jeune mère primo-parente</name>
+      <demographics>25-35 ans, CSP+, active</demographics>
+      <situation>Premier enfant, tout est nouveau</situation>
+      <problem>Ne sait pas quoi faire, débordée</problem>
+      <urgency>Doit reprendre le travail rapidement</urgency>
+      <emotion>Perdue, stressée, fatiguée</emotion>
+    </persona>
+    <persona id="2" primary="true">
+      <name>Mère expérimentée en déséquilibre</name>
+      <demographics>35-45 ans, CSP+, active</demographics>
+      <situation>Plusieurs enfants, carrière exigeante</situation>
+      <problem>N'arrive plus à tout gérer</problem>
+      <urgency>Équilibre pro/perso en danger</urgency>
+      <emotion>Épuisée, coupable, seule</emotion>
+    </persona>
+    <persona id="3" primary="false">
+      <name>Père impliqué</name>
+      <demographics>Variable</demographics>
+      <situation>Veut s'impliquer mais ne sait pas comment</situation>
+      <problem>Difficulté à trouver sa place</problem>
+      <note>Cible secondaire - impliqué via la mère</note>
+    </persona>
+  </users>
+
+  <founder>
+    <background>
+      <item>Expérience personnelle : a fait appel à un coach sommeil pour son 2e enfant</item>
+      <item>Formation en psychologie</item>
+      <item>Certifications : PNL, coaching familial, sommeil de l'enfant</item>
+    </background>
+    <experience>
+      <item>Pratique avec l'entourage puis premiers clients</item>
+      <item>Actuellement 3-4 familles en accompagnement</item>
+    </experience>
+    <expertise>
+      <domain>Sommeil de l'enfant</domain>
+      <domain>Nutrition</domain>
+      <domain>Comportement</domain>
+      <domain>Coaching parental</domain>
+    </expertise>
+  </founder>
+
+  <service_model>
+    <current_process>
+      <step order="1">Questionnaire initial pour cibler la problématique</step>
+      <step order="2">Accompagnement sur 1 mois</step>
+      <step order="3">Points quotidiens de 10 minutes</step>
+      <step order="4">Bilan hebdomadaire</step>
+    </current_process>
+    <daily_checkin_content>
+      <item>Rapport : comment s'est passée la nuit/journée</item>
+      <item>Évolution de la problématique</item>
+      <item>Motivation et encouragements</item>
+      <item>Solutions concrètes ou encouragement à continuer</item>
+    </daily_checkin_content>
+    <ai_scope>
+      <handles>Points quotidiens, motivation, solutions, suivi</handles>
+      <escalates>Crises émotionnelles nécessitant présence humaine</escalates>
+    </ai_scope>
+  </service_model>
+
+  <product_features>
+    <website>
+      <feature priority="must">Présentation de l'activité et de la coach</feature>
+      <feature priority="must">Explication des services</feature>
+      <feature priority="must">Témoignages clients</feature>
+      <feature priority="must">Prise de rendez-vous (entretien découverte)</feature>
+      <feature priority="should">Blog/conseils</feature>
+      <feature priority="should">Intégration Instagram</feature>
+    </website>
+    <webapp>
+      <feature priority="must">Chatbot IA 24h/24 (suivi quotidien, motivation, solutions)</feature>
+      <feature priority="must">Journal de bord (log quotidien par parents ou auto-rempli par IA)</feature>
+      <feature priority="must">Objectifs (définis par la coach, suivis par la famille)</feature>
+      <feature priority="must">Réflexes quotidiens (habitudes à ancrer)</feature>
+      <feature priority="must">Dashboard coach (vue globale sur toutes les familles)</feature>
+      <feature priority="must">Système d'alerte (escalade vers la coach si crise détectée)</feature>
+      <feature priority="should">Implication du père (accès partagé)</feature>
+      <feature priority="should">Historique des accompagnements</feature>
+      <feature priority="could">Notifications push</feature>
+    </webapp>
+  </product_features>
+
+  <business_model>
+    <pricing>
+      <offer name="Entretien découverte" price="0" unit="session">
+        Premier contact, diagnostic gratuit
+      </offer>
+      <offer name="Séance ponctuelle" price="50" unit="session" currency="EUR">
+        Consultation unique sans engagement
+      </offer>
+      <offer name="Accompagnement mensuel" price="500" unit="month" currency="EUR">
+        Suivi complet + accès web app inclus
+      </offer>
+    </pricing>
+    <revenue_streams>
+      <stream primary="true">Accompagnement mensuel (500€/mois)</stream>
+      <stream>Séances ponctuelles (50€)</stream>
+      <stream>Suivi alumni (abonnement réduit, app seule)</stream>
+      <stream future="true">Revenus Instagram/influence</stream>
+    </revenue_streams>
+    <capacity>
+      <current>3-4 familles simultanées</current>
+      <target>15-20 familles simultanées</target>
+      <bottleneck>Points quotidiens de 10 min par famille</bottleneck>
+      <solution>IA pour automatiser le suivi quotidien</solution>
+    </capacity>
+  </business_model>
+
+  <success_metrics>
+    <metric timeframe="2-years">20 familles en accompagnement mensuel</metric>
+    <metric timeframe="2-years">15 000€ de revenus mensuels</metric>
+    <metric timeframe="2-years">Communauté d'anciennes familles en suivi</metric>
+    <metric timeframe="2-years">Audience Instagram significative</metric>
+    <metric timeframe="2-years">Revenus complémentaires via contenu en ligne</metric>
+  </success_metrics>
+
+  <acquisition>
+    <channel current="true">Bouche-à-oreille</channel>
+    <channel future="true">Instagram</channel>
+    <channel future="true">Site web (SEO, contenu)</channel>
+    <funnel>
+      <step>Découverte via Instagram ou recommandation</step>
+      <step>Visite du site web</step>
+      <step>Prise de RDV entretien découverte (gratuit)</step>
+      <step>Conversion en accompagnement mensuel</step>
+    </funnel>
+  </acquisition>
+
+  <constraints>
+    <constraint type="budget">Développement en interne avec Genius Team</constraint>
+    <constraint type="timeline">ASAP</constraint>
+    <constraint type="technical">Web app (pas d'app native pour commencer)</constraint>
+    <constraint type="pending">Nom de l'entreprise à définir</constraint>
+  </constraints>
+
+  <risks>
+    <risk severity="medium" type="execution">
+      <description>Ne pas aller jusqu'au bout du développement</description>
+      <mitigation>MVP rapide, itérations courtes, victoires rapides</mitigation>
+    </risk>
+    <risk severity="low" type="execution">
+      <description>Procrastination</description>
+      <mitigation>Momentum maintenu par Genius Team</mitigation>
+    </risk>
+  </risks>
+
+  <open_questions>
+    <question priority="high">Nom de l'entreprise / marque</question>
+    <question priority="medium">Stratégie de contenu Instagram</question>
+    <question priority="low">Évolution vers app native à terme ?</question>
+  </open_questions>
+
+  <next_steps>
+    <step>Analyse de marché (genius-product-market-analyst)</step>
+    <step>Rédaction des spécifications (genius-specs)</step>
+    <step>Design et identité visuelle (genius-designer)</step>
+    <step>Architecture technique (genius-architect)</step>
+    <step>Développement MVP (genius-orchestrator)</step>
+  </next_steps>
+
+</discovery>

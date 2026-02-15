@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<marketing_strategy version="1.0" date="2025-02-15">
+
+  <executive_summary>
+    <mission>Alléger la charge mentale des mamans</mission>
+    <positioning>
+      Le seul accompagnement parental qui combine une coach certifiée
+      pour les moments clés et une IA bienveillante disponible 24h/24.
+    </positioning>
+    <primary_channel>Instagram + Bouche-à-oreille</primary_channel>
+    <launch_strategy>Soft launch avec 5 familles pilotes puis scale progressif</launch_strategy>
+  </executive_summary>
+
+  <audience>
+    <icp name="Ideal Customer Profile">
+      <demographics>
+        <age>28-42 ans</age>
+        <gender>Femmes (95%), hommes impliqués via partenaire (5%)</gender>
+        <location>France métropolitaine, zones urbaines et péri-urbaines</location>
+        <income>CSP+, revenus ménage &gt; 60K€/an</income>
+        <family>1-3 enfants, au moins un de 4 mois à 8 ans</family>
+      </demographics>
+      <psychographics>
+        <trait>Active professionnellement (salarié ou indépendant)</trait>
+        <trait>Cherche l'équilibre vie pro / vie perso</trait>
+        <trait>Prête à investir dans le bien-être familial</trait>
+        <trait>Connectée, utilise Instagram et WhatsApp quotidiennement</trait>
+        <trait>Sensible aux approches bienveillantes (pas de méthodes dures)</trait>
+      </psychographics>
+      <triggers>
+        <trigger>Reprise du travail imminente (congé maternité)</trigger>
+        <trigger>Épuisement après plusieurs semaines de mauvaises nuits</trigger>
+        <trigger>Échec des solutions DIY (livres, forums, conseils famille)</trigger>
+        <trigger>Recommandation d'une amie qui a réussi</trigger>
+        <trigger>Crise dans le couple liée à l'éducation</trigger>
+      </triggers>
+    </icp>
+
+    <segments>
+      <segment id="1" name="La Primo-maman Débordée" priority="primary" size="60%">
+        <description>Premier enfant, 25-35 ans, reprend le travail bientôt</description>
+        <pain>Tout est nouveau, ne sait pas si c'est "normal"</pain>
+        <desire>Être rassurée, avoir un guide de confiance</desire>
+        <channel_preference>Instagram (découverte), WhatsApp (échange)</channel_preference>
+        <message_angle>Tu n'es pas seule. On traverse ça ensemble.</message_angle>
+        <objections>
+          <objection>Est-ce vraiment utile ? Peut-être que ça va passer tout seul.</objection>
+          <objection>C'est cher pour un premier bébé.</objection>
+        </objections>
+        <counter_objections>
+          <counter>Les troubles du sommeil durent en moyenne 6 mois sans accompagnement.</counter>
+          <counter>1 mois à 500€ = prix de 2 consultations pédiatriques privées, mais avec suivi 24/7.</counter>
+        </counter_objections>
+      </segment>
+
+      <segment id="2" name="La Maman Jongleuse" priority="primary" size="35%">
+        <description>2-3 enfants, 35-45 ans, carrière exigeante</description>
+        <pain>N'arrive plus à tout gérer, s'effondre</pain>
+        <desire>Retrouver du contrôle, déléguer une partie de la charge</desire>
+        <channel_preference>Bouche-à-oreille (confiance), site web (recherche solution)</channel_preference>
+        <message_angle>Et si quelqu'un prenait le relais de 22h à 6h ?</message_angle>
+        <objections>
+          <objection>Je n'ai pas le temps d'ajouter encore un rendez-vous.</objection>
+          <objection>J'ai déjà tout essayé.</objection>
+        </objections>
+        <counter_objections>
+          <counter>L'IA te répond 24/7 depuis ton canapé. Zéro déplacement.</counter>
+          <counter>Notre approche combine 3 expertises (sommeil + nutrition + comportement).</counter>
+        </counter_objections>
+      </segment>
+
+      <segment id="3" name="Le Papa Impliqué" priority="secondary" size="5%">
+        <description>Veut aider mais ne sait pas comment</description>
+        <pain>Se sent exclu ou impuissant</pain>
+        <desire>Trouver sa place, soulager sa compagne</desire>
+        <channel_preference>Via la mère principalement</channel_preference>
+        <message_angle>Un accompagnement pour toute la famille, pas juste maman.</message_angle>
+      </segment>
+    </segments>
+  </audience>
+
+  <positioning>
+    <tagline>Alléger la charge mentale des mamans</tagline>
+
+    <value_proposition>
+      <for>Les mères actives débordées</for>
+      <who>cherchent à retrouver des nuits paisibles et un équilibre familial</who>
+      <product>est un service de coaching parental premium</product>
+      <that>combine l'expertise d'une coach certifiée et l'accompagnement 24h/24 d'une IA bienveillante</that>
+      <unlike>les consultants traditionnels limités en disponibilité ou les apps génériques sans accompagnement humain</unlike>
+      <because>nous offrons le meilleur des deux mondes : la chaleur humaine quand ça compte, et un soutien instantané le reste du temps</because>
+    </value_proposition>
+
+    <competitive_differentiators>
+      <differentiator id="1" strength="unique">
+        <claim>IA entraînée sur MES méthodes</claim>
+        <proof>Pas une IA générique, mais MON approche bienveillante encodée</proof>
+      </differentiator>
+      <differentiator id="2" strength="unique">
+        <claim>Disponible à 3h du matin</claim>
+        <proof>Quand bébé pleure, l'IA répond immédiatement</proof>
+      </differentiator>
+      <differentiator id="3" strength="strong">
+        <claim>Journal auto-rempli</claim>
+        <proof>L'IA résume vos échanges, zéro friction pour les parents</proof>
+      </differentiator>
+      <differentiator id="4" strength="strong">
+        <claim>Approche globale</claim>
+        <proof>Sommeil + Nutrition + Comportement = cohérence totale</proof>
+      </differentiator>
+      <differentiator id="5" strength="moderate">
+        <claim>Accompagnement 1 mois complet</claim>
+        <proof>Vs 2-3 semaines chez les concurrents</proof>
+      </differentiator>
+    </competitive_differentiators>
+
+    <messaging_framework>
+      <pillar id="1" name="Empathie">
+        <theme>Je sais ce que tu vis</theme>
+        <messages>
+          <message>Je suis passée par là avec mon 2e enfant.</message>
+          <message>À 3h du matin, on se sent tellement seule.</message>
+          <message>La fatigue déforme tout. Tu n'es pas une mauvaise mère.</message>
+        </messages>
+      </pillar>
+      <pillar id="2" name="Expertise">
+        <theme>Des solutions qui marchent vraiment</theme>
+        <messages>
+          <message>Certifiée en sommeil de l'enfant, PNL et coaching familial.</message>
+          <message>+X familles accompagnées avec succès.</message>
+          <message>Une méthode douce, adaptée à VOTRE enfant.</message>
+        </messages>
+      </pillar>
+      <pillar id="3" name="Innovation">
+        <theme>Le meilleur des deux mondes</theme>
+        <messages>
+          <message>Une coach pour les moments clés + une IA 24h/24.</message>
+          <message>Réponds à tes questions même à 3h du matin.</message>
+          <message>Ton journal se remplit tout seul.</message>
+        </messages>
+      </pillar>
+      <pillar id="4" name="Résultats">
+        <theme>Des nuits paisibles, c'est possible</theme>
+        <messages>
+          <message>En 2 semaines, [prénom] dormait 11h d'affilée.</message>
+          <message>Le couple respire à nouveau.</message>
+          <message>Tu retrouves de l'énergie pour ce qui compte.</message>
+        </messages>
+      </pillar>
+    </messaging_framework>
+
+    <brand_voice>
+      <tone>Chaleureuse, maternelle, rassurante mais professionnelle</tone>
+      <personality>Comme une grande soeur bienveillante qui a traversé les mêmes épreuves</personality>
+      <do>
+        <item>Tutoyer (sauf contexte formel)</item>
+        <item>Utiliser "on" pour créer la proximité</item>
+        <item>Parler des émotions ouvertement</item>
+        <item>Célébrer les petites victoires</item>
+      </do>
+      <dont>
+        <item>Être moralisatrice ou culpabilisante</item>
+        <item>Utiliser du jargon technique</item>
+        <item>Promettre des miracles</item>
+        <item>Minimiser la difficulté</item>
+      </dont>
+      <examples>
+        <good>Tu as le droit d'être fatiguée. On va trouver une solution ensemble.</good>
+        <bad>Vous devriez suivre ces conseils pour optimiser le sommeil de votre enfant.</bad>
+        <good>Et si on commençait par un petit rituel de 5 minutes ?</good>
+        <bad>Il faut absolument mettre en place un protocole de sommeil structuré.</bad>
+      </examples>
+    </brand_voice>
+  </positioning>
+
+  <channels>
+    <channel id="instagram" priority="1" budget_allocation="40%">
+      <name>Instagram</name>
+      <role>Acquisition + Notoriété</role>
+      <audience_fit>95% de la cible y est quotidiennement</audience_fit>
+      <strategy>
+        <content_pillars>
+          <pillar frequency="3x/week">Tips pratiques (sommeil, nutrition, comportement)</pillar>
+          <pillar frequency="2x/week">Behind the scenes / vie de coach</pillar>
+          <pillar frequency="1x/week">Témoignages clients (avant/après)</pillar>
+          <pillar frequency="1x/week">Q&amp;A / myths busting</pillar>
+        </content_pillars>
+        <formats>
+          <format priority="high">Reels (15-30s, tips actionnables)</format>
+          <format priority="high">Carrousels (éducatifs, sauvegardables)</format>
+          <format priority="medium">Stories (quotidien, proximité)</format>
+          <format priority="low">Lives (mensuels, Q&amp;A)</format>
+        </formats>
+        <posting_schedule>
+          <day>Lundi - Reel tip sommeil</day>
+          <day>Mardi - Stories coulisses</day>
+          <day>Mercredi - Carrousel éducatif</day>
+          <day>Jeudi - Témoignage client</day>
+          <day>Vendredi - Reel nutrition/comportement</day>
+          <day>Samedi - Repos / Stories légères</day>
+          <day>Dimanche - Q&amp;A ou recap semaine</day>
+        </posting_schedule>
+        <hashtags>
+          <category name="Niche">
+            <tag>#sommeildebebe</tag>
+            <tag>#bebenedortpas</tag>
+            <tag>#coachsommeil</tag>
+            <tag>#nuitdifficilebebe</tag>
+          </category>
+          <category name="Parentalité">
+            <tag>#mamanépuisée</tag>
+            <tag>#viematernelle</tag>
+            <tag>#chargementale</tag>
+            <tag>#jeuneparent</tag>
+          </category>
+          <category name="Bien-être">
+            <tag>#parentalitépositive</tag>
+            <tag>#bienveillance</tag>
+            <tag>#équilibrefamilial</tag>
+          </category>
+        </hashtags>
+      </strategy>
+      <kpis>
+        <kpi target="1000">Followers (Month 3)</kpi>
+        <kpi target="5%">Engagement rate</kpi>
+        <kpi target="50">DM leads/month</kpi>
+        <kpi target="10">Conversions to discovery call/month</kpi>
+      </kpis>
+    </channel>
+
+    <channel id="referral" priority="2" budget_allocation="10%">
+      <name>Bouche-à-oreille / Parrainage</name>
+      <role>Conversion + Fidélisation</role>
+      <audience_fit>Source #1 de confiance pour cette cible</audience_fit>
+      <strategy>
+        <program name="Ambassadeurs">
+          <incentive>1 mois offert pour chaque famille parrainée</incentive>
+          <process>Lien personnalisé, tracking automatique</process>
+          <activation>Demande post-accompagnement réussi</activation>
+        </program>
+        <testimonials>
+          <action>Demander témoignage vidéo (30s) à J+30</action>
+          <action>Proposer anonymisation si souhaitée</action>
+          <action>Republier avec accord sur Instagram</action>
+        </testimonials>
+        <nps>
+          <timing>J+30 après fin d'accompagnement</timing>
+          <target_score>50+</target_score>
+          <follow_up>Promoteurs recontactés pour parrainage</follow_up>
+        </nps>
+      </strategy>
+      <kpis>
+        <kpi target="30%">% clients venant de recommandation</kpi>
+        <kpi target="50+">NPS</kpi>
+        <kpi target="2">Parrainages/client satisfait</kpi>
+      </kpis>
+    </channel>
+
+    <channel id="seo" priority="3" budget_allocation="20%">
+      <name>SEO / Blog</name>
+      <role>Acquisition long terme</role>
+      <audience_fit>Recherches actives quand le problème est aigu</audience_fit>
+      <strategy>
+        <keywords_primary>
+          <keyword volume="1900" difficulty="medium">bébé ne dort pas</keyword>
+          <keyword volume="1000" difficulty="medium">coach sommeil bébé</keyword>
+          <keyword volume="720" difficulty="low">bébé réveille toutes les heures</keyword>
+          <keyword volume="590" difficulty="low">aider bébé à dormir seul</keyword>
+          <keyword volume="480" difficulty="low">régression sommeil 4 mois</keyword>
+        </keywords_primary>
+        <keywords_long_tail>
+          <keyword>bébé 6 mois ne fait pas ses nuits</keyword>
+          <keyword>comment endormir bébé sans le bercer</keyword>
+          <keyword>mon enfant se réveille la nuit à 2 ans</keyword>
+          <keyword>rituel du coucher qui fonctionne</keyword>
+        </keywords_long_tail>
+        <content_plan>
+          <article type="pillar">Guide complet : aider bébé à faire ses nuits (3000 mots)</article>
+          <article type="supporting">Les 5 erreurs du rituel du coucher</article>
+          <article type="supporting">Régression du sommeil : quand et pourquoi ?</article>
+          <article type="supporting">Sommeil et alimentation : le lien méconnu</article>
+          <article type="supporting">Témoignage : comment Léa a retrouvé ses nuits</article>
+        </content_plan>
+      </strategy>
+      <kpis>
+        <kpi target="500">Visites organiques/mois (Month 6)</kpi>
+        <kpi target="5">Articles top 10 Google</kpi>
+        <kpi target="3%">Conversion visiteur → RDV découverte</kpi>
+      </kpis>
+    </channel>
+
+    <channel id="whatsapp" priority="4" budget_allocation="5%">
+      <name>WhatsApp Business</name>
+      <role>Conversion + Relation</role>
+      <audience_fit>Canal de communication préféré des mamans</audience_fit>
+      <strategy>
+        <use_cases>
+          <case>Réponse aux leads Instagram (DM → WhatsApp)</case>
+          <case>Suivi pré-RDV découverte</case>
+          <case>Communication avec clientes actives</case>
+          <case>Chatbot IA intégré pour suivi 24/7</case>
+        </use_cases>
+        <broadcast_lists>
+          <list name="Prospects chauds">Leads en cours de conversion</list>
+          <list name="Clientes actives">En accompagnement</list>
+          <list name="Alumni">Anciennes clientes</list>
+        </broadcast_lists>
+      </strategy>
+      <kpis>
+        <kpi target="80%">Taux de réponse sous 2h</kpi>
+        <kpi target="50%">Conversion DM → RDV découverte</kpi>
+      </kpis>
+    </channel>
+
+    <channel id="partnerships" priority="5" budget_allocation="15%">
+      <name>Partenariats</name>
+      <role>Acquisition qualifiée</role>
+      <audience_fit>Sources de confiance professionnelle</audience_fit>
+      <strategy>
+        <partners>
+          <partner type="health">
+            <name>Sages-femmes libérales</name>
+            <approach>Présentation en cabinet, flyers, commission parrainage</approach>
+            <value_for_them>Solution à recommander aux patientes épuisées</value_for_them>
+          </partner>
+          <partner type="health">
+            <name>Pédiatres</name>
+            <approach>Email + plaquette professionnelle</approach>
+            <value_for_them>Alternative au "ça va passer tout seul"</value_for_them>
+          </partner>
+          <partner type="childcare">
+            <name>Crèches privées</name>
+            <approach>Atelier gratuit pour les parents</approach>
+            <value_for_them>Service additionnel pour leurs clients</value_for_them>
+          </partner>
+          <partner type="retail">
+            <name>Boutiques puériculture haut de gamme</name>
+            <approach>Flyers en caisse, événements</approach>
+            <value_for_them>Valeur ajoutée différenciante</value_for_them>
+          </partner>
+        </partners>
+      </strategy>
+      <kpis>
+        <kpi target="5">Partenariats actifs (Month 6)</kpi>
+        <kpi target="10%">% leads via partenaires</kpi>
+      </kpis>
+    </channel>
+
+    <channel id="email" priority="6" budget_allocation="10%">
+      <name>Email Marketing</name>
+      <role>Nurturing + Rétention</role>
+      <strategy>
+        <lead_magnet>
+          <name>Guide PDF : 7 jours vers de meilleures nuits</name>
+          <format>PDF 15 pages, tips actionnables</format>
+          <delivery>Email immédiat + séquence 7 jours</delivery>
+        </lead_magnet>
+        <sequences>
+          <sequence name="Onboarding lead">
+            <email delay="0">Envoi guide + présentation</email>
+            <email delay="2">Tip #1 + story personnelle</email>
+            <email delay="4">Tip #2 + témoignage</email>
+            <email delay="7">Recap + CTA RDV découverte</email>
+          </sequence>
+          <sequence name="Post-découverte">
+            <email delay="1">Merci + récap échange</email>
+            <email delay="3">FAQ objections</email>
+            <email delay="7">Dernière chance offre</email>
+          </sequence>
+          <sequence name="Alumni">
+            <email frequency="monthly">Newsletter conseils + nouveautés</email>
+          </sequence>
+        </sequences>
+      </strategy>
+      <kpis>
+        <kpi target="40%">Taux d'ouverture</kpi>
+        <kpi target="5%">Taux de clic</kpi>
+        <kpi target="20%">Conversion lead → RDV</kpi>
+      </kpis>
+    </channel>
+  </channels>
+
+  <launch_plan>
+    <phase name="Pre-launch" timeline="Weeks 1-2">
+      <objective>Préparer les assets et recruter les pilotes</objective>
+      <tasks>
+        <task owner="founder">Finaliser le site web avec CTA clairs</task>
+        <task owner="founder">Créer les 10 premiers contenus Instagram</task>
+        <task owner="founder">Préparer le guide PDF lead magnet</task>
+        <task owner="founder">Configurer WhatsApp Business</task>
+        <task owner="founder">Recruter 5 familles pilotes (réseau personnel)</task>
+        <task owner="founder">Préparer le questionnaire de feedback</task>
+      </tasks>
+      <milestone>5 familles pilotes inscrites</milestone>
+    </phase>
+
+    <phase name="Soft Launch" timeline="Weeks 3-6">
+      <objective>Valider le produit avec les pilotes</objective>
+      <tasks>
+        <task owner="founder">Accompagner les 5 familles pilotes</task>
+        <task owner="founder">Collecter feedback hebdomadaire</task>
+        <task owner="founder">Itérer sur l'app et le process</task>
+        <task owner="founder">Documenter 3 témoignages vidéo</task>
+        <task owner="founder">Commencer à poster sur Instagram (3x/semaine)</task>
+      </tasks>
+      <milestone>5 témoignages positifs, NPS &gt; 50</milestone>
+    </phase>
+
+    <phase name="Public Launch" timeline="Weeks 7-8">
+      <objective>Ouvrir au public avec momentum</objective>
+      <tasks>
+        <task owner="founder">Post de lancement Instagram (Reel + Carrousel)</task>
+        <task owner="founder">Envoyer mail aux contacts existants</task>
+        <task owner="founder">Activer les témoignages pilotes</task>
+        <task owner="founder">Offre de lancement : -20% pour les 10 premières</task>
+        <task owner="founder">Contacter 3 sages-femmes partenaires potentielles</task>
+      </tasks>
+      <milestone>10 RDV découverte, 5 conversions</milestone>
+    </phase>
+
+    <phase name="Growth" timeline="Months 3-6">
+      <objective>Scaler l'acquisition</objective>
+      <tasks>
+        <task owner="founder">Augmenter fréquence Instagram (5x/semaine)</task>
+        <task owner="founder">Publier 2 articles SEO/mois</task>
+        <task owner="founder">Activer le programme de parrainage</task>
+        <task owner="founder">Formaliser 5 partenariats</task>
+        <task owner="founder">Lancer les Reels avec budget pub (test 50€/semaine)</task>
+      </tasks>
+      <milestone>15-20 familles/mois, 10K€ MRR</milestone>
+    </phase>
+  </launch_plan>
+
+  <metrics>
+    <funnel>
+      <stage name="Awareness">
+        <metric>Impressions Instagram</metric>
+        <metric>Visites site web</metric>
+        <metric>Recherches marque</metric>
+      </stage>
+      <stage name="Interest">
+        <metric>Followers Instagram</metric>
+        <metric>Abonnés newsletter</metric>
+        <metric>Téléchargements lead magnet</metric>
+      </stage>
+      <stage name="Consideration">
+        <metric>DMs Instagram</metric>
+        <metric>Messages WhatsApp</metric>
+        <metric>Pages services vues</metric>
+      </stage>
+      <stage name="Conversion">
+        <metric>RDV découverte pris</metric>
+        <metric>RDV découverte réalisés</metric>
+        <metric>Accompagnements signés</metric>
+      </stage>
+      <stage name="Retention">
+        <metric>Durée moyenne accompagnement</metric>
+        <metric>Taux renouvellement</metric>
+        <metric>NPS</metric>
+      </stage>
+      <stage name="Referral">
+        <metric>Parrainages</metric>
+        <metric>Témoignages collectés</metric>
+        <metric>Avis Google</metric>
+      </stage>
+    </funnel>
+
+    <north_star_metric>
+      <metric>Familles en accompagnement actif</metric>
+      <target_m3>10</target_m3>
+      <target_m6>20</target_m6>
+      <target_m12>30</target_m12>
+    </north_star_metric>
+
+    <unit_economics>
+      <metric name="CAC" target="50€">Coût acquisition client</metric>
+      <metric name="LTV" target="750-1000€">Valeur vie client</metric>
+      <metric name="LTV/CAC" target="15-20x">Ratio acquisition</metric>
+      <metric name="MRR" target="10K€ M6">Revenu mensuel récurrent</metric>
+      <metric name="Churn" target="&lt;5%">Taux d'attrition mensuel</metric>
+    </unit_economics>
+
+    <reporting_cadence>
+      <daily>Engagement Instagram, DMs reçus</daily>
+      <weekly>Leads, RDV découverte, conversions</weekly>
+      <monthly>Funnel complet, MRR, NPS, CAC/LTV</monthly>
+      <quarterly>Revue stratégique, ajustement canaux</quarterly>
+    </reporting_cadence>
+  </metrics>
+
+  <budget>
+    <total_monthly>500€</total_monthly>
+    <allocation>
+      <item category="Instagram Ads (test)" amount="200€">Boost de Reels performants</item>
+      <item category="Outils" amount="150€">Canva Pro, Mailerlite, Calendly</item>
+      <item category="Partenariats" amount="100€">Flyers, supports print</item>
+      <item category="Divers" amount="50€">Buffer imprévu</item>
+    </allocation>
+    <note>Budget minimal pour démarrage. À augmenter avec validation du funnel.</note>
+  </budget>
+
+</marketing_strategy>

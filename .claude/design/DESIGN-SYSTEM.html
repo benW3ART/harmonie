@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System — Coaching Parental</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Quicksand:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #FAFAFA;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 40px;
+      background: linear-gradient(135deg, #FFF5F8 0%, #F0F7FF 50%, #F0FFF4 100%);
+      border-radius: 24px;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #E8A4B8 0%, #A8C5E2 50%, #A8D5BA 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      color: #666;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      color: #999;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .options-nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+    }
+
+    .option-btn {
+      padding: 16px 32px;
+      border: 2px solid #E8E8E8;
+      background: white;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .option-btn .color-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+    }
+
+    .option-btn[data-option="A"] .color-dot { background: linear-gradient(135deg, #E8A4B8, #F5D0DC); }
+    .option-btn[data-option="B"] .color-dot { background: linear-gradient(135deg, #A8C5E2, #C5DDF5); }
+    .option-btn[data-option="C"] .color-dot { background: linear-gradient(135deg, #A8D5BA, #C5EED5); }
+
+    .option-btn.active {
+      border-color: transparent;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .option-btn.active[data-option="A"] { background: linear-gradient(135deg, #FFF5F8, #FFE8EE); }
+    .option-btn.active[data-option="B"] { background: linear-gradient(135deg, #F0F7FF, #E0EFFF); }
+    .option-btn.active[data-option="C"] { background: linear-gradient(135deg, #F0FFF4, #E0FFE8); }
+
+    .design-option {
+      display: none;
+    }
+
+    .design-option.active {
+      display: block;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #444;
+    }
+
+    .section-title span {
+      background: linear-gradient(135deg, #E8A4B8 0%, #A8C5E2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ========================================= */
+    /* MOCKUP FRAMES */
+    /* ========================================= */
+    .mockup-section {
+      margin-bottom: 60px;
+    }
+
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 30px;
+      align-items: start;
+    }
+
+    @media (max-width: 1000px) {
+      .mockup-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .browser-frame {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+
+    .browser-header {
+      background: #F5F5F5;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #E8E8E8;
+    }
+
+    .browser-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .browser-dot.red { background: #FF5F56; }
+    .browser-dot.yellow { background: #FFBD2E; }
+    .browser-dot.green { background: #27CA40; }
+
+    .browser-url {
+      flex: 1;
+      margin-left: 10px;
+      background: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    .phone-frame {
+      background: #1a1a1a;
+      border-radius: 40px;
+      padding: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    .phone-screen {
+      background: white;
+      border-radius: 32px;
+      overflow: hidden;
+      aspect-ratio: 9/19;
+    }
+
+    .phone-notch {
+      background: #1a1a1a;
+      width: 120px;
+      height: 28px;
+      margin: 0 auto;
+      border-radius: 0 0 20px 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ========================================= */
+    /* HOMEPAGE MOCKUP */
+    /* ========================================= */
+    .homepage-hero {
+      padding: 60px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .homepage-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.8) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .homepage-hero .badge {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .homepage-hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+      line-height: 1.2;
+    }
+
+    .homepage-hero p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+
+    .homepage-hero .cta-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .homepage-hero .btn {
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .homepage-features {
+      padding: 40px;
+      background: white;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      padding: 25px;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .feature-card .icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .homepage-testimonial {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .testimonial-card {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 30px;
+      border-radius: 20px;
+    }
+
+    .testimonial-card .stars {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+
+    .testimonial-card blockquote {
+      font-size: 1rem;
+      font-style: italic;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    .testimonial-card .author {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .testimonial-card .avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .testimonial-card .author-info {
+      text-align: left;
+    }
+
+    .testimonial-card .author-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .testimonial-card .author-title {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    /* ========================================= */
+    /* APP MOCKUP */
+    /* ========================================= */
+    .app-header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .app-header .greeting h2 {
+      font-size: 1.3rem;
+      margin-bottom: 2px;
+    }
+
+    .app-header .greeting p {
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    .app-header .avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .app-stats {
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat-card {
+      padding: 16px;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .stat-card .value {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .stat-card .label {
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    .app-section-title {
+      padding: 20px 20px 10px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .app-habits {
+      padding: 0 20px 20px;
+    }
+
+    .habit-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .habit-item .checkbox {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+    .habit-item .checkbox.checked {
+      border: none;
+    }
+
+    .habit-item .habit-text {
+      flex: 1;
+      font-size: 0.9rem;
+    }
+
+    .habit-item .streak {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .app-nav {
+      display: flex;
+      justify-content: space-around;
+      padding: 15px;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .app-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      opacity: 0.5;
+    }
+
+    .app-nav-item.active {
+      opacity: 1;
+    }
+
+    .app-nav-item .nav-icon {
+      font-size: 1.3rem;
+    }
+
+    /* ========================================= */
+    /* CHAT MOCKUP */
+    /* ========================================= */
+    .chat-header-app {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-header-app .back {
+      font-size: 1.2rem;
+    }
+
+    .chat-header-app .coach-info {
+      flex: 1;
+    }
+
+    .chat-header-app .coach-name {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .chat-header-app .coach-status {
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .chat-header-app .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .chat-header-app .coach-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .chat-messages {
+      padding: 20px;
+      min-height: 350px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .chat-date {
+      text-align: center;
+      font-size: 0.75rem;
+      opacity: 0.5;
+      margin: 10px 0;
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .message.ai {
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .message .time {
+      font-size: 0.65rem;
+      opacity: 0.6;
+      margin-top: 5px;
+    }
+
+    .chat-input-bar {
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .chat-input-bar input {
+      flex: 1;
+      padding: 12px 18px;
+      border-radius: 25px;
+      border: 1px solid #E8E8E8;
+      font-size: 0.9rem;
+      background: #F8F8F8;
+    }
+
+    .chat-input-bar .send-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ========================================= */
+    /* COLOR PALETTE DISPLAY */
+    /* ========================================= */
+    .palette-section {
+      margin-bottom: 50px;
+    }
+
+    .palette-display {
+      display: flex;
+      gap: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .palette-color {
+      flex: 1;
+      height: 100px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 10px;
+      color: white;
+      font-size: 0.8rem;
+      font-family: monospace;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .palette-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .palette-info-item {
+      text-align: center;
+      padding: 15px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .palette-info-item .color-preview {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      margin: 0 auto 10px;
+    }
+
+    .palette-info-item .color-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 3px;
+    }
+
+    .palette-info-item .color-hex {
+      font-size: 0.75rem;
+      color: #888;
+      font-family: monospace;
+    }
+
+    /* ========================================= */
+    /* TYPOGRAPHY SECTION */
+    /* ========================================= */
+    .typo-section {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 50px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    }
+
+    .typo-sample {
+      margin-bottom: 30px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #F0F0F0;
+    }
+
+    .typo-sample:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .typo-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #999;
+      margin-bottom: 12px;
+    }
+
+    /* ========================================= */
+    /* VOTE SECTION */
+    /* ========================================= */
+    .vote-section {
+      text-align: center;
+      padding: 50px 40px;
+      border-radius: 24px;
+      margin-top: 50px;
+    }
+
+    .vote-section h3 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .vote-section p {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+
+    .vote-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .vote-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .vote-card {
+      padding: 30px;
+      border-radius: 20px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 3px solid transparent;
+    }
+
+    .vote-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+
+    .vote-card .vote-colors {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    .vote-card .vote-color {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+
+    .vote-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .vote-card p {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 15px;
+    }
+
+    .vote-card .vote-btn {
+      padding: 12px 30px;
+      border-radius: 50px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    /* ========================================= */
+    /* OPTION A - Rose Pastel */
+    /* ========================================= */
+    .option-a {
+      --primary: #E8A4B8;
+      --primary-light: #FFF5F8;
+      --primary-dark: #D4899E;
+      --secondary: #F5D0DC;
+      --accent: #B8D4E8;
+      --accent-green: #C5E8D0;
+      --text: #5D4A52;
+      --text-light: #8A7580;
+      --bg: #FFFBFC;
+    }
+
+    .option-a .homepage-hero {
+      background: linear-gradient(135deg, #FFF5F8 0%, #FFE8EE 50%, #FDF0F5 100%);
+      color: var(--text);
+    }
+
+    .option-a .homepage-hero .badge {
+      background: var(--secondary);
+      color: var(--text);
+    }
+
+    .option-a .homepage-hero h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--text);
+    }
+
+    .option-a .homepage-hero .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .option-a .homepage-hero .btn-secondary {
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .option-a .homepage-features {
+      background: var(--bg);
+    }
+
+    .option-a .feature-card {
+      background: linear-gradient(135deg, #FFF5F8 0%, #FFFFFF 100%);
+      border: 1px solid #FFE8EE;
+    }
+
+    .option-a .feature-card h3 { color: var(--text); }
+    .option-a .feature-card p { color: var(--text-light); }
+
+    .option-a .homepage-testimonial {
+      background: linear-gradient(135deg, var(--accent) 0%, #D0E5F5 100%);
+    }
+
+    .option-a .testimonial-card {
+      background: white;
+    }
+
+    .option-a .testimonial-card .stars { color: #FFD700; }
+    .option-a .testimonial-card blockquote { color: var(--text); }
+    .option-a .testimonial-card .avatar { background: var(--secondary); }
+
+    .option-a .phone-screen { background: var(--bg); }
+
+    .option-a .app-header { background: var(--primary-light); color: var(--text); }
+    .option-a .app-header .avatar { background: var(--secondary); }
+
+    .option-a .stat-card:nth-child(1) { background: linear-gradient(135deg, var(--secondary), #FFE8EE); color: var(--text); }
+    .option-a .stat-card:nth-child(2) { background: linear-gradient(135deg, var(--accent), #D0E8F5); color: #4A5D6B; }
+
+    .option-a .app-section-title { color: var(--text); }
+
+    .option-a .habit-item { background: white; border: 1px solid #FFE8EE; }
+    .option-a .habit-item .checkbox { border-color: var(--primary); }
+    .option-a .habit-item .checkbox.checked { background: var(--primary); color: white; }
+    .option-a .habit-item .habit-text { color: var(--text); }
+    .option-a .habit-item .streak { background: var(--accent-green); color: #4A6B52; }
+
+    .option-a .app-nav { background: white; }
+    .option-a .app-nav-item.active { color: var(--primary); }
+
+    .option-a .chat-header-app { background: var(--primary); color: white; }
+    .option-a .chat-header-app .status-dot { background: #90EE90; }
+    .option-a .chat-header-app .coach-avatar { background: rgba(255,255,255,0.2); }
+
+    .option-a .chat-messages { background: white; }
+    .option-a .message.ai { background: var(--primary-light); color: var(--text); }
+    .option-a .message.user { background: var(--primary); color: white; }
+
+    .option-a .chat-input-bar { background: var(--bg); }
+    .option-a .chat-input-bar .send-btn { background: var(--primary); color: white; }
+
+    .option-a .heading-font {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--text);
+    }
+
+    .option-a .body-font {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1rem;
+      color: var(--text-light);
+    }
+
+    .option-a .vote-section { background: linear-gradient(135deg, #FFF5F8 0%, #FFE8EE 100%); }
+
+    /* ========================================= */
+    /* OPTION B - Bleu Pastel */
+    /* ========================================= */
+    .option-b {
+      --primary: #A8C5E2;
+      --primary-light: #F0F7FF;
+      --primary-dark: #8AB0D4;
+      --secondary: #C5DDF5;
+      --accent: #E8B8C5;
+      --accent-green: #C5E8D0;
+      --text: #4A5D6B;
+      --text-light: #7A8D9B;
+      --bg: #FBFDFF;
+    }
+
+    .option-b .homepage-hero {
+      background: linear-gradient(135deg, #F0F7FF 0%, #E0EFFF 50%, #EEF5FF 100%);
+      color: var(--text);
+    }
+
+    .option-b .homepage-hero .badge {
+      background: var(--secondary);
+      color: var(--text);
+    }
+
+    .option-b .homepage-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .option-b .homepage-hero .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .option-b .homepage-hero .btn-secondary {
+      background: white;
+      color: var(--primary-dark);
+      border: 2px solid var(--primary);
+    }
+
+    .option-b .homepage-features {
+      background: var(--bg);
+    }
+
+    .option-b .feature-card {
+      background: linear-gradient(135deg, #F0F7FF 0%, #FFFFFF 100%);
+      border: 1px solid #E0EFFF;
+    }
+
+    .option-b .feature-card h3 { color: var(--text); }
+    .option-b .feature-card p { color: var(--text-light); }
+
+    .option-b .homepage-testimonial {
+      background: linear-gradient(135deg, var(--accent) 0%, #F5D0DC 100%);
+    }
+
+    .option-b .testimonial-card {
+      background: white;
+    }
+
+    .option-b .testimonial-card .stars { color: #FFD700; }
+    .option-b .testimonial-card blockquote { color: var(--text); }
+    .option-b .testimonial-card .avatar { background: var(--secondary); }
+
+    .option-b .phone-screen { background: var(--bg); }
+
+    .option-b .app-header { background: var(--primary-light); color: var(--text); }
+    .option-b .app-header .avatar { background: var(--secondary); }
+
+    .option-b .stat-card:nth-child(1) { background: linear-gradient(135deg, var(--secondary), #E0EFFF); color: var(--text); }
+    .option-b .stat-card:nth-child(2) { background: linear-gradient(135deg, var(--accent), #F5D0DC); color: #5D4A52; }
+
+    .option-b .app-section-title { color: var(--text); }
+
+    .option-b .habit-item { background: white; border: 1px solid #E0EFFF; }
+    .option-b .habit-item .checkbox { border-color: var(--primary); }
+    .option-b .habit-item .checkbox.checked { background: var(--primary); color: white; }
+    .option-b .habit-item .habit-text { color: var(--text); }
+    .option-b .habit-item .streak { background: var(--accent-green); color: #4A6B52; }
+
+    .option-b .app-nav { background: white; }
+    .option-b .app-nav-item.active { color: var(--primary-dark); }
+
+    .option-b .chat-header-app { background: var(--primary); color: white; }
+    .option-b .chat-header-app .status-dot { background: #90EE90; }
+    .option-b .chat-header-app .coach-avatar { background: rgba(255,255,255,0.2); }
+
+    .option-b .chat-messages { background: white; }
+    .option-b .message.ai { background: var(--primary-light); color: var(--text); }
+    .option-b .message.user { background: var(--primary); color: white; }
+
+    .option-b .chat-input-bar { background: var(--bg); }
+    .option-b .chat-input-bar .send-btn { background: var(--primary); color: white; }
+
+    .option-b .heading-font {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .option-b .body-font {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      color: var(--text-light);
+    }
+
+    .option-b .vote-section { background: linear-gradient(135deg, #F0F7FF 0%, #E0EFFF 100%); }
+
+    /* ========================================= */
+    /* OPTION C - Vert Pastel */
+    /* ========================================= */
+    .option-c {
+      --primary: #A8D5BA;
+      --primary-light: #F0FFF4;
+      --primary-dark: #8BC4A2;
+      --secondary: #C5EED5;
+      --accent: #E8C5D0;
+      --accent-blue: #C5D5E8;
+      --text: #4A5D52;
+      --text-light: #7A8D80;
+      --bg: #FBFFFB;
+    }
+
+    .option-c .homepage-hero {
+      background: linear-gradient(135deg, #F0FFF4 0%, #E0FFE8 50%, #EEFFF2 100%);
+      color: var(--text);
+    }
+
+    .option-c .homepage-hero .badge {
+      background: var(--secondary);
+      color: var(--text);
+    }
+
+    .option-c .homepage-hero h1 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .option-c .homepage-hero .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .option-c .homepage-hero .btn-secondary {
+      background: white;
+      color: var(--primary-dark);
+      border: 2px solid var(--primary);
+    }
+
+    .option-c .homepage-features {
+      background: var(--bg);
+    }
+
+    .option-c .feature-card {
+      background: linear-gradient(135deg, #F0FFF4 0%, #FFFFFF 100%);
+      border: 1px solid #E0FFE8;
+    }
+
+    .option-c .feature-card h3 { color: var(--text); }
+    .option-c .feature-card p { color: var(--text-light); }
+
+    .option-c .homepage-testimonial {
+      background: linear-gradient(135deg, var(--accent) 0%, #F5D5E0 100%);
+    }
+
+    .option-c .testimonial-card {
+      background: white;
+    }
+
+    .option-c .testimonial-card .stars { color: #FFD700; }
+    .option-c .testimonial-card blockquote { color: var(--text); }
+    .option-c .testimonial-card .avatar { background: var(--secondary); }
+
+    .option-c .phone-screen { background: var(--bg); }
+
+    .option-c .app-header { background: var(--primary-light); color: var(--text); }
+    .option-c .app-header .avatar { background: var(--secondary); }
+
+    .option-c .stat-card:nth-child(1) { background: linear-gradient(135deg, var(--secondary), #E0FFE8); color: var(--text); }
+    .option-c .stat-card:nth-child(2) { background: linear-gradient(135deg, var(--accent-blue), #D5E5F5); color: #4A5D6B; }
+
+    .option-c .app-section-title { color: var(--text); }
+
+    .option-c .habit-item { background: white; border: 1px solid #E0FFE8; }
+    .option-c .habit-item .checkbox { border-color: var(--primary); }
+    .option-c .habit-item .checkbox.checked { background: var(--primary); color: white; }
+    .option-c .habit-item .habit-text { color: var(--text); }
+    .option-c .habit-item .streak { background: var(--accent); color: #5D4A52; }
+
+    .option-c .app-nav { background: white; }
+    .option-c .app-nav-item.active { color: var(--primary-dark); }
+
+    .option-c .chat-header-app { background: var(--primary); color: white; }
+    .option-c .chat-header-app .status-dot { background: #FFE066; }
+    .option-c .chat-header-app .coach-avatar { background: rgba(255,255,255,0.2); }
+
+    .option-c .chat-messages { background: white; }
+    .option-c .message.ai { background: var(--primary-light); color: var(--text); }
+    .option-c .message.user { background: var(--primary); color: white; }
+
+    .option-c .chat-input-bar { background: var(--bg); }
+    .option-c .chat-input-bar .send-btn { background: var(--primary); color: white; }
+
+    .option-c .heading-font {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .option-c .body-font {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      color: var(--text-light);
+    }
+
+    .option-c .vote-section { background: linear-gradient(135deg, #F0FFF4 0%, #E0FFE8 100%); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Design System</h1>
+      <p>Coaching Parental</p>
+      <p class="tagline">"Alleger la charge mentale des mamans"</p>
+    </header>
+
+    <nav class="options-nav">
+      <button class="option-btn active" data-option="A">
+        <span class="color-dot"></span>
+        Option A — Rose Pastel
+      </button>
+      <button class="option-btn" data-option="B">
+        <span class="color-dot"></span>
+        Option B — Bleu Serenite
+      </button>
+      <button class="option-btn" data-option="C">
+        <span class="color-dot"></span>
+        Option C — Vert Douceur
+      </button>
+    </nav>
+
+    <!-- ========================================= -->
+    <!-- OPTION A - Rose Pastel -->
+    <!-- ========================================= -->
+    <div class="design-option option-a active" id="option-a">
+
+      <h2 class="section-title">Option A — <span>Rose Pastel</span></h2>
+      <p style="text-align: center; color: #888; margin-bottom: 40px;">Feminine, douce et elegante. Inspire confiance et tendresse.</p>
+
+      <!-- Palette -->
+      <div class="palette-section">
+        <div class="palette-display">
+          <div class="palette-color" style="background: #E8A4B8;">#E8A4B8</div>
+          <div class="palette-color" style="background: #F5D0DC;">#F5D0DC</div>
+          <div class="palette-color" style="background: #FFF5F8;">#FFF5F8</div>
+          <div class="palette-color" style="background: #B8D4E8;">#B8D4E8</div>
+          <div class="palette-color" style="background: #C5E8D0;">#C5E8D0</div>
+        </div>
+        <div class="palette-info">
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #E8A4B8;"></div>
+            <div class="color-name">Rose Blush</div>
+            <div class="color-hex">Primaire</div>
+          </div>
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #F5D0DC;"></div>
+            <div class="color-name">Rose Poudre</div>
+            <div class="color-hex">Secondaire</div>
+          </div>
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #B8D4E8;"></div>
+            <div class="color-name">Bleu Ciel</div>
+            <div class="color-hex">Accent</div>
+          </div>
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #C5E8D0;"></div>
+            <div class="color-name">Vert Menthe</div>
+            <div class="color-hex">Succes</div>
+          </div>
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #5D4A52;"></div>
+            <div class="color-name">Prune</div>
+            <div class="color-hex">Texte</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typography -->
+      <div class="typo-section">
+        <h3 style="margin-bottom: 25px; color: #5D4A52;">Typographie</h3>
+        <div class="typo-sample">
+          <p class="typo-label">Titres — Playfair Display</p>
+          <p class="heading-font">Allegez votre charge mentale</p>
+        </div>
+        <div class="typo-sample">
+          <p class="typo-label">Corps — Quicksand</p>
+          <p class="body-font">Un accompagnement personnalise pour vous aider a retrouver des nuits paisibles et un equilibre familial serein. Notre IA bienveillante est disponible 24h/24 pour vous soutenir dans chaque etape.</p>
+        </div>
+      </div>
+
+      <!-- Mockups -->
+      <div class="mockup-section">
+        <h3 class="section-title">Apercu du <span>Site Web</span></h3>
+        <div class="browser-frame">
+          <div class="browser-header">
+            <div class="browser-dot red"></div>
+            <div class="browser-dot yellow"></div>
+            <div class="browser-dot green"></div>
+            <div class="browser-url">www.votre-coach.fr</div>
+          </div>
+          <div class="homepage-hero">
+            <div class="badge">Coaching parental personnalise</div>
+            <h1>Allegez votre<br>charge mentale</h1>
+            <p>Sommeil, nutrition, comportement — un accompagnement sur-mesure<br>avec une IA bienveillante disponible 24h/24</p>
+            <div class="cta-group">
+              <button class="btn btn-primary">Prendre RDV gratuit</button>
+              <button class="btn btn-secondary">Decouvrir l'approche</button>
+            </div>
+          </div>
+          <div class="homepage-features">
+            <div class="features-grid">
+              <div class="feature-card">
+                <div class="icon">&#127769;</div>
+                <h3>Sommeil</h3>
+                <p>Retrouvez des nuits completes grace a un suivi adapte</p>
+              </div>
+              <div class="feature-card">
+                <div class="icon">&#127822;</div>
+                <h3>Nutrition</h3>
+                <p>Des conseils personnalises pour une alimentation sereine</p>
+              </div>
+              <div class="feature-card">
+                <div class="icon">&#128156;</div>
+                <h3>Comportement</h3>
+                <p>Comprenez et accompagnez les emotions avec bienveillance</p>
+              </div>
+            </div>
+          </div>
+          <div class="homepage-testimonial">
+            <div class="testimonial-card">
+              <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <blockquote>"En 3 semaines, Emma fait enfin ses nuits. Je revis ! L'IA est vraiment rassurante, meme a 3h du matin."</blockquote>
+              <div class="author">
+                <div class="avatar">&#128105;</div>
+                <div class="author-info">
+                  <div class="author-name">Marie L.</div>
+                  <div class="author-title">Maman d'Emma, 8 mois</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mockup-section">
+        <h3 class="section-title">Apercu de l'<span>Application</span></h3>
+        <div class="mockup-grid">
+          <!-- Dashboard -->
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <div class="phone-notch"></div>
+              <div style="margin-top: -15px;">
+                <div class="app-header">
+                  <div class="greeting">
+                    <h2>Bonjour Marie</h2>
+                    <p>Comment allez-vous aujourd'hui ?</p>
+                  </div>
+                  <div class="avatar">&#128105;</div>
+                </div>
+
+                <div class="app-stats">
+                  <div class="stat-card">
+                    <div class="value">5</div>
+                    <div class="label">Nuits completes</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="value">12</div>
+                    <div class="label">Jours d'affilee</div>
+                  </div>
+                </div>
+
+                <div class="app-section-title">Reflexes du jour</div>
+
+                <div class="app-habits">
+                  <div class="habit-item">
+                    <div class="checkbox checked">&#10003;</div>
+                    <div class="habit-text">Routine du soir (bain, histoire)</div>
+                    <div class="streak">7j</div>
+                  </div>
+                  <div class="habit-item">
+                    <div class="checkbox checked">&#10003;</div>
+                    <div class="habit-text">Coucher avant 20h</div>
+                    <div class="streak">5j</div>
+                  </div>
+                  <div class="habit-item">
+                    <div class="checkbox"></div>
+                    <div class="habit-text">Pas d'ecran apres 18h</div>
+                  </div>
+                </div>
+
+                <div class="app-nav">
+                  <div class="app-nav-item active">
+                    <span class="nav-icon">&#127968;</span>
+                    <span>Accueil</span>
+                  </div>
+                  <div class="app-nav-item">
+                    <span class="nav-icon">&#128172;</span>
+                    <span>Chat</span>
+                  </div>
+                  <div class="app-nav-item">
+                    <span class="nav-icon">&#128197;</span>
+                    <span>Journal</span>
+                  </div>
+                  <div class="app-nav-item">
+                    <span class="nav-icon">&#9881;</span>
+                    <span>Profil</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat -->
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <div class="phone-notch"></div>
+              <div style="margin-top: -15px;">
+                <div class="chat-header-app">
+                  <span class="back">&#8592;</span>
+                  <div class="coach-info">
+                    <div class="coach-name">Votre Coach IA</div>
+                    <div class="coach-status">
+                      <span class="status-dot"></span>
+                      En ligne
+                    </div>
+                  </div>
+                  <div class="coach-avatar">&#128156;</div>
+                </div>
+
+                <div class="chat-messages">
+                  <div class="chat-date">Aujourd'hui</div>
+                  <div class="message ai">
+                    Bonjour Marie ! Comment s'est passee la nuit avec Emma ?
+                    <div class="time">8:02</div>
+                  </div>
+                  <div class="message user">
+                    Beaucoup mieux ! Elle s'est reveillee qu'une seule fois
+                    <div class="time">8:15</div>
+                  </div>
+                  <div class="message ai">
+                    C'est formidable ! La routine qu'on a mise en place fonctionne. Continuez comme ca, vous faites un travail incroyable.
+                    <div class="time">8:16</div>
+                  </div>
+                </div>
+
+                <div class="chat-input-bar">
+                  <input type="text" placeholder="Votre message...">
+                  <button class="send-btn">&#10148;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- OPTION B - Bleu Pastel -->
+    <!-- ========================================= -->
+    <div class="design-option option-b" id="option-b">
+
+      <h2 class="section-title">Option B — <span style="background: linear-gradient(135deg, #A8C5E2, #8AB0D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Bleu Serenite</span></h2>
+      <p style="text-align: center; color: #888; margin-bottom: 40px;">Apaisante, professionnelle et rassurante. Evoque le calme et la confiance.</p>
+
+      <!-- Palette -->
+      <div class="palette-section">
+        <div class="palette-display">
+          <div class="palette-color" style="background: #A8C5E2;">#A8C5E2</div>
+          <div class="palette-color" style="background: #C5DDF5;">#C5DDF5</div>
+          <div class="palette-color" style="background: #F0F7FF;">#F0F7FF</div>
+          <div class="palette-color" style="background: #E8B8C5;">#E8B8C5</div>
+          <div class="palette-color" style="background: #C5E8D0;">#C5E8D0</div>
+        </div>
+        <div class="palette-info">
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #A8C5E2;"></div>
+            <div class="color-name">Bleu Lavande</div>
+            <div class="color-hex">Primaire</div>
+          </div>
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #C5DDF5;"></div>
+            <div class="color-name">Bleu Clair</div>
+            <div class="color-hex">Secondaire</div>
+          </div>
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #E8B8C5;"></div>
+            <div class="color-name">Rose Tendre</div>
+            <div class="color-hex">Accent</div>
+          </div>
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #C5E8D0;"></div>
+            <div class="color-name">Vert Eau</div>
+            <div class="color-hex">Succes</div>
+          </div>
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #4A5D6B;"></div>
+            <div class="color-name">Ardoise</div>
+            <div class="color-hex">Texte</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typography -->
+      <div class="typo-section">
+        <h3 style="margin-bottom: 25px; color: #4A5D6B;">Typographie</h3>
+        <div class="typo-sample">
+          <p class="typo-label">Titres — Cormorant Garamond</p>
+          <p class="heading-font">Allegez votre charge mentale</p>
+        </div>
+        <div class="typo-sample">
+          <p class="typo-label">Corps — Nunito</p>
+          <p class="body-font">Un accompagnement personnalise pour vous aider a retrouver des nuits paisibles et un equilibre familial serein. Notre IA bienveillante est disponible 24h/24 pour vous soutenir dans chaque etape.</p>
+        </div>
+      </div>
+
+      <!-- Mockups -->
+      <div class="mockup-section">
+        <h3 class="section-title">Apercu du <span style="background: linear-gradient(135deg, #A8C5E2, #8AB0D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Site Web</span></h3>
+        <div class="browser-frame">
+          <div class="browser-header">
+            <div class="browser-dot red"></div>
+            <div class="browser-dot yellow"></div>
+            <div class="browser-dot green"></div>
+            <div class="browser-url">www.votre-coach.fr</div>
+          </div>
+          <div class="homepage-hero">
+            <div class="badge">Coaching parental personnalise</div>
+            <h1>Allegez votre<br>charge mentale</h1>
+            <p>Sommeil, nutrition, comportement — un accompagnement sur-mesure<br>avec une IA bienveillante disponible 24h/24</p>
+            <div class="cta-group">
+              <button class="btn btn-primary">Prendre RDV gratuit</button>
+              <button class="btn btn-secondary">Decouvrir l'approche</button>
+            </div>
+          </div>
+          <div class="homepage-features">
+            <div class="features-grid">
+              <div class="feature-card">
+                <div class="icon">&#127769;</div>
+                <h3>Sommeil</h3>
+                <p>Retrouvez des nuits completes grace a un suivi adapte</p>
+              </div>
+              <div class="feature-card">
+                <div class="icon">&#127822;</div>
+                <h3>Nutrition</h3>
+                <p>Des conseils personnalises pour une alimentation sereine</p>
+              </div>
+              <div class="feature-card">
+                <div class="icon">&#128156;</div>
+                <h3>Comportement</h3>
+                <p>Comprenez et accompagnez les emotions avec bienveillance</p>
+              </div>
+            </div>
+          </div>
+          <div class="homepage-testimonial">
+            <div class="testimonial-card">
+              <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <blockquote>"En 3 semaines, Emma fait enfin ses nuits. Je revis ! L'IA est vraiment rassurante, meme a 3h du matin."</blockquote>
+              <div class="author">
+                <div class="avatar">&#128105;</div>
+                <div class="author-info">
+                  <div class="author-name">Marie L.</div>
+                  <div class="author-title">Maman d'Emma, 8 mois</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mockup-section">
+        <h3 class="section-title">Apercu de l'<span style="background: linear-gradient(135deg, #A8C5E2, #8AB0D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Application</span></h3>
+        <div class="mockup-grid">
+          <!-- Dashboard -->
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <div class="phone-notch"></div>
+              <div style="margin-top: -15px;">
+                <div class="app-header">
+                  <div class="greeting">
+                    <h2>Bonjour Marie</h2>
+                    <p>Comment allez-vous aujourd'hui ?</p>
+                  </div>
+                  <div class="avatar">&#128105;</div>
+                </div>
+
+                <div class="app-stats">
+                  <div class="stat-card">
+                    <div class="value">5</div>
+                    <div class="label">Nuits completes</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="value">12</div>
+                    <div class="label">Jours d'affilee</div>
+                  </div>
+                </div>
+
+                <div class="app-section-title">Reflexes du jour</div>
+
+                <div class="app-habits">
+                  <div class="habit-item">
+                    <div class="checkbox checked">&#10003;</div>
+                    <div class="habit-text">Routine du soir (bain, histoire)</div>
+                    <div class="streak">7j</div>
+                  </div>
+                  <div class="habit-item">
+                    <div class="checkbox checked">&#10003;</div>
+                    <div class="habit-text">Coucher avant 20h</div>
+                    <div class="streak">5j</div>
+                  </div>
+                  <div class="habit-item">
+                    <div class="checkbox"></div>
+                    <div class="habit-text">Pas d'ecran apres 18h</div>
+                  </div>
+                </div>
+
+                <div class="app-nav">
+                  <div class="app-nav-item active">
+                    <span class="nav-icon">&#127968;</span>
+                    <span>Accueil</span>
+                  </div>
+                  <div class="app-nav-item">
+                    <span class="nav-icon">&#128172;</span>
+                    <span>Chat</span>
+                  </div>
+                  <div class="app-nav-item">
+                    <span class="nav-icon">&#128197;</span>
+                    <span>Journal</span>
+                  </div>
+                  <div class="app-nav-item">
+                    <span class="nav-icon">&#9881;</span>
+                    <span>Profil</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat -->
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <div class="phone-notch"></div>
+              <div style="margin-top: -15px;">
+                <div class="chat-header-app">
+                  <span class="back">&#8592;</span>
+                  <div class="coach-info">
+                    <div class="coach-name">Votre Coach IA</div>
+                    <div class="coach-status">
+                      <span class="status-dot"></span>
+                      En ligne
+                    </div>
+                  </div>
+                  <div class="coach-avatar">&#128156;</div>
+                </div>
+
+                <div class="chat-messages">
+                  <div class="chat-date">Aujourd'hui</div>
+                  <div class="message ai">
+                    Bonjour Marie ! Comment s'est passee la nuit avec Emma ?
+                    <div class="time">8:02</div>
+                  </div>
+                  <div class="message user">
+                    Beaucoup mieux ! Elle s'est reveillee qu'une seule fois
+                    <div class="time">8:15</div>
+                  </div>
+                  <div class="message ai">
+                    C'est formidable ! La routine qu'on a mise en place fonctionne. Continuez comme ca, vous faites un travail incroyable.
+                    <div class="time">8:16</div>
+                  </div>
+                </div>
+
+                <div class="chat-input-bar">
+                  <input type="text" placeholder="Votre message...">
+                  <button class="send-btn">&#10148;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- OPTION C - Vert Pastel -->
+    <!-- ========================================= -->
+    <div class="design-option option-c" id="option-c">
+
+      <h2 class="section-title">Option C — <span style="background: linear-gradient(135deg, #A8D5BA, #8BC4A2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Vert Douceur</span></h2>
+      <p style="text-align: center; color: #888; margin-bottom: 40px;">Naturelle, fraiche et equilibree. Inspire harmonie et bien-etre.</p>
+
+      <!-- Palette -->
+      <div class="palette-section">
+        <div class="palette-display">
+          <div class="palette-color" style="background: #A8D5BA;">#A8D5BA</div>
+          <div class="palette-color" style="background: #C5EED5;">#C5EED5</div>
+          <div class="palette-color" style="background: #F0FFF4;">#F0FFF4</div>
+          <div class="palette-color" style="background: #E8C5D0;">#E8C5D0</div>
+          <div class="palette-color" style="background: #C5D5E8;">#C5D5E8</div>
+        </div>
+        <div class="palette-info">
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #A8D5BA;"></div>
+            <div class="color-name">Vert Sauge</div>
+            <div class="color-hex">Primaire</div>
+          </div>
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #C5EED5;"></div>
+            <div class="color-name">Vert Menthe</div>
+            <div class="color-hex">Secondaire</div>
+          </div>
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #E8C5D0;"></div>
+            <div class="color-name">Rose Ancien</div>
+            <div class="color-hex">Accent</div>
+          </div>
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #C5D5E8;"></div>
+            <div class="color-name">Bleu Glacier</div>
+            <div class="color-hex">Info</div>
+          </div>
+          <div class="palette-info-item">
+            <div class="color-preview" style="background: #4A5D52;"></div>
+            <div class="color-name">Foret</div>
+            <div class="color-hex">Texte</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typography -->
+      <div class="typo-section">
+        <h3 style="margin-bottom: 25px; color: #4A5D52;">Typographie</h3>
+        <div class="typo-sample">
+          <p class="typo-label">Titres — DM Sans</p>
+          <p class="heading-font">Allegez votre charge mentale</p>
+        </div>
+        <div class="typo-sample">
+          <p class="typo-label">Corps — Poppins</p>
+          <p class="body-font">Un accompagnement personnalise pour vous aider a retrouver des nuits paisibles et un equilibre familial serein. Notre IA bienveillante est disponible 24h/24 pour vous soutenir dans chaque etape.</p>
+        </div>
+      </div>
+
+      <!-- Mockups -->
+      <div class="mockup-section">
+        <h3 class="section-title">Apercu du <span style="background: linear-gradient(135deg, #A8D5BA, #8BC4A2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Site Web</span></h3>
+        <div class="browser-frame">
+          <div class="browser-header">
+            <div class="browser-dot red"></div>
+            <div class="browser-dot yellow"></div>
+            <div class="browser-dot green"></div>
+            <div class="browser-url">www.votre-coach.fr</div>
+          </div>
+          <div class="homepage-hero">
+            <div class="badge">Coaching parental personnalise</div>
+            <h1>Allegez votre<br>charge mentale</h1>
+            <p>Sommeil, nutrition, comportement — un accompagnement sur-mesure<br>avec une IA bienveillante disponible 24h/24</p>
+            <div class="cta-group">
+              <button class="btn btn-primary">Prendre RDV gratuit</button>
+              <button class="btn btn-secondary">Decouvrir l'approche</button>
+            </div>
+          </div>
+          <div class="homepage-features">
+            <div class="features-grid">
+              <div class="feature-card">
+                <div class="icon">&#127769;</div>
+                <h3>Sommeil</h3>
+                <p>Retrouvez des nuits completes grace a un suivi adapte</p>
+              </div>
+              <div class="feature-card">
+                <div class="icon">&#127822;</div>
+                <h3>Nutrition</h3>
+                <p>Des conseils personnalises pour une alimentation sereine</p>
+              </div>
+              <div class="feature-card">
+                <div class="icon">&#128156;</div>
+                <h3>Comportement</h3>
+                <p>Comprenez et accompagnez les emotions avec bienveillance</p>
+              </div>
+            </div>
+          </div>
+          <div class="homepage-testimonial">
+            <div class="testimonial-card">
+              <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <blockquote>"En 3 semaines, Emma fait enfin ses nuits. Je revis ! L'IA est vraiment rassurante, meme a 3h du matin."</blockquote>
+              <div class="author">
+                <div class="avatar">&#128105;</div>
+                <div class="author-info">
+                  <div class="author-name">Marie L.</div>
+                  <div class="author-title">Maman d'Emma, 8 mois</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mockup-section">
+        <h3 class="section-title">Apercu de l'<span style="background: linear-gradient(135deg, #A8D5BA, #8BC4A2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Application</span></h3>
+        <div class="mockup-grid">
+          <!-- Dashboard -->
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <div class="phone-notch"></div>
+              <div style="margin-top: -15px;">
+                <div class="app-header">
+                  <div class="greeting">
+                    <h2>Bonjour Marie</h2>
+                    <p>Comment allez-vous aujourd'hui ?</p>
+                  </div>
+                  <div class="avatar">&#128105;</div>
+                </div>
+
+                <div class="app-stats">
+                  <div class="stat-card">
+                    <div class="value">5</div>
+                    <div class="label">Nuits completes</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="value">12</div>
+                    <div class="label">Jours d'affilee</div>
+                  </div>
+                </div>
+
+                <div class="app-section-title">Reflexes du jour</div>
+
+                <div class="app-habits">
+                  <div class="habit-item">
+                    <div class="checkbox checked">&#10003;</div>
+                    <div class="habit-text">Routine du soir (bain, histoire)</div>
+                    <div class="streak">7j</div>
+                  </div>
+                  <div class="habit-item">
+                    <div class="checkbox checked">&#10003;</div>
+                    <div class="habit-text">Coucher avant 20h</div>
+                    <div class="streak">5j</div>
+                  </div>
+                  <div class="habit-item">
+                    <div class="checkbox"></div>
+                    <div class="habit-text">Pas d'ecran apres 18h</div>
+                  </div>
+                </div>
+
+                <div class="app-nav">
+                  <div class="app-nav-item active">
+                    <span class="nav-icon">&#127968;</span>
+                    <span>Accueil</span>
+                  </div>
+                  <div class="app-nav-item">
+                    <span class="nav-icon">&#128172;</span>
+                    <span>Chat</span>
+                  </div>
+                  <div class="app-nav-item">
+                    <span class="nav-icon">&#128197;</span>
+                    <span>Journal</span>
+                  </div>
+                  <div class="app-nav-item">
+                    <span class="nav-icon">&#9881;</span>
+                    <span>Profil</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat -->
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <div class="phone-notch"></div>
+              <div style="margin-top: -15px;">
+                <div class="chat-header-app">
+                  <span class="back">&#8592;</span>
+                  <div class="coach-info">
+                    <div class="coach-name">Votre Coach IA</div>
+                    <div class="coach-status">
+                      <span class="status-dot"></span>
+                      En ligne
+                    </div>
+                  </div>
+                  <div class="coach-avatar">&#128156;</div>
+                </div>
+
+                <div class="chat-messages">
+                  <div class="chat-date">Aujourd'hui</div>
+                  <div class="message ai">
+                    Bonjour Marie ! Comment s'est passee la nuit avec Emma ?
+                    <div class="time">8:02</div>
+                  </div>
+                  <div class="message user">
+                    Beaucoup mieux ! Elle s'est reveillee qu'une seule fois
+                    <div class="time">8:15</div>
+                  </div>
+                  <div class="message ai">
+                    C'est formidable ! La routine qu'on a mise en place fonctionne. Continuez comme ca, vous faites un travail incroyable.
+                    <div class="time">8:16</div>
+                  </div>
+                </div>
+
+                <div class="chat-input-bar">
+                  <input type="text" placeholder="Votre message...">
+                  <button class="send-btn">&#10148;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vote Section -->
+    <div class="vote-section" style="background: linear-gradient(135deg, #FFF5F8 0%, #F0F7FF 50%, #F0FFF4 100%);">
+      <h3>Quelle direction vous parle le plus ?</h3>
+      <p>Choisissez l'ambiance qui represente le mieux votre vision</p>
+      <div class="vote-cards">
+        <div class="vote-card" onclick="alert('Option A selectionnee ! Retournez dans le terminal et tapez: A')">
+          <div class="vote-colors">
+            <div class="vote-color" style="background: #E8A4B8;"></div>
+            <div class="vote-color" style="background: #F5D0DC;"></div>
+            <div class="vote-color" style="background: #B8D4E8;"></div>
+          </div>
+          <h4>Rose Pastel</h4>
+          <p>Feminine, douce et elegante</p>
+          <button class="vote-btn" style="background: #E8A4B8; color: white;">Choisir A</button>
+        </div>
+        <div class="vote-card" onclick="alert('Option B selectionnee ! Retournez dans le terminal et tapez: B')">
+          <div class="vote-colors">
+            <div class="vote-color" style="background: #A8C5E2;"></div>
+            <div class="vote-color" style="background: #C5DDF5;"></div>
+            <div class="vote-color" style="background: #E8B8C5;"></div>
+          </div>
+          <h4>Bleu Serenite</h4>
+          <p>Apaisante et rassurante</p>
+          <button class="vote-btn" style="background: #A8C5E2; color: white;">Choisir B</button>
+        </div>
+        <div class="vote-card" onclick="alert('Option C selectionnee ! Retournez dans le terminal et tapez: C')">
+          <div class="vote-colors">
+            <div class="vote-color" style="background: #A8D5BA;"></div>
+            <div class="vote-color" style="background: #C5EED5;"></div>
+            <div class="vote-color" style="background: #E8C5D0;"></div>
+          </div>
+          <h4>Vert Douceur</h4>
+          <p>Naturelle et equilibree</p>
+          <button class="vote-btn" style="background: #A8D5BA; color: white;">Choisir C</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Tab navigation
+    document.querySelectorAll('.option-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const option = btn.dataset.option;
+
+        // Update buttons
+        document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Update content
+        document.querySelectorAll('.design-option').forEach(opt => opt.classList.remove('active'));
+        document.getElementById('option-' + option.toLowerCase()).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

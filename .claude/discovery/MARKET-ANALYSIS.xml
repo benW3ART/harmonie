@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<market_analysis version="1.0" date="2025-02-15">
+
+  <executive_summary>
+    <opportunity_score value="28" max="35">FORTE OPPORTUNITE</opportunity_score>
+    <key_insight>
+      Le marché du coaching sommeil bébé en France est en forte croissance (+12%/an)
+      mais reste sous-exploité technologiquement. Les consultants individuels ne scalent pas,
+      les apps IA sont impersonnelles. La combinaison IA 24h/24 + coach humaine est un
+      positionnement unique non occupé.
+    </key_insight>
+    <recommendation>
+      GO — Lancer rapidement pour capturer le positionnement "IA + Humain"
+      avant que les acteurs établis ne s'y positionnent.
+    </recommendation>
+  </executive_summary>
+
+  <market_size>
+    <tam description="Total Addressable Market">
+      <value>180000</value>
+      <unit>familles/an</unit>
+      <calculation>
+        663 000 naissances France 2024 × 25-30% troubles sommeil enfant
+      </calculation>
+      <value_eur>90000000</value_eur>
+      <note>Hypothèse panier moyen 500€</note>
+    </tam>
+    <sam description="Serviceable Addressable Market">
+      <value>30000</value>
+      <unit>familles/an</unit>
+      <calculation>
+        TAM × 15-20% CSP+ prêtes à payer un accompagnement premium
+      </calculation>
+      <value_eur>15000000</value_eur>
+    </sam>
+    <som description="Serviceable Obtainable Market - Year 2">
+      <value>240</value>
+      <unit>accompagnements/an</unit>
+      <calculation>
+        20 familles simultanées × 12 mois
+      </calculation>
+      <value_eur>120000</value_eur>
+    </som>
+    <sources>
+      <source>INSEE - Naissances France 2024: 663 000</source>
+      <source>INSV/MGEN 2022 - 25-30% enfants avec troubles sommeil</source>
+      <source>Santé Publique France - 15% enfants 3 ans troubles sommeil</source>
+    </sources>
+  </market_size>
+
+  <opportunity_assessment>
+    <score_breakdown>
+      <criterion name="Urgency" score="9" max="10" weight="2">
+        <justification>
+          Parents épuisés par le manque de sommeil, besoin immédiat de solutions.
+          Le problème affecte santé, travail, couple. Forte pression reprise travail.
+        </justification>
+      </criterion>
+      <criterion name="Frequency" score="8" max="10" weight="2">
+        <justification>
+          Problème quotidien (chaque nuit) pendant des semaines/mois.
+          76% des 6 mois-3 ans dorment moins de 11h recommandées.
+        </justification>
+      </criterion>
+      <criterion name="Willingness_to_Pay" score="9" max="10" weight="3">
+        <justification>
+          Cible CSP+ habituée à payer pour des services premium.
+          Marché existant valide tarifs 150-400€ pour 2-3 semaines.
+          500€/mois pour accompagnement complet + IA = prix justifiable.
+        </justification>
+      </criterion>
+    </score_breakdown>
+    <total_score>28</total_score>
+    <interpretation>25-35 = Forte opportunité - GO</interpretation>
+  </opportunity_assessment>
+
+  <competitive_landscape>
+    <segment name="Consultants individuels">
+      <players>
+        <player name="Dodo &amp; Co" clients="2500+" url="dodo-co.com"/>
+        <player name="Bébé &amp; Confidences" clients="6000+" since="2016" url="bebeetconfidences.com"/>
+        <player name="Fée Dodo" url="feedodo.fr"/>
+        <player name="Plus belle la nuit" url="plusbellelanuit.fr"/>
+        <player name="Caroline Decré" url="carolinedecre.fr"/>
+      </players>
+      <strengths>
+        <item>Expertise personnalisée</item>
+        <item>Relation de confiance</item>
+        <item>Approches variées (bienveillante, Ferber, etc.)</item>
+      </strengths>
+      <weaknesses>
+        <item>Non scalable (temps limité)</item>
+        <item>Pas de suivi 24h/24</item>
+        <item>Coûts fixes élevés (temps coach)</item>
+        <item>Qualité variable, pas de techno</item>
+      </weaknesses>
+      <pricing>150-400€ pour 2-3 semaines</pricing>
+    </segment>
+
+    <segment name="Applications IA/Tech">
+      <players>
+        <player name="Huckleberry" users="5M+" global="true" url="huckleberry-labs.com">
+          <feature>SweetSpot® prédiction siestes</feature>
+          <feature>Berry IA 24h/24</feature>
+          <feature>Suivi alimentation</feature>
+        </player>
+        <player name="May" market="France" url="may.app">
+          <feature>Chat avec puéricultrices</feature>
+          <feature>Réponse &lt;20min</feature>
+          <feature>7j/7 8h-22h</feature>
+        </player>
+        <player name="Napper" users="100K+" url="napper.app">
+          <feature>Prédiction siestes algorithme</feature>
+        </player>
+      </players>
+      <strengths>
+        <item>Scalable</item>
+        <item>Disponible 24h/24</item>
+        <item>Données et analytics</item>
+        <item>Prix accessible</item>
+      </strengths>
+      <weaknesses>
+        <item>Impersonnel, générique</item>
+        <item>Pas d'accompagnement humain profond</item>
+        <item>Manque d'expertise contextuelle</item>
+        <item>Pas adapté aux situations complexes</item>
+      </weaknesses>
+      <pricing>Freemium à 15€/mois</pricing>
+    </segment>
+
+    <segment name="Professionnels santé">
+      <players>
+        <player name="Pédiatres"/>
+        <player name="PMI"/>
+        <player name="Puéricultrices libérales"/>
+      </players>
+      <strengths>
+        <item>Gratuit/remboursé</item>
+        <item>Confiance médicale</item>
+      </strengths>
+      <weaknesses>
+        <item>Peu de temps en consultation</item>
+        <item>Pas spécialisés sommeil</item>
+        <item>Pas de suivi quotidien</item>
+      </weaknesses>
+    </segment>
+
+    <positioning_gap>
+      <description>
+        AUCUN acteur ne combine :
+        (1) Expertise humaine personnalisée
+        (2) IA disponible 24h/24
+        (3) Suivi quotidien structuré
+        (4) Accompagnement long terme (1 mois+)
+      </description>
+      <opportunity>
+        Positionnement "IA + Humain" = différenciateur majeur
+      </opportunity>
+    </positioning_gap>
+  </competitive_landscape>
+
+  <positioning>
+    <tagline>Alléger la charge mentale des mamans</tagline>
+    <unique_value_proposition>
+      Le seul accompagnement parental qui combine une coach certifiée
+      pour les moments clés et une IA bienveillante disponible 24h/24
+      pour le soutien quotidien.
+    </unique_value_proposition>
+    <differentiators>
+      <differentiator>IA entraînée sur vos méthodes (pas générique)</differentiator>
+      <differentiator>Journal auto-rempli par l'IA (zéro friction)</differentiator>
+      <differentiator>Escalade automatique vers la coach si crise</differentiator>
+      <differentiator>Suivi 1 mois complet (pas juste 2-3 semaines)</differentiator>
+      <differentiator>Approche globale: sommeil + nutrition + comportement</differentiator>
+    </differentiators>
+    <positioning_statement>
+      Pour les mères actives débordées qui cherchent à retrouver des nuits paisibles,
+      [Nom] est le service de coaching parental qui combine l'expertise d'une coach
+      certifiée et l'accompagnement 24h/24 d'une IA bienveillante, contrairement
+      aux consultants traditionnels limités en disponibilité ou aux apps génériques
+      sans accompagnement humain.
+    </positioning_statement>
+  </positioning>
+
+  <business_model>
+    <revenue_streams>
+      <stream name="Accompagnement mensuel" primary="true">
+        <price>500</price>
+        <currency>EUR</currency>
+        <unit>mois</unit>
+        <includes>
+          <item>Questionnaire initial + diagnostic</item>
+          <item>Bilans hebdomadaires avec la coach</item>
+          <item>Accès app: chatbot IA 24h/24</item>
+          <item>Journal de bord auto-rempli</item>
+          <item>Objectifs et réflexes quotidiens</item>
+          <item>Escalade vers coach si crise</item>
+        </includes>
+      </stream>
+      <stream name="Séance ponctuelle">
+        <price>50</price>
+        <currency>EUR</currency>
+        <unit>séance</unit>
+      </stream>
+      <stream name="Entretien découverte" lead_gen="true">
+        <price>0</price>
+        <purpose>Conversion en accompagnement mensuel</purpose>
+      </stream>
+      <stream name="Abonnement alumni" future="true">
+        <price>50-100</price>
+        <currency>EUR</currency>
+        <unit>mois</unit>
+        <includes>Accès app seule pour anciennes familles</includes>
+      </stream>
+    </revenue_streams>
+
+    <unit_economics>
+      <metric name="Prix accompagnement">500€/mois</metric>
+      <metric name="Durée moyenne">1-2 mois</metric>
+      <metric name="LTV estimée">750-1000€</metric>
+      <metric name="Capacité actuelle">3-4 familles</metric>
+      <metric name="Capacité avec IA">15-20 familles</metric>
+      <metric name="Revenu mensuel cible">10 000€ (20 × 500€)</metric>
+      <metric name="Marge brute estimée">80%+ (coûts IA faibles)</metric>
+    </unit_economics>
+
+    <pricing_validation>
+      <comparison>
+        <competitor name="Consultants classiques" price="150-400€" duration="2-3 semaines"/>
+        <competitor name="Huckleberry Premium" price="~15€/mois" type="app seule"/>
+        <competitor name="May" price="Inclus mutuelle ou direct" type="chat puéricultrices"/>
+      </comparison>
+      <conclusion>
+        500€/mois est premium mais justifié par:
+        (1) Durée 1 mois complet vs 2-3 semaines
+        (2) IA 24h/24 incluse
+        (3) Approche globale (sommeil + nutrition + comportement)
+        (4) Journal auto-rempli = moins d'effort parent
+      </conclusion>
+    </pricing_validation>
+  </business_model>
+
+  <go_to_market>
+    <phase name="Launch" timeline="Months 1-3">
+      <channel name="Bouche-à-oreille">
+        <action>Convertir les clients actuels en ambassadeurs</action>
+        <action>Demander témoignages et avis</action>
+      </channel>
+      <channel name="Instagram">
+        <action>Contenu éducatif: tips sommeil, nutrition</action>
+        <action>Stories du quotidien de coach</action>
+        <action>Témoignages clients (avec accord)</action>
+        <action>Reels sur problématiques courantes</action>
+      </channel>
+      <channel name="Site web">
+        <action>SEO: mots-clés "coach sommeil bébé", "bébé ne dort pas"</action>
+        <action>Blog avec articles experts</action>
+        <action>Témoignages et cas d'étude</action>
+      </channel>
+    </phase>
+    <phase name="Growth" timeline="Months 4-12">
+      <channel name="Partenariats">
+        <action>Sages-femmes libérales</action>
+        <action>Maternités privées</action>
+        <action>Crèches</action>
+        <action>Pédiatres</action>
+      </channel>
+      <channel name="Content marketing">
+        <action>Podcast parentalité</action>
+        <action>Guide téléchargeable (lead magnet)</action>
+        <action>Webinaires gratuits</action>
+      </channel>
+    </phase>
+    <acquisition_funnel>
+      <step conversion="100%">Découverte (Instagram, bouche-à-oreille, SEO)</step>
+      <step conversion="30%">Visite site web</step>
+      <step conversion="20%">Prise RDV entretien découverte</step>
+      <step conversion="50%">Conversion en accompagnement mensuel</step>
+      <step conversion="3%">Taux global visiteurs → clients</step>
+    </acquisition_funnel>
+  </go_to_market>
+
+  <market_risks>
+    <risk severity="medium">
+      <description>Entrée des apps établies (Huckleberry, May) sur le créneau humain+IA</description>
+      <mitigation>First mover advantage, expertise personnalisée difficile à répliquer</mitigation>
+    </risk>
+    <risk severity="low">
+      <description>Baisse natalité France (-2%/an)</description>
+      <mitigation>Marché encore large, compensation par augmentation taux d'adoption</mitigation>
+    </risk>
+    <risk severity="low">
+      <description>Réglementation IA santé</description>
+      <mitigation>Coaching bien-être, pas acte médical. IA en support, pas en diagnostic.</mitigation>
+    </risk>
+  </market_risks>
+
+  <key_metrics_to_track>
+    <metric>Taux de conversion entretien découverte → accompagnement</metric>
+    <metric>Durée moyenne accompagnement</metric>
+    <metric>NPS (Net Promoter Score)</metric>
+    <metric>Taux d'utilisation quotidienne app</metric>
+    <metric>Taux d'escalade IA → coach</metric>
+    <metric>Coût d'acquisition client (CAC)</metric>
+    <metric>Lifetime Value (LTV)</metric>
+  </key_metrics_to_track>
+
+  <next_steps>
+    <step>Rédaction des spécifications (genius-specs)</step>
+    <step>Design et identité visuelle (genius-designer)</step>
+    <step>Architecture technique (genius-architect)</step>
+    <step>Développement MVP (genius-orchestrator)</step>
+  </next_steps>
+
+  <sources>
+    <source url="https://www.linkup-coaching.com/blog/marche-coaching/">Marché coaching France 750-800M€</source>
+    <source url="https://www.bebeetconfidences.com/">Bébé &amp; Confidences - 6000+ familles</source>
+    <source url="https://www.dodo-co.com/">Dodo &amp; Co - 2500+ familles</source>
+    <source url="https://www.may.app/">May - App parentalité France</source>
+    <source url="https://www.europe1.fr/societe/les-naissances-encore-en-baisse-en-2024">Naissances France 2024: 663 000</source>
+    <source url="https://institut-sommeil-vigilance.org/le-sommeil-des-enfants-de-moins-de-10-ans-et-leurs-parents-enquete-insv-mgen/">Enquête INSV/MGEN 2022 - Sommeil enfants</source>
+    <source url="https://www.santepubliquefrance.fr/determinants-de-sante/sommeil/">15% enfants 3 ans troubles sommeil</source>
+  </sources>
+
+</market_analysis>

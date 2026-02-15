@@ -1,0 +1,1244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<specifications version="1.0" date="2025-02-15">
+
+  <metadata>
+    <project_name>Coaching Parental (nom à définir)</project_name>
+    <tagline>Alléger la charge mentale des mamans</tagline>
+    <products>
+      <product id="website">Site vitrine</product>
+      <product id="webapp">Application web (coaching IA + suivi)</product>
+      <product id="multichannel">Intégrations WhatsApp &amp; Instagram</product>
+    </products>
+    <source_documents>
+      <document>DISCOVERY.xml</document>
+      <document>MARKET-ANALYSIS.xml</document>
+    </source_documents>
+  </metadata>
+
+  <!-- ============================================== -->
+  <!-- PERSONAS -->
+  <!-- ============================================== -->
+
+  <personas>
+    <persona id="P1" name="Marie - Jeune mère primo-parente">
+      <demographics>28 ans, cadre, premier enfant de 8 mois</demographics>
+      <goals>
+        <goal>Retrouver des nuits complètes</goal>
+        <goal>Reprendre le travail sereinement</goal>
+        <goal>Se sentir soutenue et rassurée</goal>
+      </goals>
+      <frustrations>
+        <frustration>Épuisée, ne sait pas quoi faire</frustration>
+        <frustration>Conseils contradictoires de l'entourage</frustration>
+        <frustration>Se sent seule face au problème</frustration>
+      </frustrations>
+      <tech_comfort>Élevé - smartphone toujours à portée</tech_comfort>
+    </persona>
+
+    <persona id="P2" name="Sophie - Mère expérimentée débordée">
+      <demographics>38 ans, directrice marketing, 3 enfants (2, 5, 7 ans)</demographics>
+      <goals>
+        <goal>Retrouver l'équilibre pro/perso</goal>
+        <goal>Gérer les crises de comportement du 2e</goal>
+        <goal>Avoir un appui quand tout déborde</goal>
+      </goals>
+      <frustrations>
+        <frustration>Culpabilité de ne pas être assez présente</frustration>
+        <frustration>Pas le temps pour des RDV en journée</frustration>
+        <frustration>Problèmes qui s'accumulent</frustration>
+      </frustrations>
+      <tech_comfort>Élevé - utilise beaucoup d'apps au quotidien</tech_comfort>
+    </persona>
+
+    <persona id="P3" name="Coach - La fondatrice">
+      <role>Coach parentale certifiée</role>
+      <goals>
+        <goal>Accompagner 15-20 familles simultanément</goal>
+        <goal>Suivre la progression de chaque famille</goal>
+        <goal>Intervenir uniquement quand c'est nécessaire</goal>
+        <goal>Développer sa visibilité Instagram</goal>
+      </goals>
+      <needs>
+        <need>Dashboard centralisant toutes les familles</need>
+        <need>Alertes si crise détectée par l'IA</need>
+        <need>Historique des conversations IA</need>
+        <need>Outils de définition d'objectifs</need>
+      </needs>
+    </persona>
+  </personas>
+
+  <!-- ============================================== -->
+  <!-- SITE VITRINE - USER STORIES -->
+  <!-- ============================================== -->
+
+  <product id="website" name="Site Vitrine">
+
+    <epic id="E-WEB-01" name="Découverte et crédibilité">
+      <description>Permettre aux visiteurs de découvrir le service et d'établir la confiance</description>
+
+      <story id="US-WEB-01" priority="must" points="3">
+        <title>Comprendre l'offre en 10 secondes</title>
+        <as_a>Visiteur arrivant sur le site</as_a>
+        <i_want>Comprendre immédiatement ce que propose le service</i_want>
+        <so_that>Je sache si c'est pertinent pour ma situation</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un visiteur arrive sur la page d'accueil</given>
+            <when>La page est chargée</when>
+            <then>Le titre principal et le sous-titre expliquent clairement : qui (coach parentale), quoi (accompagnement sommeil/nutrition/comportement), pour qui (parents d'enfants 4 mois - 8 ans)</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Un visiteur est sur la page d'accueil</given>
+            <when>Il regarde au-dessus de la ligne de flottaison</when>
+            <then>Un CTA "Prendre RDV gratuit" est visible sans scroller</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-WEB-02" priority="must" points="2">
+        <title>Découvrir le parcours de la coach</title>
+        <as_a>Parent intéressé</as_a>
+        <i_want>Connaître le parcours et les qualifications de la coach</i_want>
+        <so_that>Je puisse lui faire confiance</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un visiteur est sur la page "À propos"</given>
+            <when>Il lit la page</when>
+            <then>Il voit : photo professionnelle, histoire personnelle (vécu avec son 2e enfant), formations (psychologie, PNL, coaching familial, sommeil), nombre de familles accompagnées</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-WEB-03" priority="must" points="3">
+        <title>Lire des témoignages clients</title>
+        <as_a>Parent hésitant</as_a>
+        <i_want>Lire des témoignages de parents qui ont utilisé le service</i_want>
+        <so_that>Je sois rassuré sur l'efficacité</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un visiteur est sur la section témoignages</given>
+            <when>Il consulte les avis</when>
+            <then>Il voit au moins 3 témoignages avec : prénom, âge de l'enfant, problématique initiale, résultat obtenu, photo (optionnel)</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-WEB-04" priority="must" points="2">
+        <title>Comprendre les offres et tarifs</title>
+        <as_a>Parent intéressé</as_a>
+        <i_want>Voir clairement les différentes offres et leurs prix</i_want>
+        <so_that>Je puisse choisir celle qui me convient</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un visiteur est sur la page tarifs</given>
+            <when>Il consulte les offres</when>
+            <then>Il voit 3 offres clairement différenciées : Entretien découverte (gratuit), Séance ponctuelle (50€), Accompagnement mensuel (500€)</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Un visiteur regarde l'offre accompagnement mensuel</given>
+            <when>Il lit les détails</when>
+            <then>Il comprend que l'accès à l'app IA 24h/24 est inclus</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+    </epic>
+
+    <epic id="E-WEB-02" name="Prise de contact">
+      <description>Permettre aux visiteurs de prendre RDV pour un entretien découverte</description>
+
+      <story id="US-WEB-05" priority="must" points="5">
+        <title>Prendre RDV pour un entretien découverte</title>
+        <as_a>Parent convaincu</as_a>
+        <i_want>Réserver un créneau pour un entretien découverte gratuit</i_want>
+        <so_that>Je puisse discuter de ma situation avec la coach</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un visiteur clique sur "Prendre RDV gratuit"</given>
+            <when>Le système de réservation s'affiche</when>
+            <then>Il voit les créneaux disponibles sur les 2 prochaines semaines</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Un visiteur sélectionne un créneau</given>
+            <when>Il remplit le formulaire (nom, email, téléphone, âge enfant, problématique principale)</when>
+            <then>La réservation est confirmée et il reçoit un email de confirmation</then>
+          </criterion>
+          <criterion id="AC-03">
+            <given>Une réservation est effectuée</given>
+            <when>Le système traite la demande</when>
+            <then>La coach reçoit une notification avec les infos du prospect</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-WEB-06" priority="should" points="2">
+        <title>Contacter par formulaire simple</title>
+        <as_a>Visiteur avec une question</as_a>
+        <i_want>Envoyer un message sans prendre RDV</i_want>
+        <so_that>Je puisse poser ma question avant de m'engager</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un visiteur est sur la page contact</given>
+            <when>Il remplit le formulaire (nom, email, message)</when>
+            <then>Le message est envoyé à la coach et le visiteur reçoit un accusé de réception</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+    </epic>
+
+    <epic id="E-WEB-03" name="Contenu et SEO">
+      <description>Attirer du trafic organique via du contenu de qualité</description>
+
+      <story id="US-WEB-07" priority="should" points="5">
+        <title>Consulter des articles de blog</title>
+        <as_a>Parent cherchant des conseils</as_a>
+        <i_want>Lire des articles sur le sommeil, la nutrition et le comportement</i_want>
+        <so_that>J'obtienne des conseils gratuits et découvre l'expertise de la coach</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un visiteur est sur le blog</given>
+            <when>Il consulte la liste des articles</when>
+            <then>Il voit les articles triés par catégorie (Sommeil, Nutrition, Comportement) et par date</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Un visiteur lit un article</given>
+            <when>Il arrive à la fin</when>
+            <then>Un CTA "Prendre RDV gratuit" est affiché</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-WEB-08" priority="could" points="2">
+        <title>Voir le feed Instagram intégré</title>
+        <as_a>Visiteur</as_a>
+        <i_want>Voir les dernières publications Instagram de la coach</i_want>
+        <so_that>Je puisse la suivre et voir son activité régulière</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un visiteur est sur le site</given>
+            <when>Il consulte la section Instagram</when>
+            <then>Il voit les 6 derniers posts avec lien vers le profil</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+    </epic>
+
+  </product>
+
+  <!-- ============================================== -->
+  <!-- WEB APP - USER STORIES -->
+  <!-- ============================================== -->
+
+  <product id="webapp" name="Application Web Coaching">
+
+    <!-- ONBOARDING -->
+    <epic id="E-APP-01" name="Onboarding famille">
+      <description>Permettre à une nouvelle famille de démarrer son accompagnement</description>
+
+      <story id="US-APP-01" priority="must" points="3">
+        <title>Créer son compte famille</title>
+        <as_a>Nouveau client</as_a>
+        <i_want>Créer un compte pour accéder à l'application</i_want>
+        <so_that>Je puisse démarrer mon accompagnement</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un nouveau client a payé son accompagnement</given>
+            <when>Il reçoit un lien d'invitation par email</when>
+            <then>Il peut créer son compte (email, mot de passe, prénom)</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Le compte est créé</given>
+            <when>L'utilisateur se connecte pour la première fois</when>
+            <then>Il est guidé vers le questionnaire initial</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-02" priority="must" points="5">
+        <title>Remplir le questionnaire initial</title>
+        <as_a>Nouveau parent inscrit</as_a>
+        <i_want>Répondre au questionnaire de diagnostic</i_want>
+        <so_that>La coach et l'IA comprennent ma situation</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un nouveau parent accède au questionnaire</given>
+            <when>Il répond aux questions</when>
+            <then>Il peut renseigner : infos enfant (prénom, âge, position fratrie), problématique principale, historique sommeil, routine actuelle, tentatives passées, objectifs</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Le questionnaire est complété</given>
+            <when>Le parent soumet ses réponses</when>
+            <then>La coach reçoit une notification et peut consulter les réponses</then>
+          </criterion>
+          <criterion id="AC-03">
+            <given>Le questionnaire est complété</given>
+            <when>Le système traite les réponses</when>
+            <then>L'IA est contextualisée avec ces informations pour personnaliser ses réponses</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-03" priority="should" points="2">
+        <title>Inviter le co-parent</title>
+        <as_a>Parent principal</as_a>
+        <i_want>Inviter mon conjoint à rejoindre l'application</i_want>
+        <so_that>Nous puissions suivre ensemble et qu'il soit impliqué</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent est connecté</given>
+            <when>Il va dans les paramètres et invite le co-parent</when>
+            <then>Le co-parent reçoit un email d'invitation avec un lien</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Le co-parent accepte l'invitation</given>
+            <when>Il crée son compte</when>
+            <then>Il a accès à toutes les conversations, objectifs et journal de la famille</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+    </epic>
+
+    <!-- CHATBOT IA -->
+    <epic id="E-APP-02" name="Chatbot IA 24h/24">
+      <description>Fournir un accompagnement IA personnalisé disponible à tout moment</description>
+
+      <story id="US-APP-04" priority="must" points="8">
+        <title>Échanger avec l'IA coach</title>
+        <as_a>Parent en accompagnement</as_a>
+        <i_want>Discuter avec l'IA de ma situation du jour</i_want>
+        <so_that>Je reçoive des conseils et du soutien à tout moment</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent ouvre l'application</given>
+            <when>Il accède au chat</when>
+            <then>Il voit l'historique de ses conversations précédentes</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Un parent envoie un message</given>
+            <when>L'IA répond</when>
+            <then>La réponse est personnalisée (utilise le prénom de l'enfant, connaît le contexte famille)</then>
+          </criterion>
+          <criterion id="AC-03">
+            <given>Un parent décrit sa nuit</given>
+            <when>L'IA analyse le message</when>
+            <then>L'IA peut : poser des questions de suivi, donner des conseils concrets, encourager, rappeler les objectifs</then>
+          </criterion>
+          <criterion id="AC-04">
+            <given>L'IA ne sait pas répondre ou détecte un sujet sensible</given>
+            <when>Elle analyse le contexte</when>
+            <then>Elle suggère de contacter la coach et notifie cette dernière</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-05" priority="must" points="5">
+        <title>Recevoir une notification de check-in quotidien</title>
+        <as_a>Parent en accompagnement</as_a>
+        <i_want>Recevoir un rappel quotidien pour faire mon point</i_want>
+        <so_that>Je n'oublie pas de communiquer sur ma nuit/journée</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Il est l'heure du check-in configuré (ex: 8h)</given>
+            <when>Le système envoie une notification</when>
+            <then>Le parent reçoit une notification "Comment s'est passée la nuit ?"</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Le parent clique sur la notification</given>
+            <when>L'app s'ouvre</when>
+            <then>Le chat démarre avec une question de l'IA adaptée au contexte</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-06" priority="must" points="3">
+        <title>Escalade vers la coach humaine</title>
+        <as_a>Parent en détresse</as_a>
+        <i_want>Pouvoir demander à parler à la coach</i_want>
+        <so_that>Je puisse avoir un soutien humain dans les moments difficiles</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent est en conversation avec l'IA</given>
+            <when>Il demande explicitement à parler à la coach</when>
+            <then>Une demande est envoyée à la coach avec le contexte de la conversation</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>L'IA détecte des signes de détresse (mots-clés : "je n'en peux plus", "je craque", etc.)</given>
+            <when>Elle analyse le message</when>
+            <then>Elle propose proactivement de contacter la coach et alerte cette dernière</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+    </epic>
+
+    <!-- JOURNAL DE BORD -->
+    <epic id="E-APP-03" name="Journal de bord">
+      <description>Permettre le suivi quotidien de l'évolution de l'enfant</description>
+
+      <story id="US-APP-07" priority="must" points="5">
+        <title>Consulter le journal de bord</title>
+        <as_a>Parent</as_a>
+        <i_want>Voir l'historique jour par jour de ce qui s'est passé</i_want>
+        <so_that>Je puisse suivre l'évolution et identifier des patterns</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent accède au journal</given>
+            <when>Il consulte la vue calendrier</when>
+            <then>Il voit chaque jour avec un indicateur visuel (vert/orange/rouge selon la qualité de la nuit)</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Un parent clique sur un jour</given>
+            <when>Le détail s'affiche</when>
+            <then>Il voit : résumé de la nuit, heures coucher/réveil, nombre de réveils, notes, conseils appliqués</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-08" priority="must" points="5">
+        <title>Journal auto-rempli par l'IA</title>
+        <as_a>Parent pressé</as_a>
+        <i_want>Que le journal se remplisse automatiquement depuis mes conversations avec l'IA</i_want>
+        <so_that>Je n'aie pas à tout ressaisir manuellement</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent a eu une conversation avec l'IA aujourd'hui</given>
+            <when>L'IA a extrait des informations clés (heures, qualité nuit, événements)</when>
+            <then>Le journal du jour est pré-rempli avec ces informations</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Le journal est pré-rempli par l'IA</given>
+            <when>Le parent consulte l'entrée</when>
+            <then>Il peut modifier ou compléter les informations extraites</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-09" priority="should" points="3">
+        <title>Ajouter une entrée manuelle</title>
+        <as_a>Parent</as_a>
+        <i_want>Ajouter manuellement une entrée dans le journal</i_want>
+        <so_that>Je puisse noter des informations sans passer par le chat</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent est dans le journal</given>
+            <when>Il clique sur "Ajouter une entrée"</when>
+            <then>Un formulaire rapide s'affiche : heure coucher, heure réveil, qualité (1-5), réveils nocturnes, notes libres</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+    </epic>
+
+    <!-- OBJECTIFS ET RÉFLEXES -->
+    <epic id="E-APP-04" name="Objectifs et réflexes quotidiens">
+      <description>Permettre le suivi des objectifs et l'ancrage des habitudes</description>
+
+      <story id="US-APP-10" priority="must" points="3">
+        <title>Voir mes objectifs actuels</title>
+        <as_a>Parent</as_a>
+        <i_want>Voir les objectifs que la coach a définis pour moi</i_want>
+        <so_that>Je sache sur quoi me concentrer cette semaine</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent accède à la section Objectifs</given>
+            <when>Il consulte ses objectifs</when>
+            <then>Il voit la liste des objectifs actifs avec leur progression</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Un objectif est affiché</given>
+            <when>Le parent le consulte</when>
+            <then>Il voit : description, date de début, progression, conseils associés</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-11" priority="must" points="3">
+        <title>Valider mes réflexes quotidiens</title>
+        <as_a>Parent</as_a>
+        <i_want>Cocher les habitudes que j'ai appliquées aujourd'hui</i_want>
+        <so_that>Je suive mes progrès et ancre les bonnes pratiques</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent accède à ses réflexes du jour</given>
+            <when>Il voit la liste des réflexes</when>
+            <then>Chaque réflexe peut être coché (fait/pas fait)</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Un parent a coché ses réflexes</given>
+            <when>Il consulte son historique</when>
+            <then>Il voit une série (streak) de jours consécutifs réussis</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-12" priority="should" points="2">
+        <title>Recevoir des encouragements sur ma progression</title>
+        <as_a>Parent</as_a>
+        <i_want>Recevoir des messages positifs quand j'atteins des jalons</i_want>
+        <so_that>Je reste motivé</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent atteint un jalon (ex: 7 jours de suite)</given>
+            <when>Le système détecte le jalon</when>
+            <then>Une notification de félicitation est envoyée</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+    </epic>
+
+    <!-- DASHBOARD COACH -->
+    <epic id="E-APP-05" name="Dashboard Coach">
+      <description>Permettre à la coach de suivre et gérer toutes les familles</description>
+
+      <story id="US-APP-13" priority="must" points="5">
+        <title>Voir la liste de toutes les familles</title>
+        <as_a>Coach</as_a>
+        <i_want>Voir un dashboard avec toutes mes familles en accompagnement</i_want>
+        <so_that>Je puisse avoir une vue d'ensemble</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>La coach se connecte à son dashboard</given>
+            <when>Elle consulte la liste des familles</when>
+            <then>Elle voit chaque famille avec : nom, enfant(s), date début accompagnement, statut (actif/terminé), indicateur dernière activité</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Une famille a une alerte (demande d'escalade)</given>
+            <when>La coach consulte la liste</when>
+            <then>Cette famille est mise en évidence avec un badge "Attention requise"</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-14" priority="must" points="3">
+        <title>Consulter le dossier d'une famille</title>
+        <as_a>Coach</as_a>
+        <i_want>Accéder au dossier complet d'une famille</i_want>
+        <so_that>Je puisse préparer mon bilan hebdomadaire</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>La coach clique sur une famille</given>
+            <when>Le dossier s'ouvre</when>
+            <then>Elle voit : questionnaire initial, historique des conversations IA, journal de bord, objectifs en cours, réflexes et leur suivi</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-15" priority="must" points="3">
+        <title>Lire les conversations IA d'une famille</title>
+        <as_a>Coach</as_a>
+        <i_want>Lire tout l'historique des échanges entre la famille et l'IA</i_want>
+        <so_that>Je comprenne ce qui s'est passé depuis le dernier bilan</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>La coach est dans le dossier famille</given>
+            <when>Elle consulte l'onglet "Conversations"</when>
+            <then>Elle voit l'intégralité des échanges, triés par date</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>La coach consulte les conversations</given>
+            <when>Il y a eu une escalade</when>
+            <then>Les messages d'escalade sont mis en évidence</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-16" priority="must" points="3">
+        <title>Définir les objectifs d'une famille</title>
+        <as_a>Coach</as_a>
+        <i_want>Créer et modifier les objectifs pour une famille</i_want>
+        <so_that>Je puisse personnaliser leur accompagnement</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>La coach est dans le dossier famille</given>
+            <when>Elle clique sur "Ajouter un objectif"</when>
+            <then>Elle peut créer un objectif avec : titre, description, date cible</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Un objectif est créé</given>
+            <when>La famille consulte ses objectifs</when>
+            <then>Le nouvel objectif apparaît dans leur liste</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-17" priority="must" points="3">
+        <title>Définir les réflexes quotidiens d'une famille</title>
+        <as_a>Coach</as_a>
+        <i_want>Créer les réflexes quotidiens à suivre pour une famille</i_want>
+        <so_that>Ils puissent ancrer les bonnes habitudes</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>La coach est dans le dossier famille</given>
+            <when>Elle clique sur "Ajouter un réflexe"</when>
+            <then>Elle peut créer un réflexe avec : titre, description, fréquence (quotidien/hebdo)</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-18" priority="must" points="2">
+        <title>Recevoir les alertes d'escalade</title>
+        <as_a>Coach</as_a>
+        <i_want>Être notifiée quand une famille demande mon intervention</i_want>
+        <so_that>Je puisse réagir rapidement</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Une demande d'escalade est créée</given>
+            <when>Le système la traite</when>
+            <then>La coach reçoit une notification (email + notification app)</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>La coach consulte l'alerte</given>
+            <when>Elle clique dessus</when>
+            <then>Elle voit le contexte complet (derniers messages, motif si détecté)</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-19" priority="should" points="3">
+        <title>Envoyer un message à une famille</title>
+        <as_a>Coach</as_a>
+        <i_want>Envoyer un message directement dans l'app à une famille</i_want>
+        <so_that>Je puisse communiquer sans sortir de la plateforme</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>La coach est dans le dossier famille</given>
+            <when>Elle rédige un message</when>
+            <then>Le message apparaît dans la conversation de la famille (clairement identifié comme venant de la coach)</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-20" priority="should" points="3">
+        <title>Voir les statistiques globales</title>
+        <as_a>Coach</as_a>
+        <i_want>Voir des statistiques agrégées de mon activité</i_want>
+        <so_that>Je puisse suivre mon business</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>La coach consulte les statistiques</given>
+            <when>Le dashboard s'affiche</when>
+            <then>Elle voit : familles actives, taux d'engagement (% familles actives /jour), escalades cette semaine, familles terminées ce mois</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+    </epic>
+
+    <!-- GESTION COMPTE -->
+    <epic id="E-APP-06" name="Gestion de compte">
+      <description>Permettre la gestion du compte utilisateur</description>
+
+      <story id="US-APP-21" priority="must" points="2">
+        <title>Se connecter à l'application</title>
+        <as_a>Utilisateur</as_a>
+        <i_want>Me connecter avec mon email et mot de passe</i_want>
+        <so_that>J'accède à mon espace</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un utilisateur est sur la page de connexion</given>
+            <when>Il entre ses identifiants valides</when>
+            <then>Il est connecté et redirigé vers son dashboard (parent ou coach)</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Un utilisateur entre des identifiants invalides</given>
+            <when>Il tente de se connecter</when>
+            <then>Un message d'erreur clair s'affiche</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-22" priority="must" points="2">
+        <title>Réinitialiser mon mot de passe</title>
+        <as_a>Utilisateur ayant oublié son mot de passe</as_a>
+        <i_want>Réinitialiser mon mot de passe par email</i_want>
+        <so_that>Je puisse retrouver l'accès à mon compte</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un utilisateur clique sur "Mot de passe oublié"</given>
+            <when>Il entre son email</when>
+            <then>Il reçoit un email avec un lien de réinitialisation valide 24h</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-23" priority="should" points="2">
+        <title>Modifier mes informations de profil</title>
+        <as_a>Utilisateur</as_a>
+        <i_want>Modifier mes informations personnelles</i_want>
+        <so_that>Mon profil soit à jour</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un utilisateur accède aux paramètres</given>
+            <when>Il modifie ses informations</when>
+            <then>Il peut changer : prénom, photo, préférences de notification</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-24" priority="should" points="2">
+        <title>Configurer l'heure de check-in</title>
+        <as_a>Parent</as_a>
+        <i_want>Choisir l'heure à laquelle je reçois la notification de check-in</i_want>
+        <so_that>Elle arrive au bon moment pour moi</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent accède aux paramètres</given>
+            <when>Il modifie l'heure de check-in</when>
+            <then>Les futures notifications arrivent à l'heure choisie</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+    </epic>
+
+    <!-- CHAT MULTICANAL -->
+    <epic id="E-APP-07" name="Chat Multicanal (WhatsApp &amp; Instagram)">
+      <description>Permettre aux parents d'échanger avec l'IA via WhatsApp ou Instagram DM, en plus de l'app web</description>
+
+      <story id="US-APP-25" priority="must" points="8">
+        <title>Échanger avec l'IA via WhatsApp</title>
+        <as_a>Parent en accompagnement</as_a>
+        <i_want>Parler à l'IA directement sur WhatsApp</i_want>
+        <so_that>Je puisse utiliser l'app que j'utilise déjà tous les jours</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent a activé WhatsApp dans ses paramètres</given>
+            <when>Il envoie un message au numéro WhatsApp Business</when>
+            <then>L'IA répond de manière personnalisée (connaît son contexte famille)</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Un parent écrit sur WhatsApp</given>
+            <when>L'IA répond</when>
+            <then>La conversation est synchronisée et visible dans l'app web</then>
+          </criterion>
+          <criterion id="AC-03">
+            <given>L'IA détecte une crise sur WhatsApp</given>
+            <when>Elle analyse le message</when>
+            <then>Elle alerte la coach et propose l'escalade comme dans l'app web</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-26" priority="should" points="8">
+        <title>Échanger avec l'IA via Instagram DM</title>
+        <as_a>Parent en accompagnement</as_a>
+        <i_want>Parler à l'IA via les messages Instagram du compte de la coach</i_want>
+        <so_that>Je puisse utiliser Instagram que je consulte souvent</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent a lié son compte Instagram</given>
+            <when>Il envoie un DM au compte de la coach</when>
+            <then>L'IA répond automatiquement (si le compte est reconnu)</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Un parent écrit sur Instagram</given>
+            <when>L'IA répond</when>
+            <then>La conversation est synchronisée et visible dans l'app web</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-27" priority="must" points="3">
+        <title>Choisir mon canal de communication préféré</title>
+        <as_a>Parent</as_a>
+        <i_want>Configurer mon canal préféré (App, WhatsApp, Instagram)</i_want>
+        <so_that>Je reçoive les notifications de check-in sur le bon canal</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent accède aux paramètres</given>
+            <when>Il configure son canal préféré</when>
+            <then>Il peut choisir : App web, WhatsApp, ou Instagram</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Le check-in quotidien est déclenché</given>
+            <when>Le système envoie la notification</when>
+            <then>Elle est envoyée sur le canal préféré du parent</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-28" priority="must" points="3">
+        <title>Lier mon numéro WhatsApp</title>
+        <as_a>Parent</as_a>
+        <i_want>Associer mon numéro WhatsApp à mon compte</i_want>
+        <so_that>L'IA me reconnaisse quand j'écris</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent va dans les paramètres</given>
+            <when>Il entre son numéro WhatsApp</when>
+            <then>Il reçoit un code de vérification par WhatsApp</then>
+          </criterion>
+          <criterion id="AC-02">
+            <given>Le code est validé</given>
+            <when>Le lien est confirmé</when>
+            <then>Les futurs messages WhatsApp de ce numéro sont associés à ce compte</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-29" priority="must" points="2">
+        <title>Voir l'historique unifié des conversations</title>
+        <as_a>Parent</as_a>
+        <i_want>Voir toutes mes conversations avec l'IA au même endroit</i_want>
+        <so_that>Je retrouve facilement nos échanges quel que soit le canal utilisé</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>Un parent a échangé sur plusieurs canaux</given>
+            <when>Il consulte l'historique dans l'app web</when>
+            <then>Il voit tous les messages avec un indicateur du canal (icône WhatsApp, Instagram, ou App)</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+
+      <story id="US-APP-30" priority="must" points="2">
+        <title>Voir les conversations multicanal d'une famille (Coach)</title>
+        <as_a>Coach</as_a>
+        <i_want>Voir toutes les conversations d'une famille, quel que soit le canal</i_want>
+        <so_that>J'aie une vue complète de leurs échanges</so_that>
+        <acceptance_criteria>
+          <criterion id="AC-01">
+            <given>La coach consulte le dossier d'une famille</given>
+            <when>Elle va dans l'onglet Conversations</when>
+            <then>Elle voit l'historique unifié avec indication du canal pour chaque message</then>
+          </criterion>
+        </acceptance_criteria>
+      </story>
+    </epic>
+
+  </product>
+
+  <!-- ============================================== -->
+  <!-- BUSINESS RULES -->
+  <!-- ============================================== -->
+
+  <business_rules>
+    <rule id="BR-01" domain="Accompagnement">
+      <title>Durée accompagnement standard</title>
+      <description>Un accompagnement mensuel dure 30 jours à partir de la date de début définie par la coach après le premier bilan</description>
+    </rule>
+
+    <rule id="BR-02" domain="IA">
+      <title>Personnalisation IA</title>
+      <description>L'IA doit toujours utiliser le prénom de l'enfant et tenir compte du contexte famille (âge, problématique, historique) dans ses réponses</description>
+    </rule>
+
+    <rule id="BR-03" domain="IA">
+      <title>Limites de l'IA</title>
+      <description>L'IA ne doit jamais : donner de conseils médicaux, recommander des médicaments, diagnostiquer des troubles. Elle doit rediriger vers un professionnel de santé si nécessaire.</description>
+    </rule>
+
+    <rule id="BR-04" domain="IA">
+      <title>Détection de crise</title>
+      <description>L'IA doit détecter les signaux de détresse (mots-clés : "épuisé", "je craque", "je n'en peux plus", "dépression", "envie de tout arrêter") et proposer une escalade vers la coach</description>
+    </rule>
+
+    <rule id="BR-05" domain="Journal">
+      <title>Extraction automatique journal</title>
+      <description>L'IA extrait des conversations : heure de coucher, heure de réveil, nombre de réveils nocturnes, qualité perçue, événements notables</description>
+    </rule>
+
+    <rule id="BR-06" domain="Notifications">
+      <title>Heure check-in par défaut</title>
+      <description>L'heure de check-in par défaut est 8h00, modifiable par le parent entre 6h00 et 12h00</description>
+    </rule>
+
+    <rule id="BR-07" domain="Accès">
+      <title>Accès co-parent</title>
+      <description>Un co-parent invité a les mêmes accès que le parent principal (chat, journal, objectifs) mais ne peut pas modifier les paramètres de compte</description>
+    </rule>
+
+    <rule id="BR-08" domain="Données">
+      <title>Rétention des données</title>
+      <description>Les données d'un accompagnement sont conservées 2 ans après la fin de l'accompagnement, sauf demande de suppression</description>
+    </rule>
+
+    <rule id="BR-09" domain="Multicanal">
+      <title>Synchronisation conversations</title>
+      <description>Toutes les conversations (WhatsApp, Instagram, App web) sont synchronisées en temps réel et stockées de manière unifiée</description>
+    </rule>
+
+    <rule id="BR-10" domain="Multicanal">
+      <title>Identification utilisateur WhatsApp</title>
+      <description>Un numéro WhatsApp doit être vérifié et associé à un compte avant de pouvoir interagir avec l'IA</description>
+    </rule>
+
+    <rule id="BR-11" domain="Multicanal">
+      <title>Canal par défaut check-in</title>
+      <description>Le check-in quotidien est envoyé sur le canal préféré du parent (App par défaut, WhatsApp ou Instagram si configuré)</description>
+    </rule>
+
+    <rule id="BR-12" domain="Multicanal">
+      <title>Contexte IA multicanal</title>
+      <description>L'IA dispose du même contexte famille quel que soit le canal utilisé pour la conversation</description>
+    </rule>
+  </business_rules>
+
+  <!-- ============================================== -->
+  <!-- NON-FUNCTIONAL REQUIREMENTS -->
+  <!-- ============================================== -->
+
+  <non_functional_requirements>
+    <category name="Performance">
+      <nfr id="NFR-01">
+        <title>Temps de réponse IA</title>
+        <requirement>L'IA doit répondre en moins de 5 secondes dans 95% des cas</requirement>
+        <metric>P95 latency &lt; 5s</metric>
+      </nfr>
+      <nfr id="NFR-02">
+        <title>Temps de chargement pages</title>
+        <requirement>Les pages doivent charger en moins de 2 secondes sur 4G</requirement>
+        <metric>LCP &lt; 2s</metric>
+      </nfr>
+    </category>
+
+    <category name="Disponibilité">
+      <nfr id="NFR-03">
+        <title>Uptime</title>
+        <requirement>L'application doit être disponible 99.5% du temps</requirement>
+        <metric>Uptime &gt;= 99.5%</metric>
+      </nfr>
+      <nfr id="NFR-04">
+        <title>Disponibilité IA</title>
+        <requirement>Le chatbot IA doit être disponible 24h/24, 7j/7</requirement>
+        <metric>IA availability = 24/7</metric>
+      </nfr>
+    </category>
+
+    <category name="Sécurité">
+      <nfr id="NFR-05">
+        <title>Authentification</title>
+        <requirement>Mots de passe hashés (bcrypt), sessions JWT avec expiration 7 jours</requirement>
+      </nfr>
+      <nfr id="NFR-06">
+        <title>Chiffrement</title>
+        <requirement>Toutes les communications en HTTPS, données sensibles chiffrées au repos</requirement>
+      </nfr>
+      <nfr id="NFR-07">
+        <title>RGPD</title>
+        <requirement>Conformité RGPD : consentement explicite, droit à l'oubli, export des données</requirement>
+      </nfr>
+    </category>
+
+    <category name="Accessibilité">
+      <nfr id="NFR-08">
+        <title>Standards</title>
+        <requirement>Conformité WCAG 2.1 niveau AA minimum</requirement>
+      </nfr>
+      <nfr id="NFR-09">
+        <title>Mobile-first</title>
+        <requirement>Application optimisée pour mobile en priorité (responsive)</requirement>
+      </nfr>
+    </category>
+
+    <category name="Scalabilité">
+      <nfr id="NFR-10">
+        <title>Capacité</title>
+        <requirement>Supporter jusqu'à 100 familles simultanées sans dégradation</requirement>
+      </nfr>
+    </category>
+  </non_functional_requirements>
+
+  <!-- ============================================== -->
+  <!-- DATA MODEL -->
+  <!-- ============================================== -->
+
+  <data_model>
+    <entity name="User">
+      <attribute name="id" type="UUID" primary_key="true"/>
+      <attribute name="email" type="String" unique="true"/>
+      <attribute name="password_hash" type="String"/>
+      <attribute name="first_name" type="String"/>
+      <attribute name="role" type="Enum">parent, co_parent, coach</attribute>
+      <attribute name="photo_url" type="String" nullable="true"/>
+      <attribute name="checkin_time" type="Time" default="08:00"/>
+      <attribute name="preferred_channel" type="Enum" default="app">app, whatsapp, instagram</attribute>
+      <attribute name="whatsapp_number" type="String" nullable="true"/>
+      <attribute name="whatsapp_verified" type="Boolean" default="false"/>
+      <attribute name="instagram_username" type="String" nullable="true"/>
+      <attribute name="instagram_linked" type="Boolean" default="false"/>
+      <attribute name="created_at" type="DateTime"/>
+      <attribute name="updated_at" type="DateTime"/>
+    </entity>
+
+    <entity name="Family">
+      <attribute name="id" type="UUID" primary_key="true"/>
+      <attribute name="coach_id" type="UUID" foreign_key="User.id"/>
+      <attribute name="status" type="Enum">active, completed, paused</attribute>
+      <attribute name="start_date" type="Date"/>
+      <attribute name="end_date" type="Date" nullable="true"/>
+      <attribute name="created_at" type="DateTime"/>
+    </entity>
+
+    <entity name="FamilyMember">
+      <attribute name="id" type="UUID" primary_key="true"/>
+      <attribute name="family_id" type="UUID" foreign_key="Family.id"/>
+      <attribute name="user_id" type="UUID" foreign_key="User.id"/>
+      <attribute name="role" type="Enum">primary, co_parent</attribute>
+      <attribute name="joined_at" type="DateTime"/>
+    </entity>
+
+    <entity name="Child">
+      <attribute name="id" type="UUID" primary_key="true"/>
+      <attribute name="family_id" type="UUID" foreign_key="Family.id"/>
+      <attribute name="first_name" type="String"/>
+      <attribute name="birth_date" type="Date"/>
+      <attribute name="sibling_position" type="Integer"/>
+    </entity>
+
+    <entity name="Questionnaire">
+      <attribute name="id" type="UUID" primary_key="true"/>
+      <attribute name="family_id" type="UUID" foreign_key="Family.id"/>
+      <attribute name="responses" type="JSON"/>
+      <attribute name="submitted_at" type="DateTime"/>
+    </entity>
+
+    <entity name="Conversation">
+      <attribute name="id" type="UUID" primary_key="true"/>
+      <attribute name="family_id" type="UUID" foreign_key="Family.id"/>
+      <attribute name="created_at" type="DateTime"/>
+    </entity>
+
+    <entity name="Message">
+      <attribute name="id" type="UUID" primary_key="true"/>
+      <attribute name="conversation_id" type="UUID" foreign_key="Conversation.id"/>
+      <attribute name="sender_type" type="Enum">user, ai, coach</attribute>
+      <attribute name="sender_id" type="UUID" nullable="true"/>
+      <attribute name="content" type="Text"/>
+      <attribute name="channel" type="Enum" default="app">app, whatsapp, instagram</attribute>
+      <attribute name="created_at" type="DateTime"/>
+    </entity>
+
+    <entity name="JournalEntry">
+      <attribute name="id" type="UUID" primary_key="true"/>
+      <attribute name="family_id" type="UUID" foreign_key="Family.id"/>
+      <attribute name="child_id" type="UUID" foreign_key="Child.id"/>
+      <attribute name="date" type="Date"/>
+      <attribute name="bedtime" type="Time" nullable="true"/>
+      <attribute name="waketime" type="Time" nullable="true"/>
+      <attribute name="night_wakings" type="Integer" nullable="true"/>
+      <attribute name="quality_score" type="Integer" min="1" max="5"/>
+      <attribute name="notes" type="Text" nullable="true"/>
+      <attribute name="auto_filled" type="Boolean" default="false"/>
+      <attribute name="created_at" type="DateTime"/>
+      <attribute name="updated_at" type="DateTime"/>
+    </entity>
+
+    <entity name="Goal">
+      <attribute name="id" type="UUID" primary_key="true"/>
+      <attribute name="family_id" type="UUID" foreign_key="Family.id"/>
+      <attribute name="title" type="String"/>
+      <attribute name="description" type="Text"/>
+      <attribute name="status" type="Enum">active, completed, abandoned</attribute>
+      <attribute name="target_date" type="Date" nullable="true"/>
+      <attribute name="created_by" type="UUID" foreign_key="User.id"/>
+      <attribute name="created_at" type="DateTime"/>
+    </entity>
+
+    <entity name="DailyHabit">
+      <attribute name="id" type="UUID" primary_key="true"/>
+      <attribute name="family_id" type="UUID" foreign_key="Family.id"/>
+      <attribute name="title" type="String"/>
+      <attribute name="description" type="Text" nullable="true"/>
+      <attribute name="frequency" type="Enum">daily, weekly</attribute>
+      <attribute name="active" type="Boolean" default="true"/>
+      <attribute name="created_by" type="UUID" foreign_key="User.id"/>
+      <attribute name="created_at" type="DateTime"/>
+    </entity>
+
+    <entity name="HabitCompletion">
+      <attribute name="id" type="UUID" primary_key="true"/>
+      <attribute name="habit_id" type="UUID" foreign_key="DailyHabit.id"/>
+      <attribute name="date" type="Date"/>
+      <attribute name="completed" type="Boolean"/>
+      <attribute name="completed_by" type="UUID" foreign_key="User.id"/>
+    </entity>
+
+    <entity name="Escalation">
+      <attribute name="id" type="UUID" primary_key="true"/>
+      <attribute name="family_id" type="UUID" foreign_key="Family.id"/>
+      <attribute name="message_id" type="UUID" foreign_key="Message.id"/>
+      <attribute name="reason" type="String"/>
+      <attribute name="status" type="Enum">pending, acknowledged, resolved</attribute>
+      <attribute name="created_at" type="DateTime"/>
+      <attribute name="resolved_at" type="DateTime" nullable="true"/>
+    </entity>
+  </data_model>
+
+  <!-- ============================================== -->
+  <!-- API ENDPOINTS -->
+  <!-- ============================================== -->
+
+  <api_endpoints>
+    <group name="Authentication">
+      <endpoint method="POST" path="/auth/register">Create user account</endpoint>
+      <endpoint method="POST" path="/auth/login">Login and get JWT</endpoint>
+      <endpoint method="POST" path="/auth/logout">Logout</endpoint>
+      <endpoint method="POST" path="/auth/forgot-password">Request password reset</endpoint>
+      <endpoint method="POST" path="/auth/reset-password">Reset password with token</endpoint>
+    </group>
+
+    <group name="User">
+      <endpoint method="GET" path="/users/me">Get current user profile</endpoint>
+      <endpoint method="PUT" path="/users/me">Update profile</endpoint>
+      <endpoint method="PUT" path="/users/me/preferences">Update preferences</endpoint>
+    </group>
+
+    <group name="Family">
+      <endpoint method="GET" path="/families/:id">Get family details</endpoint>
+      <endpoint method="POST" path="/families/:id/invite">Invite co-parent</endpoint>
+      <endpoint method="GET" path="/families/:id/questionnaire">Get questionnaire</endpoint>
+      <endpoint method="POST" path="/families/:id/questionnaire">Submit questionnaire</endpoint>
+    </group>
+
+    <group name="Chat">
+      <endpoint method="GET" path="/families/:id/conversations">Get conversations</endpoint>
+      <endpoint method="GET" path="/conversations/:id/messages">Get messages</endpoint>
+      <endpoint method="POST" path="/conversations/:id/messages">Send message (triggers AI response)</endpoint>
+      <endpoint method="POST" path="/conversations/:id/escalate">Request coach escalation</endpoint>
+    </group>
+
+    <group name="Journal">
+      <endpoint method="GET" path="/families/:id/journal">Get journal entries</endpoint>
+      <endpoint method="GET" path="/families/:id/journal/:date">Get entry for date</endpoint>
+      <endpoint method="POST" path="/families/:id/journal">Create/update entry</endpoint>
+    </group>
+
+    <group name="Goals">
+      <endpoint method="GET" path="/families/:id/goals">Get family goals</endpoint>
+      <endpoint method="POST" path="/families/:id/goals">Create goal (coach only)</endpoint>
+      <endpoint method="PUT" path="/goals/:id">Update goal</endpoint>
+      <endpoint method="DELETE" path="/goals/:id">Delete goal (coach only)</endpoint>
+    </group>
+
+    <group name="Habits">
+      <endpoint method="GET" path="/families/:id/habits">Get family habits</endpoint>
+      <endpoint method="POST" path="/families/:id/habits">Create habit (coach only)</endpoint>
+      <endpoint method="POST" path="/habits/:id/complete">Mark habit complete for today</endpoint>
+      <endpoint method="GET" path="/habits/:id/history">Get completion history</endpoint>
+    </group>
+
+    <group name="Coach Dashboard">
+      <endpoint method="GET" path="/coach/families">List all coached families</endpoint>
+      <endpoint method="GET" path="/coach/families/:id">Get family full details</endpoint>
+      <endpoint method="GET" path="/coach/escalations">Get pending escalations</endpoint>
+      <endpoint method="PUT" path="/coach/escalations/:id">Acknowledge/resolve escalation</endpoint>
+      <endpoint method="POST" path="/coach/families/:id/message">Send message as coach</endpoint>
+      <endpoint method="GET" path="/coach/stats">Get dashboard statistics</endpoint>
+    </group>
+
+    <group name="Booking (Website)">
+      <endpoint method="GET" path="/booking/slots">Get available slots</endpoint>
+      <endpoint method="POST" path="/booking">Create booking</endpoint>
+      <endpoint method="GET" path="/booking/:id">Get booking details</endpoint>
+      <endpoint method="DELETE" path="/booking/:id">Cancel booking</endpoint>
+    </group>
+
+    <group name="Multichannel">
+      <endpoint method="POST" path="/users/me/whatsapp/link">Link WhatsApp number</endpoint>
+      <endpoint method="POST" path="/users/me/whatsapp/verify">Verify WhatsApp code</endpoint>
+      <endpoint method="DELETE" path="/users/me/whatsapp">Unlink WhatsApp</endpoint>
+      <endpoint method="POST" path="/users/me/instagram/link">Link Instagram account</endpoint>
+      <endpoint method="DELETE" path="/users/me/instagram">Unlink Instagram</endpoint>
+      <endpoint method="PUT" path="/users/me/preferred-channel">Set preferred channel</endpoint>
+    </group>
+
+    <group name="Webhooks (External)">
+      <endpoint method="POST" path="/webhooks/whatsapp">WhatsApp Business API webhook</endpoint>
+      <endpoint method="POST" path="/webhooks/instagram">Instagram Messaging API webhook</endpoint>
+      <endpoint method="GET" path="/webhooks/whatsapp">WhatsApp webhook verification</endpoint>
+      <endpoint method="GET" path="/webhooks/instagram">Instagram webhook verification</endpoint>
+    </group>
+  </api_endpoints>
+
+  <!-- ============================================== -->
+  <!-- SCREENS -->
+  <!-- ============================================== -->
+
+  <screens>
+    <product id="website">
+      <screen id="S-WEB-01" name="Page d'accueil">
+        <components>Hero, Services, Témoignages, CTA, Footer</components>
+      </screen>
+      <screen id="S-WEB-02" name="À propos">
+        <components>Bio coach, Parcours, Certifications, Photo</components>
+      </screen>
+      <screen id="S-WEB-03" name="Services et tarifs">
+        <components>Liste offres, Détails, Comparatif, CTA</components>
+      </screen>
+      <screen id="S-WEB-04" name="Témoignages">
+        <components>Liste témoignages, Filtres par problématique</components>
+      </screen>
+      <screen id="S-WEB-05" name="Blog">
+        <components>Liste articles, Catégories, Recherche</components>
+      </screen>
+      <screen id="S-WEB-06" name="Article">
+        <components>Contenu, Partage, Articles liés, CTA</components>
+      </screen>
+      <screen id="S-WEB-07" name="Prise de RDV">
+        <components>Calendrier créneaux, Formulaire, Confirmation</components>
+      </screen>
+      <screen id="S-WEB-08" name="Contact">
+        <components>Formulaire, Infos contact, FAQ</components>
+      </screen>
+    </product>
+
+    <product id="webapp">
+      <screen id="S-APP-01" name="Login">
+        <components>Formulaire connexion, Mot de passe oublié</components>
+      </screen>
+      <screen id="S-APP-02" name="Onboarding - Questionnaire">
+        <components>Questions étape par étape, Progression</components>
+      </screen>
+      <screen id="S-APP-03" name="Dashboard Parent">
+        <components>Résumé jour, Accès chat, Objectifs du jour, Réflexes</components>
+      </screen>
+      <screen id="S-APP-04" name="Chat IA">
+        <components>Historique messages, Input, Bouton escalade</components>
+      </screen>
+      <screen id="S-APP-05" name="Journal">
+        <components>Vue calendrier, Détail jour, Formulaire ajout</components>
+      </screen>
+      <screen id="S-APP-06" name="Objectifs">
+        <components>Liste objectifs, Détail, Progression</components>
+      </screen>
+      <screen id="S-APP-07" name="Réflexes quotidiens">
+        <components>Liste réflexes, Checkbox, Streak</components>
+      </screen>
+      <screen id="S-APP-08" name="Paramètres">
+        <components>Profil, Notifications, Co-parent, Canaux (WhatsApp/Instagram), Déconnexion</components>
+      </screen>
+      <screen id="S-APP-09" name="Dashboard Coach">
+        <components>Liste familles, Alertes, Stats</components>
+      </screen>
+      <screen id="S-APP-10" name="Dossier Famille (Coach)">
+        <components>Infos, Questionnaire, Conversations, Journal, Objectifs, Réflexes</components>
+      </screen>
+    </product>
+  </screens>
+
+  <!-- ============================================== -->
+  <!-- GLOSSARY -->
+  <!-- ============================================== -->
+
+  <glossary>
+    <term name="Accompagnement">Programme de coaching d'une durée de 1 mois incluant bilans hebdo + accès app</term>
+    <term name="Check-in">Point quotidien entre le parent et l'IA pour faire le bilan de la nuit/journée</term>
+    <term name="Escalade">Transfert de la conversation vers la coach humaine quand l'IA détecte un besoin</term>
+    <term name="Réflexe">Habitude quotidienne à ancrer, définie par la coach et cochée par le parent</term>
+    <term name="Journal de bord">Historique jour par jour des nuits/journées de l'enfant</term>
+    <term name="Questionnaire initial">Formulaire de diagnostic rempli au début de l'accompagnement</term>
+    <term name="Co-parent">Deuxième parent invité à rejoindre le compte famille</term>
+    <term name="Canal">Moyen de communication avec l'IA : App web, WhatsApp, ou Instagram DM</term>
+    <term name="Multicanal">Capacité à échanger avec l'IA via plusieurs plateformes avec synchronisation</term>
+  </glossary>
+
+  <!-- ============================================== -->
+  <!-- SUMMARY -->
+  <!-- ============================================== -->
+
+  <summary>
+    <stories_count>30</stories_count>
+    <epics_count>10</epics_count>
+    <business_rules_count>12</business_rules_count>
+    <nfr_count>10</nfr_count>
+    <entities_count>12</entities_count>
+    <api_endpoints_count>40</api_endpoints_count>
+    <screens_count>18</screens_count>
+  </summary>
+
+</specifications>
