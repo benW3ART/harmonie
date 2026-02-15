@@ -3,9 +3,15 @@ import { redirect } from 'next/navigation'
 import { Users, Search, ArrowRight, Baby } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { createClient } from '@/lib/supabase/server'
+import type { Family, Profile, Child } from '@/types/helpers'
+
+interface FamilyWithRelations extends Family {
+  children?: Child[]
+  profiles?: Profile | null
+}
 
 export default async function CoachFamillesPage() {
   const supabase = await createClient()
@@ -19,21 +25,19 @@ export default async function CoachFamillesPage() {
   }
 
   // Get all families with children and profiles
-  const { data: families } = await supabase
+  const { data: familiesData } = await supabase
     .from('families')
-    .select(`
-      *,
-      children(*),
-      profiles!families_parent_id_fkey(first_name, email)
-    `)
+    .select('*, children(*), profiles!families_parent_id_fkey(first_name, email)')
     .order('created_at', { ascending: false })
 
-  const activeFamilies = families?.filter(
+  const families = (familiesData ?? []) as FamilyWithRelations[]
+
+  const activeFamilies = families.filter(
     (f) => f.subscription_status === 'active'
-  ) || []
-  const inactiveFamilies = families?.filter(
+  )
+  const inactiveFamilies = families.filter(
     (f) => f.subscription_status !== 'active'
-  ) || []
+  )
 
   function calculateAge(birthDate: string): string {
     const birth = new Date(birthDate)
@@ -79,7 +83,7 @@ export default async function CoachFamillesPage() {
               <Users className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{families?.length || 0}</p>
+              <p className="text-2xl font-bold">{families.length}</p>
               <p className="text-sm text-muted-foreground">Familles totales</p>
             </div>
           </CardContent>
@@ -136,7 +140,7 @@ export default async function CoachFamillesPage() {
                         </p>
                         {family.children && family.children.length > 0 && (
                           <div className="mt-2 flex flex-wrap gap-2">
-                            {family.children.map((child: { id: string; first_name: string; birth_date: string }) => (
+                            {family.children.map((child) => (
                               <span
                                 key={child.id}
                                 className="inline-flex items-center gap-1 rounded-full bg-secondary px-2 py-1 text-xs"
@@ -191,7 +195,7 @@ export default async function CoachFamillesPage() {
       )}
 
       {/* Empty state */}
-      {(!families || families.length === 0) && (
+      {families.length === 0 && (
         <Card>
           <CardContent className="flex flex-col items-center py-12 text-center">
             <Users className="h-16 w-16 text-muted-foreground/50" />

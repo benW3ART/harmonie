@@ -1,4 +1,4 @@
-import { createServerClient } from '@supabase/ssr'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import type { Database } from '@/types/database'
 import { NextResponse, type NextRequest } from 'next/server'
 
@@ -15,7 +15,7 @@ export async function middleware(request: NextRequest) {
         getAll() {
           return request.cookies.getAll()
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: { name: string; value: string; options?: CookieOptions }[]) {
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
           supabaseResponse = NextResponse.next({
             request,
@@ -89,12 +89,13 @@ export async function middleware(request: NextRequest) {
     // Redirect away from auth routes if already logged in
     if (isAuthRoute) {
       // Get user profile to determine redirect
-      const { data: profile } = await supabase
+      const { data: profileData } = await supabase
         .from('profiles')
         .select('role')
         .eq('id', user.id)
         .single()
 
+      const profile = profileData as { role: string } | null
       const url = request.nextUrl.clone()
       url.pathname = profile?.role === 'coach' ? '/coach/dashboard' : '/dashboard'
       return NextResponse.redirect(url)
@@ -102,12 +103,13 @@ export async function middleware(request: NextRequest) {
 
     // Check role-based access for coach routes
     if (isCoachRoute) {
-      const { data: profile } = await supabase
+      const { data: profileData } = await supabase
         .from('profiles')
         .select('role')
         .eq('id', user.id)
         .single()
 
+      const profile = profileData as { role: string } | null
       if (profile?.role !== 'coach') {
         const url = request.nextUrl.clone()
         url.pathname = '/dashboard'
@@ -117,12 +119,13 @@ export async function middleware(request: NextRequest) {
 
     // Check role-based access for app routes (parents only)
     if (isAppRoute) {
-      const { data: profile } = await supabase
+      const { data: profileData } = await supabase
         .from('profiles')
         .select('role')
         .eq('id', user.id)
         .single()
 
+      const profile = profileData as { role: string } | null
       if (profile?.role === 'coach') {
         const url = request.nextUrl.clone()
         url.pathname = '/coach/dashboard'

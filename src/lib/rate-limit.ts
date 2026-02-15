@@ -14,11 +14,11 @@ const cache = new Map<string, RateLimitEntry>()
 if (typeof setInterval !== 'undefined') {
   setInterval(() => {
     const now = Date.now()
-    for (const [key, entry] of cache.entries()) {
+    Array.from(cache.entries()).forEach(([key, entry]) => {
       if (entry.resetAt < now) {
         cache.delete(key)
       }
-    }
+    })
   }, 5 * 60 * 1000)
 }
 

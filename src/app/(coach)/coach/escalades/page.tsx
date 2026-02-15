@@ -2,11 +2,20 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { AlertTriangle, CheckCircle, Clock, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { createClient } from '@/lib/supabase/server'
+import type { Escalation, Family, Profile } from '@/types/helpers'
 
-const statusConfig = {
+interface FamilyWithProfile extends Family {
+  profiles?: Profile | null
+}
+
+interface EscalationWithFamily extends Escalation {
+  families?: FamilyWithProfile | null
+}
+
+const statusConfig: Record<string, { label: string; color: string; icon: typeof Clock }> = {
   pending: {
     label: 'En attente',
     color: 'bg-yellow-100 text-yellow-700',
@@ -24,7 +33,7 @@ const statusConfig = {
   },
 }
 
-const priorityConfig = {
+const priorityConfig: Record<string, { label: string; color: string }> = {
   low: { label: 'Basse', color: 'bg-gray-100 text-gray-700' },
   medium: { label: 'Moyenne', color: 'bg-yellow-100 text-yellow-700' },
   high: { label: 'Haute', color: 'bg-orange-100 text-orange-700' },
@@ -43,17 +52,16 @@ export default async function CoachEscaladesPage() {
   }
 
   // Get all escalations
-  const { data: escalations } = await supabase
+  const { data: escalationsData } = await supabase
     .from('escalations')
-    .select(`
-      *,
-      families(name, profiles!families_parent_id_fkey(first_name, email))
-    `)
+    .select('*, families(name, profiles!families_parent_id_fkey(first_name, email))')
     .order('created_at', { ascending: false })
 
-  const pendingEscalations = escalations?.filter((e) => e.status === 'pending') || []
-  const acknowledgedEscalations = escalations?.filter((e) => e.status === 'acknowledged') || []
-  const resolvedEscalations = escalations?.filter((e) => e.status === 'resolved') || []
+  const escalations = (escalationsData ?? []) as EscalationWithFamily[]
+
+  const pendingEscalations = escalations.filter((e) => e.status === 'pending')
+  const acknowledgedEscalations = escalations.filter((e) => e.status === 'acknowledged')
+  const resolvedEscalations = escalations.filter((e) => e.status === 'resolved')
 
   return (
     <div className="space-y-8">
@@ -110,8 +118,8 @@ export default async function CoachEscaladesPage() {
           </h2>
           <div className="space-y-4">
             {pendingEscalations.map((escalation) => {
-              const status = statusConfig[escalation.status as keyof typeof statusConfig]
-              const priority = priorityConfig[escalation.priority as keyof typeof priorityConfig] || priorityConfig.medium
+              const status = statusConfig[escalation.status] ?? statusConfig.pending
+              const priority = priorityConfig[escalation.priority] ?? priorityConfig.medium
               return (
                 <Card key={escalation.id} className="border-destructive">
                   <CardContent className="p-4">
@@ -124,8 +132,8 @@ export default async function CoachEscaladesPage() {
                           <p className="font-semibold">
                             {escalation.families?.name || 'Famille'}
                           </p>
-                          <Badge className={status?.color}>
-                            {status?.label}
+                          <Badge className={status.color}>
+                            {status.label}
                           </Badge>
                           <Badge className={priority.color}>
                             {priority.label}
@@ -170,7 +178,7 @@ export default async function CoachEscaladesPage() {
           </h2>
           <div className="space-y-4">
             {acknowledgedEscalations.map((escalation) => {
-              const status = statusConfig[escalation.status as keyof typeof statusConfig]
+              const status = statusConfig[escalation.status] ?? statusConfig.pending
               return (
                 <Card key={escalation.id}>
                   <CardContent className="flex items-center gap-4 p-4">
@@ -185,8 +193,8 @@ export default async function CoachEscaladesPage() {
                         {escalation.reason}
                       </p>
                     </div>
-                    <Badge className={status?.color}>
-                      {status?.label}
+                    <Badge className={status.color}>
+                      {status.label}
                     </Badge>
                     <Button size="sm" variant="outline">
                       Marquer résolu
@@ -231,7 +239,7 @@ export default async function CoachEscaladesPage() {
       )}
 
       {/* Empty state */}
-      {(!escalations || escalations.length === 0) && (
+      {escalations.length === 0 && (
         <Card>
           <CardContent className="flex flex-col items-center py-12 text-center">
             <CheckCircle className="h-16 w-16 text-success" />

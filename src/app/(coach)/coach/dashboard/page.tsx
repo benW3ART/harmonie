@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation'
 import {
   Users,
   AlertTriangle,
-  MessageCircle,
   TrendingUp,
   ArrowRight,
   Calendar,
@@ -13,6 +12,20 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { createClient } from '@/lib/supabase/server'
+import type { Profile, Family, Escalation, Booking, Child } from '@/types/helpers'
+
+interface FamilyWithRelations extends Family {
+  children?: Child[]
+  profiles?: Profile | null
+}
+
+interface EscalationWithFamily extends Escalation {
+  families?: Family | null
+}
+
+interface BookingWithFamily extends Booking {
+  families?: Family | null
+}
 
 export default async function CoachDashboardPage() {
   const supabase = await createClient()
@@ -26,44 +39,45 @@ export default async function CoachDashboardPage() {
   }
 
   // Get profile
-  const { data: profile } = await supabase
+  const { data: profileData } = await supabase
     .from('profiles')
     .select('*')
     .eq('id', user.id)
     .single()
+  
+  const profile = profileData as Profile | null
 
   // Get all families
-  const { data: families } = await supabase
+  const { data: familiesData } = await supabase
     .from('families')
     .select('*, children(*), profiles!families_parent_id_fkey(*)')
     .order('created_at', { ascending: false })
 
+  const families = (familiesData ?? []) as FamilyWithRelations[]
+
   // Get pending escalations
-  const { data: escalations } = await supabase
+  const { data: escalationsData } = await supabase
     .from('escalations')
     .select('*, families(*)')
     .eq('status', 'pending')
     .order('created_at', { ascending: false })
     .limit(5)
 
+  const escalations = (escalationsData ?? []) as EscalationWithFamily[]
+
   // Get upcoming bookings
-  const { data: bookings } = await supabase
+  const { data: bookingsData } = await supabase
     .from('bookings')
     .select('*, families(*)')
     .gte('date_time', new Date().toISOString())
     .order('date_time', { ascending: true })
     .limit(5)
 
-  // Get recent conversations with high activity
-  const { data: recentMessages } = await supabase
-    .from('messages')
-    .select('*, conversations(*, families(*))')
-    .order('created_at', { ascending: false })
-    .limit(10)
+  const bookings = (bookingsData ?? []) as BookingWithFamily[]
 
-  const activeFamilies = families?.filter(
+  const activeFamilies = families.filter(
     (f) => f.subscription_status === 'active'
-  ).length || 0
+  ).length
 
   return (
     <div className="space-y-8">
@@ -85,7 +99,7 @@ export default async function CoachDashboardPage() {
               <Users className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{families?.length || 0}</p>
+              <p className="text-2xl font-bold">{families.length}</p>
               <p className="text-sm text-muted-foreground">Familles totales</p>
             </div>
           </CardContent>
@@ -107,7 +121,7 @@ export default async function CoachDashboardPage() {
               <AlertTriangle className="h-6 w-6 text-destructive" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{escalations?.length || 0}</p>
+              <p className="text-2xl font-bold">{escalations.length}</p>
               <p className="text-sm text-muted-foreground">Escalades</p>
             </div>
           </CardContent>
@@ -118,7 +132,7 @@ export default async function CoachDashboardPage() {
               <Calendar className="h-6 w-6 text-accent" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{bookings?.length || 0}</p>
+              <p className="text-2xl font-bold">{bookings.length}</p>
               <p className="text-sm text-muted-foreground">RDV à venir</p>
             </div>
           </CardContent>
@@ -138,7 +152,7 @@ export default async function CoachDashboardPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {escalations && escalations.length > 0 ? (
+            {escalations.length > 0 ? (
               <ul className="space-y-4">
                 {escalations.map((escalation) => (
                   <li
@@ -190,7 +204,7 @@ export default async function CoachDashboardPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {bookings && bookings.length > 0 ? (
+            {bookings.length > 0 ? (
               <ul className="space-y-4">
                 {bookings.map((booking) => (
                   <li
@@ -246,7 +260,7 @@ export default async function CoachDashboardPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {families && families.length > 0 ? (
+          {families.length > 0 ? (
             <div className="space-y-4">
               {families.slice(0, 5).map((family) => (
                 <Link
