@@ -1,13 +1,12 @@
-// @ts-nocheck
-// TODO: Remove ts-nocheck after running `npx supabase gen types typescript` with actual database
 'use client'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Plus, Repeat, CheckCircle, Clock, Sun, Sunset, Moon } from 'lucide-react'
+import { Plus, Repeat, CheckCircle, Sun, Sunset, Moon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { createClient } from '@/lib/supabase/client'
+import type { HabitWithCompletions, Family } from '@/types/helpers'
 
 const timeOfDayConfig = {
   morning: { label: 'Matin', icon: Sun, color: 'text-yellow-500' },
@@ -15,17 +14,8 @@ const timeOfDayConfig = {
   evening: { label: 'Soir', icon: Moon, color: 'text-blue-500' },
 }
 
-interface Habit {
-  id: string
-  title: string
-  description: string | null
-  time_of_day: string | null
-  active: boolean
-  habit_completions: { completed_at: string }[]
-}
-
 export default function ReflexesPage() {
-  const [habits, setHabits] = useState<Habit[]>([])
+  const [habits, setHabits] = useState<HabitWithCompletions[]>([])
   const [loading, setLoading] = useState(true)
   const [completing, setCompleting] = useState<string | null>(null)
   const supabase = createClient()
@@ -33,6 +23,7 @@ export default function ReflexesPage() {
 
   useEffect(() => {
     loadHabits()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const loadHabits = async () => {
@@ -40,12 +31,13 @@ export default function ReflexesPage() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
 
-      const { data: family } = await supabase
+      const { data: familyData } = await supabase
         .from('families')
         .select('id')
         .eq('parent_id', user.id)
         .single()
 
+      const family = familyData as Family | null
       if (!family) return
 
       const { data } = await supabase
@@ -55,7 +47,7 @@ export default function ReflexesPage() {
         .eq('active', true)
         .order('time_of_day')
 
-      setHabits(data || [])
+      setHabits((data ?? []) as HabitWithCompletions[])
     } catch (error) {
       console.error('Error loading habits:', error)
     } finally {
@@ -63,7 +55,7 @@ export default function ReflexesPage() {
     }
   }
 
-  const toggleCompletion = async (habitId: string, isCompleted: boolean) => {
+  const toggleCompletion = async (habitId: string, isCompleted: boolean | undefined) => {
     setCompleting(habitId)
     try {
       if (isCompleted) {
@@ -79,7 +71,7 @@ export default function ReflexesPage() {
         await supabase.from('habit_completions').insert({
           habit_id: habitId,
           completed_at: new Date().toISOString(),
-        })
+        } as never)
       }
       await loadHabits()
     } catch (error) {
@@ -89,7 +81,7 @@ export default function ReflexesPage() {
     }
   }
 
-  const isCompletedToday = (habit: Habit) => {
+  const isCompletedToday = (habit: HabitWithCompletions) => {
     return habit.habit_completions?.some((c) =>
       c.completed_at.startsWith(today)
     )
@@ -112,7 +104,7 @@ export default function ReflexesPage() {
     title: string
     icon: typeof Sun
     iconColor: string
-    habitList: Habit[]
+    habitList: HabitWithCompletions[]
   }) => {
     if (habitList.length === 0) return null
 

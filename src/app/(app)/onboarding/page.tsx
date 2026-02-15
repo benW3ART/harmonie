@@ -1,5 +1,3 @@
-// @ts-nocheck
-// TODO: Remove ts-nocheck after running `npx supabase gen types typescript` with actual database
 'use client'
 
 import { useState } from 'react'
@@ -11,8 +9,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/checkbox'
 import { createClient } from '@/lib/supabase/client'
+import type { FamilyInsert, ChildInsert, QuestionnaireInsert } from '@/types/helpers'
 
 const steps = [
   { id: 1, name: 'Bienvenue', description: 'Présentation' },
@@ -28,7 +26,7 @@ const concerns = [
   { id: 'behavior', label: 'Comportement', icon: Brain },
 ]
 
-interface Child {
+interface ChildForm {
   firstName: string
   birthDate: string
   gender: 'M' | 'F' | ''
@@ -42,7 +40,7 @@ export default function OnboardingPage() {
 
   // Form state
   const [familyName, setFamilyName] = useState('')
-  const [children, setChildren] = useState<Child[]>([{ firstName: '', birthDate: '', gender: '' }])
+  const [children, setChildren] = useState<ChildForm[]>([{ firstName: '', birthDate: '', gender: '' }])
   const [selectedConcerns, setSelectedConcerns] = useState<string[]>([])
   const [mainChallenge, setMainChallenge] = useState('')
   const [goals, setGoals] = useState('')
@@ -51,7 +49,7 @@ export default function OnboardingPage() {
     setChildren([...children, { firstName: '', birthDate: '', gender: '' }])
   }
 
-  const updateChild = (index: number, field: keyof Child, value: string) => {
+  const updateChild = (index: number, field: keyof ChildForm, value: string) => {
     const updated = [...children]
     updated[index] = { ...updated[index], [field]: value }
     setChildren(updated)
@@ -91,40 +89,52 @@ export default function OnboardingPage() {
       if (!user) throw new Error('No user')
 
       // Create family
+      const familyData: FamilyInsert = {
+        parent_id: user.id,
+        name: familyName || 'Ma famille',
+        onboarding_completed: true,
+      }
+
       const { data: family, error: familyError } = await supabase
         .from('families')
-        .insert({
-          parent_id: user.id,
-          name: familyName || 'Ma famille',
-          onboarding_completed: true,
-        })
+        .insert(familyData as never)
         .select()
         .single()
 
       if (familyError) throw familyError
+      const familyId = (family as { id: string }).id
 
       // Create children
       for (const child of children) {
         if (child.firstName && child.birthDate) {
-          await supabase.from('children').insert({
-            family_id: family.id,
+          const childData: ChildInsert = {
+            family_id: familyId,
             first_name: child.firstName,
             birth_date: child.birthDate,
             gender: child.gender || null,
-          })
+          }
+          await supabase.from('children').insert(childData as never)
         }
       }
 
       // Create questionnaire
-      await supabase.from('questionnaires').insert({
-        family_id: family.id,
+      const questionnaireData: QuestionnaireInsert = {
+        family_id: familyId,
         type: 'onboarding',
         responses: {
           concerns: selectedConcerns,
           main_challenge: mainChallenge,
           goals,
         },
-      })
+      }
+      await supabase.from('questionnaires').insert(questionnaireData as never)
+
+      // Send welcome email
+      try {
+        await fetch('/api/auth/welcome', { method: 'POST' })
+      } catch {
+        // Email sending is best-effort
+      }
 
       router.push('/dashboard')
       router.refresh()

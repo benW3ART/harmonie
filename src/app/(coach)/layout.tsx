@@ -1,9 +1,8 @@
-// @ts-nocheck
-// TODO: Remove ts-nocheck after running `npx supabase gen types typescript` with actual database
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { CoachSidebar } from '@/components/coach/sidebar'
 import { CoachHeader } from '@/components/coach/header'
+import type { Profile } from '@/types/helpers'
 
 export default async function CoachLayout({
   children,
@@ -21,11 +20,13 @@ export default async function CoachLayout({
   }
 
   // Get user profile and verify coach role
-  const { data: profile } = await supabase
+  const { data: profileData } = await supabase
     .from('profiles')
     .select('*')
     .eq('id', user.id)
     .single()
+
+  const profile = profileData as Profile | null
 
   if (!profile || profile.role !== 'coach') {
     redirect('/dashboard')

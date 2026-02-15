@@ -1,14 +1,14 @@
-// @ts-nocheck
-// TODO: Remove ts-nocheck after running `npx supabase gen types typescript` with actual database
+// TODO: Generate types with `npx supabase gen types` after DB migration
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Plus, Calendar, Moon, Apple, Heart, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { createClient } from '@/lib/supabase/server'
+import type { JournalEntry, Family } from '@/types/helpers'
 
-const moodEmojis = {
+const moodEmojis: Record<string, string> = {
   great: '😊',
   good: '🙂',
   neutral: '😐',
@@ -16,7 +16,7 @@ const moodEmojis = {
   terrible: '😢',
 }
 
-const moodLabels = {
+const moodLabels: Record<string, string> = {
   great: 'Super',
   good: 'Bien',
   neutral: 'Neutre',
@@ -36,22 +36,26 @@ export default async function JournalPage() {
   }
 
   // Get family
-  const { data: family } = await supabase
+  const { data: familyData } = await supabase
     .from('families')
     .select('id')
     .eq('parent_id', user.id)
     .single()
 
+  const family = familyData as Family | null
+
   // Get journal entries
-  const { data: entries } = await supabase
+  const { data: entriesData } = await supabase
     .from('journal_entries')
     .select('*')
-    .eq('family_id', family?.id)
+    .eq('family_id', family?.id ?? '')
     .order('date', { ascending: false })
     .limit(30)
 
+  const entries = (entriesData ?? []) as JournalEntry[]
+
   // Group entries by month
-  const entriesByMonth = entries?.reduce((acc, entry) => {
+  const entriesByMonth = entries.reduce((acc, entry) => {
     const month = new Date(entry.date).toLocaleDateString('fr-FR', {
       year: 'numeric',
       month: 'long',
@@ -61,7 +65,7 @@ export default async function JournalPage() {
     }
     acc[month].push(entry)
     return acc
-  }, {} as Record<string, typeof entries>)
+  }, {} as Record<string, JournalEntry[]>)
 
   return (
     <div className="space-y-8">
@@ -88,7 +92,7 @@ export default async function JournalPage() {
               <Calendar className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{entries?.length || 0}</p>
+              <p className="text-2xl font-bold">{entries.length}</p>
               <p className="text-sm text-muted-foreground">Entrées totales</p>
             </div>
           </CardContent>
@@ -100,7 +104,7 @@ export default async function JournalPage() {
             </div>
             <div>
               <p className="text-2xl font-bold">
-                {entries?.filter((e) => e.sleep_quality === 'good' || e.sleep_quality === 'great').length || 0}
+                {entries.filter((e) => e.sleep_quality === 'good' || e.sleep_quality === 'great').length}
               </p>
               <p className="text-sm text-muted-foreground">Bonnes nuits</p>
             </div>
@@ -113,7 +117,7 @@ export default async function JournalPage() {
             </div>
             <div>
               <p className="text-2xl font-bold">
-                {entries?.filter((e) => e.meals_quality === 'good' || e.meals_quality === 'great').length || 0}
+                {entries.filter((e) => e.meals_quality === 'good' || e.meals_quality === 'great').length}
               </p>
               <p className="text-sm text-muted-foreground">Bons repas</p>
             </div>
@@ -126,7 +130,7 @@ export default async function JournalPage() {
             </div>
             <div>
               <p className="text-2xl font-bold">
-                {entries?.filter((e) => e.mood === 'good' || e.mood === 'great').length || 0}
+                {entries.filter((e) => e.mood === 'good' || e.mood === 'great').length}
               </p>
               <p className="text-sm text-muted-foreground">Bonnes journées</p>
             </div>
@@ -135,20 +139,20 @@ export default async function JournalPage() {
       </div>
 
       {/* Entries */}
-      {entries && entries.length > 0 ? (
+      {entries.length > 0 ? (
         <div className="space-y-8">
-          {Object.entries(entriesByMonth || {}).map(([month, monthEntries]) => (
+          {Object.entries(entriesByMonth).map(([month, monthEntries]) => (
             <div key={month}>
               <h2 className="mb-4 font-heading text-xl font-semibold capitalize">
                 {month}
               </h2>
               <div className="space-y-4">
-                {monthEntries?.map((entry) => (
+                {monthEntries.map((entry) => (
                   <Link key={entry.id} href={`/journal/${entry.id}`}>
                     <Card className="transition-shadow hover:shadow-lg">
                       <CardContent className="flex items-center gap-4 p-4">
                         <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-secondary text-2xl">
-                          {entry.mood ? moodEmojis[entry.mood as keyof typeof moodEmojis] : '📝'}
+                          {entry.mood ? moodEmojis[entry.mood] ?? '📝' : '📝'}
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
@@ -160,7 +164,7 @@ export default async function JournalPage() {
                             </p>
                             {entry.mood && (
                               <Badge variant="secondary">
-                                {moodLabels[entry.mood as keyof typeof moodLabels]}
+                                {moodLabels[entry.mood] ?? entry.mood}
                               </Badge>
                             )}
                           </div>

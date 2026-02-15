@@ -1,9 +1,8 @@
-// @ts-nocheck
-// TODO: Remove ts-nocheck after running `npx supabase gen types typescript` with actual database
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AppSidebar } from '@/components/app/sidebar'
 import { AppHeader } from '@/components/app/header'
+import type { Profile, Family } from '@/types/helpers'
 
 export default async function AppLayout({
   children,
@@ -21,28 +20,28 @@ export default async function AppLayout({
   }
 
   // Get user profile
-  const { data: profile } = await supabase
+  const { data: profileData } = await supabase
     .from('profiles')
     .select('*')
     .eq('id', user.id)
     .single()
+
+  const profile = profileData as Profile | null
 
   if (!profile) {
     redirect('/onboarding')
   }
 
   // Check if onboarding is completed
-  const { data: family } = await supabase
+  const { data: familyData } = await supabase
     .from('families')
     .select('onboarding_completed')
     .eq('parent_id', user.id)
     .single()
 
-  // Allow access to onboarding even if family doesn't exist
-  const isOnboarding = typeof window !== 'undefined' &&
-    window.location.pathname.startsWith('/onboarding')
+  const family = familyData as Pick<Family, 'onboarding_completed'> | null
 
-  if (!family?.onboarding_completed && !isOnboarding) {
+  if (!family?.onboarding_completed) {
     redirect('/onboarding')
   }
 

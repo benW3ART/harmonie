@@ -1,8 +1,7 @@
-// @ts-nocheck
-// TODO: Remove ts-nocheck after running `npx supabase gen types typescript` with actual database
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { createClient } from '@/lib/supabase/server'
+import { rateLimit, RATE_LIMITS } from '@/lib/rate-limit'
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
@@ -36,48 +35,71 @@ export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient()
 
-    // Verify user is authenticated
+    // Get user (for rate limiting key)
     const {
       data: { user },
     } = await supabase.auth.getUser()
 
-    if (!user) {
+    // Rate limiting
+    const rateLimitKey = user?.id || request.headers.get('x-forwarded-for') || 'anonymous'
+    const config = user ? RATE_LIMITS.AUTHENTICATED : RATE_LIMITS.UNAUTHENTICATED
+    const result = rateLimit(rateLimitKey, config.limit, config.windowMs)
+
+    if (!result.success) {
       return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
+        { error: 'Too many requests. Please slow down.' },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': result.limit.toString(),
+            'X-RateLimit-Remaining': result.remaining.toString(),
+            'X-RateLimit-Reset': result.reset.toString(),
+            'Retry-After': Math.ceil((result.reset * 1000 - Date.now()) / 1000).toString(),
+          },
+        }
       )
+    }
+
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const { messages } = await request.json()
 
     if (!messages || !Array.isArray(messages)) {
-      return NextResponse.json(
-        { error: 'Invalid messages' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Invalid messages' }, { status: 400 })
     }
 
     // Get family context
-    const { data: family } = await supabase
+    const { data: familyData } = await supabase
       .from('families')
       .select('*, children(*)')
       .eq('parent_id', user.id)
       .single()
+
+    interface FamilyWithChildren {
+      id: string
+      children?: Array<{ first_name: string; birth_date: string }>
+    }
+    const family = familyData as FamilyWithChildren | null
 
     // Build context about the family
     let familyContext = ''
     if (family) {
       familyContext = `\n\nContexte famille:\n`
       if (family.children && family.children.length > 0) {
-        familyContext += `Enfants: ${family.children.map((child: { first_name: string; birth_date: string }) => {
-          const age = calculateAge(child.birth_date)
-          return `${child.first_name} (${age})`
-        }).join(', ')}`
+        familyContext += `Enfants: ${family.children
+          .map((child) => {
+            const age = calculateAge(child.birth_date)
+            return `${child.first_name} (${age})`
+          })
+          .join(', ')}`
       }
     }
 
-    const response = await anthropic.messages.create({
-      model: 'claude-3-haiku-20240307',
+    // Create streaming response
+    const stream = await anthropic.messages.stream({
+      model: 'claude-sonnet-4-20250514',
       max_tokens: 1024,
       system: SYSTEM_PROMPT + familyContext,
       messages: messages.map((m: { role: string; content: string }) => ({
@@ -86,31 +108,89 @@ export async function POST(request: NextRequest) {
       })),
     })
 
-    // Extract text content from response
-    const textContent = response.content.find((block) => block.type === 'text')
-    const content = textContent ? textContent.text : ''
+    // Create a TransformStream to convert Anthropic events to SSE
+    const encoder = new TextEncoder()
+    let fullContent = ''
 
-    // Store conversation in database
-    const { data: conversation } = await supabase
+    const readable = new ReadableStream({
+      async start(controller) {
+        try {
+          for await (const event of stream) {
+            if (
+              event.type === 'content_block_delta' &&
+              event.delta.type === 'text_delta'
+            ) {
+              const text = event.delta.text
+              fullContent += text
+              controller.enqueue(
+                encoder.encode(`data: ${JSON.stringify({ text })}\n\n`)
+              )
+            }
+          }
+
+          // Send done event
+          controller.enqueue(encoder.encode('data: [DONE]\n\n'))
+          controller.close()
+
+          // Store conversation in database (async, don't wait)
+          storeConversation(supabase, family?.id, messages, fullContent).catch(
+            console.error
+          )
+        } catch (error) {
+          console.error('Streaming error:', error)
+          controller.error(error)
+        }
+      },
+    })
+
+    return new Response(readable, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        Connection: 'keep-alive',
+        'X-RateLimit-Limit': result.limit.toString(),
+        'X-RateLimit-Remaining': result.remaining.toString(),
+        'X-RateLimit-Reset': result.reset.toString(),
+      },
+    })
+  } catch (error) {
+    console.error('Chat API error:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
+
+async function storeConversation(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  familyId: string | undefined,
+  messages: { role: string; content: string }[],
+  assistantContent: string
+) {
+  if (!familyId) return
+
+  try {
+    // Get or create conversation
+    const { data: conversationData } = await supabase
       .from('conversations')
       .select('id')
-      .eq('family_id', family?.id)
+      .eq('family_id', familyId)
       .eq('channel', 'web')
       .order('created_at', { ascending: false })
       .limit(1)
       .single()
 
+    const conversation = conversationData as { id: string } | null
     let conversationId = conversation?.id
 
     if (!conversationId) {
-      const { data: newConversation } = await supabase
+      const { data: newConversationData } = await supabase
         .from('conversations')
         .insert({
-          family_id: family?.id,
+          family_id: familyId,
           channel: 'web',
-        })
+        } as never)
         .select()
         .single()
+      const newConversation = newConversationData as { id: string } | null
       conversationId = newConversation?.id
     }
 
@@ -126,25 +206,21 @@ export async function POST(request: NextRequest) {
         {
           conversation_id: conversationId,
           role: 'assistant',
-          content,
+          content: assistantContent,
         },
-      ])
+      ] as never)
     }
-
-    return NextResponse.json({ content })
   } catch (error) {
-    console.error('Chat API error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    console.error('Error storing conversation:', error)
   }
 }
 
 function calculateAge(birthDate: string): string {
   const birth = new Date(birthDate)
   const today = new Date()
-  const months = (today.getFullYear() - birth.getFullYear()) * 12 + (today.getMonth() - birth.getMonth())
+  const months =
+    (today.getFullYear() - birth.getFullYear()) * 12 +
+    (today.getMonth() - birth.getMonth())
 
   if (months < 12) {
     return `${months} mois`

@@ -1,5 +1,3 @@
-// @ts-nocheck
-// TODO: Remove ts-nocheck after running `npx supabase gen types typescript` with actual database
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { AlertTriangle, CheckCircle, Clock, ArrowRight } from 'lucide-react'

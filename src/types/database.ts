@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export type Database = {
+export interface Database {
   public: {
     Tables: {
       profiles: {
@@ -55,11 +55,12 @@ export type Database = {
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
       }
       families: {
         Row: {
           id: string
-          parent_id: string
+          parent_id: string | null
           name: string | null
           coach_id: string | null
           subscription_status: 'active' | 'inactive' | 'trial' | 'expired'
@@ -70,7 +71,7 @@ export type Database = {
         }
         Insert: {
           id?: string
-          parent_id: string
+          parent_id?: string | null
           name?: string | null
           coach_id?: string | null
           subscription_status?: 'active' | 'inactive' | 'trial' | 'expired'
@@ -81,7 +82,7 @@ export type Database = {
         }
         Update: {
           id?: string
-          parent_id?: string
+          parent_id?: string | null
           name?: string | null
           coach_id?: string | null
           subscription_status?: 'active' | 'inactive' | 'trial' | 'expired'
@@ -90,6 +91,20 @@ export type Database = {
           end_date?: string | null
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "families_parent_id_fkey"
+            columns: ["parent_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "families_coach_id_fkey"
+            columns: ["coach_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       family_members: {
         Row: {
@@ -113,6 +128,20 @@ export type Database = {
           role?: 'primary' | 'co_parent'
           joined_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "family_members_family_id_fkey"
+            columns: ["family_id"]
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "family_members_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       children: {
         Row: {
@@ -142,6 +171,14 @@ export type Database = {
           sibling_position?: number
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "children_family_id_fkey"
+            columns: ["family_id"]
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       questionnaires: {
         Row: {
@@ -154,7 +191,7 @@ export type Database = {
         Insert: {
           id?: string
           family_id: string
-          type: string
+          type?: string
           responses: Json
           submitted_at?: string
         }
@@ -165,6 +202,14 @@ export type Database = {
           responses?: Json
           submitted_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "questionnaires_family_id_fkey"
+            columns: ["family_id"]
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       conversations: {
         Row: {
@@ -185,6 +230,14 @@ export type Database = {
           channel?: 'web' | 'whatsapp' | 'instagram'
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "conversations_family_id_fkey"
+            columns: ["family_id"]
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       messages: {
         Row: {
@@ -211,6 +264,14 @@ export type Database = {
           metadata?: Json | null
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       journal_entries: {
         Row: {
@@ -252,6 +313,20 @@ export type Database = {
           created_at?: string
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "journal_entries_family_id_fkey"
+            columns: ["family_id"]
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "journal_entries_child_id_fkey"
+            columns: ["child_id"]
+            referencedRelation: "children"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       goals: {
         Row: {
@@ -287,6 +362,20 @@ export type Database = {
           created_by?: string | null
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "goals_family_id_fkey"
+            columns: ["family_id"]
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "goals_created_by_fkey"
+            columns: ["created_by"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       daily_habits: {
         Row: {
@@ -322,6 +411,20 @@ export type Database = {
           created_by?: string | null
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "daily_habits_family_id_fkey"
+            columns: ["family_id"]
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "daily_habits_created_by_fkey"
+            columns: ["created_by"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       habit_completions: {
         Row: {
@@ -342,6 +445,20 @@ export type Database = {
           completed_at?: string
           completed_by?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "habit_completions_habit_id_fkey"
+            columns: ["habit_id"]
+            referencedRelation: "daily_habits"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "habit_completions_completed_by_fkey"
+            columns: ["completed_by"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       escalations: {
         Row: {
@@ -374,6 +491,20 @@ export type Database = {
           created_at?: string
           resolved_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "escalations_family_id_fkey"
+            columns: ["family_id"]
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "escalations_message_id_fkey"
+            columns: ["message_id"]
+            referencedRelation: "messages"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       bookings: {
         Row: {
@@ -383,15 +514,25 @@ export type Database = {
           date_time: string
           status: 'pending' | 'confirmed' | 'cancelled' | 'completed'
           notes: string | null
+          client_name: string | null
+          client_email: string | null
+          client_phone: string | null
+          child_age: string | null
+          main_issue: string | null
           created_at: string
         }
         Insert: {
           id?: string
           family_id?: string | null
-          type: string
+          type?: string
           date_time: string
           status?: 'pending' | 'confirmed' | 'cancelled' | 'completed'
           notes?: string | null
+          client_name?: string | null
+          client_email?: string | null
+          client_phone?: string | null
+          child_age?: string | null
+          main_issue?: string | null
           created_at?: string
         }
         Update: {
@@ -401,8 +542,21 @@ export type Database = {
           date_time?: string
           status?: 'pending' | 'confirmed' | 'cancelled' | 'completed'
           notes?: string | null
+          client_name?: string | null
+          client_email?: string | null
+          client_phone?: string | null
+          child_age?: string | null
+          main_issue?: string | null
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_family_id_fkey"
+            columns: ["family_id"]
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       blog_posts: {
         Row: {
@@ -450,6 +604,7 @@ export type Database = {
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
       }
       testimonials: {
         Row: {
@@ -488,6 +643,7 @@ export type Database = {
           approved?: boolean
           created_at?: string
         }
+        Relationships: []
       }
     }
     Views: {
@@ -499,12 +655,89 @@ export type Database = {
     Enums: {
       [_ in never]: never
     }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
 }
 
-export type Tables<T extends keyof Database['public']['Tables']> =
-  Database['public']['Tables'][T]['Row']
-export type InsertTables<T extends keyof Database['public']['Tables']> =
-  Database['public']['Tables'][T]['Insert']
-export type UpdateTables<T extends keyof Database['public']['Tables']> =
-  Database['public']['Tables'][T]['Update']
+// Helper types
+export type Tables<
+  PublicTableNameOrOptions extends
+    | keyof (Database['public']['Tables'] & Database['public']['Views'])
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+        Database[PublicTableNameOrOptions['schema']]['Views'])
+    : never = never,
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : PublicTableNameOrOptions extends keyof (Database['public']['Tables'] &
+        Database['public']['Views'])
+    ? (Database['public']['Tables'] &
+        Database['public']['Views'])[PublicTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  PublicTableNameOrOptions extends
+    | keyof Database['public']['Tables']
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+    : never = never,
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : PublicTableNameOrOptions extends keyof Database['public']['Tables']
+    ? Database['public']['Tables'][PublicTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  PublicTableNameOrOptions extends
+    | keyof Database['public']['Tables']
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+    : never = never,
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : PublicTableNameOrOptions extends keyof Database['public']['Tables']
+    ? Database['public']['Tables'][PublicTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  PublicEnumNameOrOptions extends
+    | keyof Database['public']['Enums']
+    | { schema: keyof Database },
+  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
+    : never = never,
+> = PublicEnumNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : PublicEnumNameOrOptions extends keyof Database['public']['Enums']
+    ? Database['public']['Enums'][PublicEnumNameOrOptions]
+    : never

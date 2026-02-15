@@ -1,5 +1,3 @@
-// @ts-nocheck
-// TODO: Remove ts-nocheck after running `npx supabase gen types typescript` with actual database
 'use client'
 
 import { useState } from 'react'
@@ -11,6 +9,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClient } from '@/lib/supabase/client'
 import { Loader2 } from 'lucide-react'
+import type { Profile } from '@/types/helpers'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -37,11 +36,13 @@ export default function LoginPage() {
       }
 
       // Get user profile to determine redirect
-      const { data: profile } = await supabase
+      const { data: profileData } = await supabase
         .from('profiles')
         .select('role')
         .eq('id', data.user.id)
         .single()
+
+      const profile = profileData as Pick<Profile, 'role'> | null
 
       if (profile?.role === 'coach') {
         router.push('/coach/dashboard')

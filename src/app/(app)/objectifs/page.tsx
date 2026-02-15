@@ -1,14 +1,13 @@
-// @ts-nocheck
-// TODO: Remove ts-nocheck after running `npx supabase gen types typescript` with actual database
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Plus, Target, CheckCircle, Clock, AlertCircle, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { createClient } from '@/lib/supabase/server'
+import type { Goal, Family } from '@/types/helpers'
 
-const statusConfig = {
+const statusConfig: Record<string, { label: string; color: string; icon: typeof Clock }> = {
   not_started: {
     label: 'Non commencé',
     color: 'bg-gray-100 text-gray-700',
@@ -31,7 +30,7 @@ const statusConfig = {
   },
 }
 
-const categoryIcons = {
+const categoryIcons: Record<string, string> = {
   sleep: '🌙',
   nutrition: '🍎',
   behavior: '🧠',
@@ -50,24 +49,28 @@ export default async function ObjectifsPage() {
   }
 
   // Get family
-  const { data: family } = await supabase
+  const { data: familyData } = await supabase
     .from('families')
     .select('id')
     .eq('parent_id', user.id)
     .single()
 
+  const family = familyData as Family | null
+
   // Get goals
-  const { data: goals } = await supabase
+  const { data: goalsData } = await supabase
     .from('goals')
     .select('*')
-    .eq('family_id', family?.id)
+    .eq('family_id', family?.id ?? '')
     .order('created_at', { ascending: false })
 
-  const inProgressGoals = goals?.filter((g) => g.status === 'in_progress') || []
-  const completedGoals = goals?.filter((g) => g.status === 'completed') || []
-  const otherGoals = goals?.filter(
+  const goals = (goalsData ?? []) as Goal[]
+
+  const inProgressGoals = goals.filter((g) => g.status === 'in_progress')
+  const completedGoals = goals.filter((g) => g.status === 'completed')
+  const otherGoals = goals.filter(
     (g) => g.status !== 'in_progress' && g.status !== 'completed'
-  ) || []
+  )
 
   return (
     <div className="space-y-8">
@@ -116,7 +119,7 @@ export default async function ObjectifsPage() {
               <Target className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{goals?.length || 0}</p>
+              <p className="text-2xl font-bold">{goals.length}</p>
               <p className="text-sm text-muted-foreground">Total</p>
             </div>
           </CardContent>
@@ -129,21 +132,21 @@ export default async function ObjectifsPage() {
           <h2 className="mb-4 font-heading text-xl font-semibold">En cours</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {inProgressGoals.map((goal) => {
-              const status = statusConfig[goal.status as keyof typeof statusConfig]
-              const StatusIcon = status?.icon || Target
+              const status = statusConfig[goal.status] ?? statusConfig.not_started
+              const StatusIcon = status.icon
               return (
                 <Link key={goal.id} href={`/objectifs/${goal.id}`}>
                   <Card className="h-full transition-shadow hover:shadow-lg">
                     <CardContent className="flex items-start gap-4 p-4">
                       <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-secondary text-2xl">
-                        {categoryIcons[goal.category as keyof typeof categoryIcons] || '✨'}
+                        {categoryIcons[goal.category ?? 'other'] ?? '✨'}
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
                           <p className="font-semibold">{goal.title}</p>
-                          <Badge className={status?.color}>
+                          <Badge className={status.color}>
                             <StatusIcon className="mr-1 h-3 w-3" />
-                            {status?.label}
+                            {status.label}
                           </Badge>
                         </div>
                         {goal.description && (
@@ -173,21 +176,21 @@ export default async function ObjectifsPage() {
           <h2 className="mb-4 font-heading text-xl font-semibold">Autres</h2>
           <div className="space-y-4">
             {otherGoals.map((goal) => {
-              const status = statusConfig[goal.status as keyof typeof statusConfig]
-              const StatusIcon = status?.icon || Target
+              const status = statusConfig[goal.status] ?? statusConfig.not_started
+              const StatusIcon = status.icon
               return (
                 <Link key={goal.id} href={`/objectifs/${goal.id}`}>
                   <Card className="transition-shadow hover:shadow-lg">
                     <CardContent className="flex items-center gap-4 p-4">
                       <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary text-xl">
-                        {categoryIcons[goal.category as keyof typeof categoryIcons] || '✨'}
+                        {categoryIcons[goal.category ?? 'other'] ?? '✨'}
                       </div>
                       <div className="flex-1">
                         <p className="font-semibold">{goal.title}</p>
                       </div>
-                      <Badge className={status?.color}>
+                      <Badge className={status.color}>
                         <StatusIcon className="mr-1 h-3 w-3" />
-                        {status?.label}
+                        {status.label}
                       </Badge>
                       <ChevronRight className="h-5 w-5 text-muted-foreground" />
                     </CardContent>
@@ -230,7 +233,7 @@ export default async function ObjectifsPage() {
       )}
 
       {/* Empty state */}
-      {(!goals || goals.length === 0) && (
+      {goals.length === 0 && (
         <Card>
           <CardContent className="flex flex-col items-center py-12 text-center">
             <Target className="h-16 w-16 text-muted-foreground/50" />

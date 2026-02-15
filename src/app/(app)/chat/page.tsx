@@ -1,10 +1,9 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
-import { Send, Loader2, Bot, User } from 'lucide-react'
+import { useState, useRef, useEffect, useCallback } from 'react'
+import { Send, Loader2, Bot, User, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
 interface Message {
@@ -12,6 +11,7 @@ interface Message {
   role: 'user' | 'assistant'
   content: string
   timestamp: Date
+  isStreaming?: boolean
 }
 
 export default function ChatPage() {
@@ -19,26 +19,30 @@ export default function ChatPage() {
     {
       id: '1',
       role: 'assistant',
-      content: 'Bonjour ! Je suis votre assistant de coaching parental. Comment puis-je vous aider aujourd\'hui ? N\'hésitez pas à me poser toutes vos questions sur le sommeil, la nutrition ou le comportement de votre enfant.',
+      content:
+        "Bonjour ! Je suis votre assistant de coaching parental. Comment puis-je vous aider aujourd'hui ? N'hésitez pas à me poser toutes vos questions sur le sommeil, la nutrition ou le comportement de votre enfant.",
       timestamp: new Date(),
     },
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const abortControllerRef = useRef<AbortController | null>(null)
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
+  }, [])
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages])
+  }, [messages, scrollToBottom])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!input.trim() || isLoading) return
 
+    setError(null)
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
@@ -46,9 +50,24 @@ export default function ChatPage() {
       timestamp: new Date(),
     }
 
-    setMessages((prev) => [...prev, userMessage])
+    const assistantMessageId = (Date.now() + 1).toString()
+
+    setMessages((prev) => [
+      ...prev,
+      userMessage,
+      {
+        id: assistantMessageId,
+        role: 'assistant',
+        content: '',
+        timestamp: new Date(),
+        isStreaming: true,
+      },
+    ])
     setInput('')
     setIsLoading(true)
+
+    // Create abort controller for this request
+    abortControllerRef.current = new AbortController()
 
     try {
       const response = await fetch('/api/chat', {
@@ -62,33 +81,88 @@ export default function ChatPage() {
             content: m.content,
           })),
         }),
+        signal: abortControllerRef.current.signal,
       })
 
       if (!response.ok) {
-        throw new Error('Failed to send message')
+        if (response.status === 429) {
+          const retryAfter = response.headers.get('Retry-After')
+          throw new Error(
+            `Trop de messages envoyés. Réessayez dans ${retryAfter || '60'} secondes.`
+          )
+        }
+        throw new Error('Impossible d\'envoyer le message')
       }
 
-      const data = await response.json()
+      const reader = response.body?.getReader()
+      if (!reader) throw new Error('No reader')
 
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: data.content,
-        timestamp: new Date(),
+      const decoder = new TextDecoder()
+      let accumulatedContent = ''
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+
+        const chunk = decoder.decode(value, { stream: true })
+        const lines = chunk.split('\n')
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = line.slice(6)
+            if (data === '[DONE]') {
+              continue
+            }
+            try {
+              const parsed = JSON.parse(data)
+              if (parsed.text) {
+                accumulatedContent += parsed.text
+                setMessages((prev) =>
+                  prev.map((m) =>
+                    m.id === assistantMessageId
+                      ? { ...m, content: accumulatedContent }
+                      : m
+                  )
+                )
+              }
+            } catch {
+              // Skip invalid JSON
+            }
+          }
+        }
       }
 
-      setMessages((prev) => [...prev, assistantMessage])
-    } catch (error) {
-      console.error('Chat error:', error)
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: 'Désolée, une erreur est survenue. Pouvez-vous réessayer ?',
-        timestamp: new Date(),
+      // Mark streaming as complete
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === assistantMessageId ? { ...m, isStreaming: false } : m
+        )
+      )
+    } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        // Request was aborted, do nothing
+        return
       }
-      setMessages((prev) => [...prev, errorMessage])
+
+      console.error('Chat error:', err)
+      const errorMsg = err instanceof Error ? err.message : 'Une erreur est survenue'
+      setError(errorMsg)
+
+      // Remove the empty assistant message or update with error
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === assistantMessageId
+            ? {
+                ...m,
+                content: 'Désolée, une erreur est survenue. Pouvez-vous réessayer ?',
+                isStreaming: false,
+              }
+            : m
+        )
+      )
     } finally {
       setIsLoading(false)
+      abortControllerRef.current = null
     }
   }
 
@@ -96,6 +170,13 @@ export default function ChatPage() {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSubmit(e)
+    }
+  }
+
+  const handleStop = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort()
+      setIsLoading(false)
     }
   }
 
@@ -107,6 +188,20 @@ export default function ChatPage() {
           Disponible 24h/24 pour vous accompagner
         </p>
       </div>
+
+      {/* Error banner */}
+      {error && (
+        <div className="mb-4 flex items-center gap-2 rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
+          <AlertCircle className="h-4 w-4" />
+          {error}
+          <button
+            onClick={() => setError(null)}
+            className="ml-auto text-xs underline"
+          >
+            Fermer
+          </button>
+        </div>
+      )}
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto rounded-lg border bg-card p-4">
@@ -132,20 +227,27 @@ export default function ChatPage() {
                     : 'bg-secondary'
                 )}
               >
-                <p className="whitespace-pre-wrap text-sm">{message.content}</p>
-                <p
-                  className={cn(
-                    'mt-1 text-xs',
-                    message.role === 'user'
-                      ? 'text-white/60'
-                      : 'text-muted-foreground'
+                <p className="whitespace-pre-wrap text-sm">
+                  {message.content}
+                  {message.isStreaming && (
+                    <span className="ml-1 inline-block h-4 w-1 animate-pulse bg-current" />
                   )}
-                >
-                  {message.timestamp.toLocaleTimeString('fr-FR', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
                 </p>
+                {!message.isStreaming && (
+                  <p
+                    className={cn(
+                      'mt-1 text-xs',
+                      message.role === 'user'
+                        ? 'text-white/60'
+                        : 'text-muted-foreground'
+                    )}
+                  >
+                    {message.timestamp.toLocaleTimeString('fr-FR', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </p>
+                )}
               </div>
               {message.role === 'user' && (
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary">
@@ -154,21 +256,6 @@ export default function ChatPage() {
               )}
             </div>
           ))}
-          {isLoading && (
-            <div className="flex gap-3">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary">
-                <Bot className="h-4 w-4 text-white" />
-              </div>
-              <div className="rounded-lg bg-secondary px-4 py-2">
-                <div className="flex items-center gap-2">
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span className="text-sm text-muted-foreground">
-                    En train d'écrire...
-                  </span>
-                </div>
-              </div>
-            </div>
-          )}
           <div ref={messagesEndRef} />
         </div>
       </div>
@@ -185,14 +272,27 @@ export default function ChatPage() {
             rows={2}
             className="resize-none"
           />
-          <Button
-            type="submit"
-            size="icon"
-            className="h-full w-12"
-            disabled={!input.trim() || isLoading}
-          >
-            <Send className="h-5 w-5" />
-          </Button>
+          {isLoading ? (
+            <Button
+              type="button"
+              size="icon"
+              variant="destructive"
+              className="h-full w-12"
+              onClick={handleStop}
+            >
+              <span className="sr-only">Arrêter</span>
+              <div className="h-4 w-4 rounded-sm bg-white" />
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              size="icon"
+              className="h-full w-12"
+              disabled={!input.trim()}
+            >
+              <Send className="h-5 w-5" />
+            </Button>
+          )}
         </div>
         <p className="mt-2 text-center text-xs text-muted-foreground">
           Entrée pour envoyer • Shift+Entrée pour nouvelle ligne

@@ -1,5 +1,3 @@
-// @ts-nocheck
-// TODO: Remove ts-nocheck after running `npx supabase gen types typescript` with actual database
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -19,12 +17,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClient } from '@/lib/supabase/client'
+import type { Profile } from '@/types/helpers'
 
 export default function ParametresPage() {
-  const [profile, setProfile] = useState<{
-    first_name: string
-    email: string
-  } | null>(null)
+  const [profile, setProfile] = useState<Pick<Profile, 'first_name' | 'email'> | null>(null)
   const [firstName, setFirstName] = useState('')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -34,6 +30,7 @@ export default function ParametresPage() {
 
   useEffect(() => {
     loadProfile()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const loadProfile = async () => {
@@ -46,13 +43,14 @@ export default function ParametresPage() {
 
       const { data } = await supabase
         .from('profiles')
-        .select('*')
+        .select('first_name, email')
         .eq('id', user.id)
         .single()
 
-      if (data) {
-        setProfile({ first_name: data.first_name || '', email: data.email || '' })
-        setFirstName(data.first_name || '')
+      const profileData = data as Pick<Profile, 'first_name' | 'email'> | null
+      if (profileData) {
+        setProfile(profileData)
+        setFirstName(profileData.first_name || '')
       }
     } catch (error) {
       console.error('Error loading profile:', error)
@@ -69,7 +67,7 @@ export default function ParametresPage() {
 
       await supabase
         .from('profiles')
-        .update({ first_name: firstName })
+        .update({ first_name: firstName } as never)
         .eq('id', user.id)
 
       setProfile((prev) => prev ? { ...prev, first_name: firstName } : null)

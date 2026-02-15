@@ -1,5 +1,3 @@
-// @ts-nocheck
-// TODO: Remove ts-nocheck after running `npx supabase gen types typescript` with actual database
 'use client'
 
 import { useState } from 'react'
@@ -11,6 +9,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClient } from '@/lib/supabase/client'
+import type { Family, JournalEntryInsert } from '@/types/helpers'
 
 const moodOptions = [
   { value: 'great', emoji: '😊', label: 'Super' },
@@ -47,23 +46,28 @@ export default function NewJournalEntryPage() {
       if (!user) throw new Error('No user')
 
       // Get family
-      const { data: family } = await supabase
+      const { data: familyData } = await supabase
         .from('families')
         .select('id')
         .eq('parent_id', user.id)
         .single()
 
+      const family = familyData as Family | null
       if (!family) throw new Error('No family')
 
       // Create journal entry
-      const { error } = await supabase.from('journal_entries').insert({
+      const entry: JournalEntryInsert = {
         family_id: family.id,
         date,
         mood: mood || null,
         sleep_quality: sleepQuality || null,
         meals_quality: mealsQuality || null,
         notes: notes || null,
-      })
+      }
+
+      const { error } = await supabase
+        .from('journal_entries')
+        .insert(entry as never)
 
       if (error) throw error
 
